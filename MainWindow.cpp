@@ -22,7 +22,7 @@ public:
 
 class MainWindow : public Fl_Window
 {
-    Board Board;
+    Board board;
 
 public:
     MainWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
@@ -33,20 +33,20 @@ public:
     void draw() override
     {
         Fl_Window::draw();
-        Board.draw();
+        board.draw();
     }
     int handle(int event) override
     {
         switch (event)
         {
         case FL_MOVE:
-            Board.mouseMove(Point{Fl::event_x(), Fl::event_y()});
+            board.mouseMove(Point{Fl::event_x(), Fl::event_y()});
             return 1;
         case FL_PUSH:
-            Board.mouseClick(Point{Fl::event_x(), Fl::event_y()});
+            board.mouseClick(Point{Fl::event_x(), Fl::event_y()});
             return 1;
         case FL_KEYDOWN:
-            Board.keyPressed(Fl::event_key());
+            board.keyPressed(Fl::event_key());
             return 1;
         }
         return 0;
