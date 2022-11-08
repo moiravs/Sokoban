@@ -1,4 +1,4 @@
-
+#include "MainWindow.hpp"
 
 MainWindow::MainWindow(/* args */)
 {
