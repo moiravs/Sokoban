@@ -1,11 +1,4 @@
-class Box
-{
-private:
-    /* data */
-public:
-    Box(/* args */);
-    ~Box();
-};
+#include "Box.hpp"
 
 Box::Box(/* args */)
 {
