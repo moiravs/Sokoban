@@ -1,5 +1,6 @@
 
 #include "MainWindow.hpp"
+
 class MainWindow : public Fl_Window
 {
     Canvas canvas;

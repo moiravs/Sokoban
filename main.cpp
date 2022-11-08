@@ -1,5 +1,4 @@
-#include "Constantes.hpp"
-#include "MainWindow.hpp"
+#include "MainWindow.cpp"
 
 
 int main(int argc, char *argv[])

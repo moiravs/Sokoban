@@ -1,4 +1,3 @@
-#include "Constantes.hpp"
 #include "Cell.hpp"
 class Canvas
 {
