@@ -1,5 +1,4 @@
 #include "Constantes.hpp"
-#include "Text.hpp"
 struct Point
 {
     int x, y;

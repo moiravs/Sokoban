@@ -1,12 +1,11 @@
+
 #include "MainWindow.hpp"
-#include "Constantes.hpp"
-#include "Cell.hpp"
-
-
 class MainWindow : public Fl_Window
 {
+    Canvas canvas;
+
 public:
-    MainWindow() : Fl_Window(000, 000, windowWidth, windowHeight, "Lab 1")
+    MainWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
     {
         Fl::add_timeout(1.0 / refreshPerSecond, Timer_CB, this);
         resizable(this);
@@ -14,23 +13,27 @@ public:
     void draw() override
     {
         Fl_Window::draw();
-        ::draw(); // Global draw function
+        canvas.draw();
     }
     int handle(int event) override
     {
         switch (event)
         {
         case FL_MOVE:
-            mouseMove(Fl::event_x(), Fl::event_y());
+            canvas.mouseMove(Point{Fl::event_x(), Fl::event_y()});
+            return 1;
+        case FL_PUSH:
+            canvas.mouseClick(Point{Fl::event_x(), Fl::event_y()});
             return 1;
         case FL_KEYDOWN:
-            keyPressed(Fl::event_key());
+            canvas.keyPressed(Fl::event_key());
+            return 1;
         }
         return 0;
     }
     static void Timer_CB(void *userdata)
     {
-        MainWindow *o = (MainWindow *)userdata;
+        MainWindow *o = static_cast<MainWindow *>(userdata);
         o->redraw();
         Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
     }
