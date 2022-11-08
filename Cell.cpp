@@ -31,17 +31,7 @@ bool Rectangle::contains(Point p)
            p.y < center.y + h / 2;
 }
 
-class Cell
-{
-    Rectangle r;
-    bool on = false;
 
-public:
-    Cell(Point center, int w, int h);
-    void draw();
-    void mouseMove(Point mouseLoc);
-    void mouseClick(Point mouseLoc);
-};
 
 Cell::Cell(Point center, int w, int h) : r(center, w, h, FL_BLACK, FL_WHITE) {}
 void Cell::draw()

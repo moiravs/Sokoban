@@ -19,3 +19,14 @@ public:
     void setFrameColor(Fl_Color newFrameColor);
     bool contains(Point p);
 };
+class Cell
+{
+    Rectangle r;
+    bool on = false;
+
+public:
+    Cell(Point center, int w, int h);
+    void draw();
+    void mouseMove(Point mouseLoc);
+    void mouseClick(Point mouseLoc);
+};

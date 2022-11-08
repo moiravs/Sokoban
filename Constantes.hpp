@@ -4,6 +4,8 @@
 #include <FL/fl_draw.H>
 #include <math.h>
 #include <time.h>
+#include <cstring>
+#include <iostream>
 
 #if !defined(MYLIB_CONSTANTS_H)
 #define MYLIB_CONSTANTS_H 1
