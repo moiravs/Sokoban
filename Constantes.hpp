@@ -1,3 +1,10 @@
+#include <FL/Fl.H>
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Double_Window.H>
+#include <FL/fl_draw.H>
+#include <math.h>
+#include <time.h>
+
 #if !defined(MYLIB_CONSTANTS_H)
 #define MYLIB_CONSTANTS_H 1
 

@@ -1,13 +1,6 @@
 #include "MainWindow.hpp"
 #include "Constantes.hpp"
 
-#include <FL/Fl.H>
-#include <FL/Fl_Box.H>
-#include <FL/Fl_Double_Window.H>
-#include <FL/fl_draw.H>
-#include <math.h>
-#include <time.h>
-
 
 class MainWindow : public Fl_Window
 {
