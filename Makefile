@@ -21,8 +21,6 @@ Board.o: Board.cpp Board.hpp Player.o
 #Player.o: Player.cpp Player.hpp
 #	${COMPILER} -c Player.cpp ${FLAGS}
 
-Board.o: Board.cpp Board.hpp
-	${COMPILER} -c Board.cpp ${FLAGS}
 
 #Wall.o: Wall.cpp Wall.hpp
 #	${COMPILER} -c Wall.cpp ${FLAGS}

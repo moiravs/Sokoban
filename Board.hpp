@@ -4,7 +4,7 @@
 class Board
 {
 private:
-    std::vector<std::vector<Cell>> cells;
+    std::vector<Cell>cells;
     
     void initialize();
 
