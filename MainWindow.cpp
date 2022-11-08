@@ -1,5 +1,6 @@
 #include "MainWindow.hpp"
 #include "Constantes.hpp"
+#include "Cell.hpp"
 
 
 class MainWindow : public Fl_Window

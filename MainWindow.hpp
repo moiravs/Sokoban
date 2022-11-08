@@ -1,4 +1,4 @@
-class MainWindow
+class MainWindow : public Fl_Window
 {
 private:
     /* data */

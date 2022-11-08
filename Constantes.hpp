@@ -6,6 +6,19 @@
 #include <time.h>
 #include <cstring>
 #include <iostream>
+#include <vector>
+#include <FL/Fl.H>
+#include <FL/fl_draw.H>
+#include <FL/Fl_Double_Window.H>
+#include <FL/Fl_Box.H>
+#include <string>
+#include <math.h>
+#include <time.h>
+#include <chrono>
+#include <vector>
+#include <iostream>
+#include <random>
+#include <array>
 
 #if !defined(MYLIB_CONSTANTS_H)
 #define MYLIB_CONSTANTS_H 1

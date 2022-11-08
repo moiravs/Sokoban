@@ -22,8 +22,8 @@ void Canvas::initialize()
     for (unsigned x = 0; x < 10; x++)
         for (unsigned y = 0; y < 10; y++)
         {
-            vector<Cell *> neighbors;
-            for (auto &shift : vector<Point>({
+            std::vector<Cell *> neighbors;
+            for (auto &shift : std::vector<Point>({
                      {-1, 0}, // The 8 neighbors relative to the cell
                      {-1, 1},
                      {0, 1},
