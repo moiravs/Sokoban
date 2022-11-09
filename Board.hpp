@@ -7,7 +7,7 @@
 class BoardModel
 {
 private:
-    std::vector<std::vector<Cell>> cells;
+    std::vector<std::vector<CellModel>> cells;
     void initialize();
 public: 
     BoardModel()
@@ -15,6 +15,7 @@ public:
         initialize();
     }
     bool solved();
+    std::vector<std::vector<CellModel>> getCells();
 };                                        
 
 
