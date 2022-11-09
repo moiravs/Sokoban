@@ -33,7 +33,7 @@ CellView::CellView(Point center, int w, int h, int type) : r(center, w, h, type,
     }
     else if(type==2){
         r.setFillColor(FL_GREEN);
-    } 
+    }
 }
 void CellView::draw()
 {

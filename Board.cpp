@@ -1,18 +1,13 @@
 #include "Board.hpp"
 
-void Board::draw()
-{
-    for (auto &v : cells)
-        for (auto &c: v)
-            c.draw();
-}
-void Board::mouseMove(Point mouseLoc)
+
+void BoardController::mouseMove(Point mouseLoc)
 {
     for (auto &v : cells)
         for (auto &c: v)
             c.mouseMove(mouseLoc);
 }
-void Board::mouseClick(Point mouseLoc)
+void BoardController::mouseClick(Point mouseLoc)
 {
     for (auto &v : cells)
         for (auto &c : v)
@@ -23,7 +18,11 @@ void Board::keyPressed(int keyCode){
     return;
 }
 
-void Board::initialize(){
+void BoardController::getBoard(string fileName){
+    std::ifstream fileStream(fileName);
+}
+
+void BoardModel::initialize(){
     cells.clear();
     for (unsigned short x = 0; x < 10; x++){
         cells.push_back({});
@@ -33,6 +32,14 @@ void Board::initialize(){
     }
 }
 
-void Board::clear(){
+void BoardView::clear(){
     return;
+}
+
+
+void BoardView::draw()
+{
+    for (auto &v : cells)
+        for (auto &c: v)
+            c.draw();
 }

@@ -1,22 +1,39 @@
 #include "Cell.hpp"
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
-
-class Board
+class BoardModel
 {
 private:
     std::vector<std::vector<Cell>> cells;
-    
     void initialize();
-
 public: 
-    Board()
+    BoardModel()
     {
         initialize();
     }
     bool solved();
-    void draw();
+};                                        
+
+
+class BoardController
+{
+private:
+    BoardModel boardModel;
+    BoardView boardView;
+public:
     void mouseMove(Point mouseLoc);
     void mouseClick(Point mouseLoc);
     void keyPressed(int keyCode);
+    void getBoard(std::string fileName);
+};
+
+class BoardView{
+private:
+
+public:
+    void draw();
     void clear();
-};                                        
+};
