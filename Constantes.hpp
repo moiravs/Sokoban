@@ -12,6 +12,9 @@
 #include <random>
 #include <array>
 #include <FL/Fl_Button.H>
+#include <FL/Fl_Choice.H>
+
+#include <FL/Fl_Menu_Bar.H>
 
 #if !defined(MYLIB_CONSTANTS_H)
 #define MYLIB_CONSTANTS_H 1
@@ -22,8 +25,8 @@
 
 // Main Window
 
-const int windowWidth = 500;
-const int windowHeight = 500;
+const int windowWidth = 700;
+const int windowHeight = 700;
 const double refreshPerSecond = 60;
 
 #endif
