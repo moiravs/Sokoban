@@ -27,7 +27,11 @@ bool Rectangle::contains(Point p)
            p.y < center.y + h / 2;
 }
 
-Cell::Cell(Point center, int w, int h, int type) : r(center, w, h, FL_BLACK, FL_WHITE, type) {}
+Cell::Cell(Point center, int w, int h, int type) : r(center, w, h, type, FL_BLACK, FL_WHITE) {
+    if (type==1){
+        r.setFillColor(FL_BLUE);
+    }
+}
 void Cell::draw()
 {
     r.draw();
