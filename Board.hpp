@@ -4,7 +4,7 @@
 class Board
 {
 private:
-    std::vector<Cell>cells;
+    std::vector<std::vector<Cell>> cells;
     
     void initialize();
 
@@ -18,4 +18,5 @@ public:
     void mouseMove(Point mouseLoc);
     void mouseClick(Point mouseLoc);
     void keyPressed(int keyCode);
+    void clear();
 };                                        
