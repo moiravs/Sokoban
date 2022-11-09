@@ -1,9 +1,7 @@
 #include "Cell.hpp"
 
-
-Rectangle::Rectangle(Point center, int w, int h,
-                     Fl_Color frameColor,
-                     Fl_Color fillColor) : center{center}, w{w}, h{h}, fillColor{fillColor}, frameColor{frameColor} {}
+Rectangle::Rectangle(Point center, int w, int h, int type, Fl_Color frameColor,
+                     Fl_Color fillColor) : center{center}, w{w}, h{h}, type{type}, fillColor{fillColor}, frameColor{frameColor} {}
 
 void Rectangle::draw()
 {
@@ -29,9 +27,7 @@ bool Rectangle::contains(Point p)
            p.y < center.y + h / 2;
 }
 
-
-
-Cell::Cell(Point center, int w, int h) : r(center, w, h, FL_BLACK, FL_WHITE) {}
+Cell::Cell(Point center, int w, int h, int type) : r(center, w, h, FL_BLACK, FL_WHITE, type) {}
 void Cell::draw()
 {
     r.draw();
