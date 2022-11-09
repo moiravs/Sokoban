@@ -8,8 +8,8 @@ class Rectangle
 {
     Point center;
     int w, h;
-    Fl_Color fillColor, frameColor;
     int type;
+    Fl_Color fillColor, frameColor;
 
 public:
     Rectangle(Point center, int w, int h, int type, Fl_Color frameColor = FL_BLACK,
