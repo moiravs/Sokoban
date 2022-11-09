@@ -13,6 +13,9 @@
 #include <array>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Choice.H>
+#include <stdio.h>  // fprintf()
+#include <stdlib.h> // exit()
+#include <string.h> // strcmp()
 
 #include <FL/Fl_Menu_Bar.H>
 
