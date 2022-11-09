@@ -27,7 +27,7 @@ void BoardModel::initialize(){
     for (unsigned short x = 0; x < 10; x++){
         cells.push_back({});
         for (int y = 0; y < 10; y++){
-            cells[x].push_back({{50*x+25, 50*y+25}, 40, 40, 1});
+            cells[x].push_back({{50*x+100, 50*y+100}, 50, 50, 1});
         }
     }
 }
