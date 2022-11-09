@@ -11,6 +11,7 @@
 #include <iostream>
 #include <random>
 #include <array>
+#include <FL/Fl_Button.H>
 
 #if !defined(MYLIB_CONSTANTS_H)
 #define MYLIB_CONSTANTS_H 1
