@@ -1,4 +1,6 @@
-class Box
+#include "Cell.hpp"
+
+class Box:Cell
 {
 private:
     /* data */
