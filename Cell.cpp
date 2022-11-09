@@ -27,7 +27,7 @@ bool Rectangle::contains(Point p)
            p.y < center.y + h / 2;
 }
 
-Cell::Cell(Point center, int w, int h, int type) : r(center, w, h, type, FL_BLACK, FL_WHITE) {
+CellView::CellView(Point center, int w, int h, int type) : r(center, w, h, type, FL_BLACK, FL_WHITE) {
     if (type==1){
         r.setFillColor(FL_BLUE);
     }
@@ -35,11 +35,11 @@ Cell::Cell(Point center, int w, int h, int type) : r(center, w, h, type, FL_BLAC
         r.setFillColor(FL_GREEN);
     } 
 }
-void Cell::draw()
+void CellView::draw()
 {
     r.draw();
 }
-void Cell::mouseMove(Point mouseLoc)
+void CellController::mouseMove(Point mouseLoc)
 {
     if (r.contains(mouseLoc))
     {
@@ -50,7 +50,7 @@ void Cell::mouseMove(Point mouseLoc)
         r.setFrameColor(FL_BLACK);
     }
 }
-void Cell::mouseClick(Point mouseLoc)
+void CellController::mouseClick(Point mouseLoc)
 {
     if (r.contains(mouseLoc))
     {

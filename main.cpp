@@ -25,7 +25,7 @@ static void MyMenuCallback(Fl_Widget *w, void *)
 int main()
 {
     Fl::scheme("gtk+");
-    MainWindow *win = new MainWindow(); // Create window
+    MainWindowView *win = new MainWindowView(); // Create window
     Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25);         // Create menubar, items..
     menu->add("&File/&Open", "^o", MyMenuCallback);
     menu->add("&File/&Save", "^s", MyMenuCallback, 0, FL_MENU_DIVIDER);
