@@ -31,6 +31,9 @@ Cell::Cell(Point center, int w, int h, int type) : r(center, w, h, type, FL_BLAC
     if (type==1){
         r.setFillColor(FL_BLUE);
     }
+    else if(type==2){
+        r.setFillColor(FL_GREEN);
+    } 
 }
 void Cell::draw()
 {

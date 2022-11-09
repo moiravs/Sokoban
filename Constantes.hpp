@@ -17,7 +17,8 @@
 #define MYLIB_CONSTANTS_H 1
 
 // Cases
-
+//int wall = 1;
+//int path = 2;
 
 // Main Window
 

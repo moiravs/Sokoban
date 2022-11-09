@@ -17,6 +17,8 @@ Cell.o: Cell.cpp Cell.hpp
 Board.o: Board.cpp Board.hpp Player.o
 	${COMPILER} -c Board.cpp ${FLAGS}
 
+clean :
+	rm -f *.o
 
 #Player.o: Player.cpp Player.hpp
 #	${COMPILER} -c Player.cpp ${FLAGS}
