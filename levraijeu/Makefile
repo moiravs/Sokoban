@@ -1,0 +1,22 @@
+
+FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE -Werror -lfltk
+COMPILER=g++
+
+main: main.cpp Board.o Player.o Board.o
+	${COMPILER} -o jeu2.exe main.cpp ${FLAGS}
+
+run:
+	make main 
+
+Board.o: Board.cpp Board.hpp Player.o 
+	${COMPILER} -c Board.cpp ${FLAGS}
+
+Player.o: Player.cpp Player.hpp
+	${COMPILER} -c Player.cpp ${FLAGS}
+
+clean :
+	rm -f *.o
+
+
+
+
