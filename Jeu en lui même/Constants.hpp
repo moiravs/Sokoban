@@ -1,0 +1,7 @@
+/*
+RIEN = 0
+PERSONNAGE = 1 
+BOX = 2
+WALL = 3
+TELEPORTATION = 4*/
+
