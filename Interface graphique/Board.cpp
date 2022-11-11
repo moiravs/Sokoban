@@ -3,7 +3,7 @@
 
 void BoardController::mouseMove(Point mouseLoc)
 {
-    for (auto &v : cells)
+    for (auto &v : boardModel.getCells())
         for (auto &c: v)
             c.mouseMove(mouseLoc);
 }
@@ -30,6 +30,10 @@ void BoardModel::initialize(){
             cells[x].push_back({{50*x+100, 50*y+100}, 50, 50, 1});
         }
     }
+}
+
+std::vector<std::vector<CellModel>> BoardModel::getCells(){
+    return cells;
 }
 
 void BoardView::clear(){
