@@ -30,6 +30,7 @@ public:
     void mouseClick(Point mouseLoc);
     void keyPressed(int keyCode);
     void getBoard(std::string fileName);
+    std::string readFileIntoString(std::string fileName);
 };
 
 class BoardView{
