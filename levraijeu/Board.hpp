@@ -1,9 +1,10 @@
+#include <vector>
+#include <string>
 class Board
 {
 private:
     /* data */
 public:
-    Board(/* args */);
-    ~Board();
-    void file_to_matrix();
+    std::string readFileIntoString(std::string fileName);
+    std::vector<std::vector<int>> getBoard(std::string fileContent);
 };

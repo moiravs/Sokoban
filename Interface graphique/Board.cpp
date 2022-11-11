@@ -27,7 +27,7 @@ std::string BoardController::readFileIntoString(std::string fileName){
 std::vector<std::vector<int>> BoardController::getBoard(std::string fileContent){
     std::vector<std::vector<int>> lines;
     std::vector<int> line;
-    for (size_t index=0; index < fileContent.size(), index++){
+    for (size_t index=0; index < fileContent.size(); index++){
         if (fileContent[index] == '\n'){
             lines.push_back(line);
             std::vector<int> line;
