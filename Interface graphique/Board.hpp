@@ -7,7 +7,7 @@
 class BoardModel
 {
 private:
-    std::vector<std::vector<Cell>> cells;
+    std::vector<std::vector<CellController>> cells;
     void initialize();
 public: 
     BoardModel()
@@ -21,6 +21,7 @@ public:
 class BoardController
 {
 private:
+    std::vector<std::vector<CellController>> cells;
     BoardModel boardModel;
     BoardView boardView;
 public:
@@ -32,7 +33,7 @@ public:
 
 class BoardView{
 private:
-
+    std::vector<std::vector<CellView>> cells;
 public:
     void draw();
     void clear();

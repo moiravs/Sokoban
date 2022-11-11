@@ -2,8 +2,8 @@
 FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE -Werror -lfltk
 COMPILER=g++
 
-main: Constantes.hpp MainWindow.o main.cpp Board.o Cell.o #Wall.o Player.o Board.o
-	${COMPILER} -o jeu Constantes.hpp MainWindow.o main.cpp Board.o Cell.o ${FLAGS}
+main: Constantes.hpp MainWindow.o main.cpp Board.o Cell.o Wall.o Player.o Board.o
+	${COMPILER} -o jeu.exe Constantes.hpp ${FLAGS}
 
 run:
 	make main 

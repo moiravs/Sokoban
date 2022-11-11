@@ -14,11 +14,11 @@ void BoardController::mouseClick(Point mouseLoc)
             c.mouseClick(mouseLoc);
 }
 
-void Board::keyPressed(int keyCode){
+void BoardController::keyPressed(int keyCode){
     return;
 }
 
-void BoardController::getBoard(string fileName){
+void BoardController::getBoard(std::string fileName){
     std::ifstream fileStream(fileName);
 }
 

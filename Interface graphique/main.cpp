@@ -25,8 +25,8 @@ static void MyMenuCallback(Fl_Widget *w, void *)
 int main()
 {
     Fl::scheme("gtk+");
-    MainWindowView *win = new MainWindowView(); // Create window
-    Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25);         // Create menubar, items..
+    MainWindowView *MWView = new MainWindowView();         // Create window
+    Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
     menu->add("&File/&Open", "^o", MyMenuCallback);
     menu->add("&File/&Save", "^s", MyMenuCallback, 0, FL_MENU_DIVIDER);
     menu->add("&File/&Quit", "^q", MyMenuCallback);
@@ -37,17 +37,7 @@ int main()
     menu->add("&Edit/Toggle 1", 0, MyMenuCallback, 0, FL_MENU_TOGGLE);                 // Default: off
     menu->add("&Edit/Toggle 2", 0, MyMenuCallback, 0, FL_MENU_TOGGLE);                 // Default: off
     menu->add("&Edit/Toggle 3", 0, MyMenuCallback, 0, FL_MENU_TOGGLE | FL_MENU_VALUE); // Default: on
-
-    // Example: show how we can dynamically change the state of item Toggle #2 (turn it 'on')
-    {
-        Fl_Menu_Item *item = (Fl_Menu_Item *)menu->find_item("&Edit/Toggle 2"); // Find item
-        if (item)
-            item->set(); // Turn it on
-        else
-            fprintf(stderr, "'Toggle 2' item not found?!\n"); // (optional) Not found? complain!
-    }
-
-    win->end();
-    win->show();
+    MWView->end();
+    MWView->show();
     return (Fl::run());
 }

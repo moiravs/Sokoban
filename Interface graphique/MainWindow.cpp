@@ -1,11 +1,6 @@
 
 #include "MainWindow.hpp"
 
-
-
-
-
-
 void MainWindowView::Timer_CB(void *userdata)
 {
     MainWindowModel *o = static_cast<MainWindowModel *>(userdata);

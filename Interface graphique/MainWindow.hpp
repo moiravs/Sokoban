@@ -4,11 +4,11 @@ class MainWindowModel : public Fl_Window
 {
 };
 
-class MainWindowView : Fl_Window
+class MainWindowView : public Fl_Window
 {
 private:
     Fl_Choice *choice = new Fl_Choice(250, 25, 100, 30, "Levels");
-    Board board;
+    BoardView board;
 
 public:
     MainWindowView() : Fl_Window(500, 500, windowWidth, windowHeight, "Game")
@@ -31,10 +31,10 @@ public:
     static void Timer_CB(void *userdata);
 };
 
-class MainWindowController : Fl_Window
+class MainWindowController : public Fl_Window
 {
 private:
-    Board board;
+    BoardController board;
     MainWindowView MWView;
     MainWindowModel MWModel;
 

@@ -1,6 +1,6 @@
 #include "Cell.hpp"
 
-class Box:Cell
+class Box
 {
 private:
     /* data */
