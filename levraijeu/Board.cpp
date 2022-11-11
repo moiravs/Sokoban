@@ -14,6 +14,10 @@ std::string Board::readFileIntoString(std::string fileName)
     return content;
 }
 
+std::vector<std::vector<int>> Board::getBoard(){
+    return (this->matrix);
+}
+
 void Board::createBoard(std::string fileContent)
 {
     std::vector<int> line;
@@ -28,8 +32,8 @@ void Board::createBoard(std::string fileContent)
         {
             if (atoi(&fileContent[index]) == 1)
             {
-                player_x = this->matrix.size();
-                player_y = line.size();
+                this->player_x = this->matrix.size();
+                this->player_y = line.size();
             }
             line.push_back(atoi(&fileContent[index]));
         }
@@ -61,25 +65,25 @@ void Board::move(int final_pos_x, int final_pos_y)
 
     if (this->matrix[final_pos_x][final_pos_y] == 0)
     { // if there is nothing
-        this->matrix[player_x][player_y] = 0;
+        this->matrix[this->player_x][this->player_y] = 0;
         this->matrix[final_pos_x][final_pos_y] = 1;
-        player_x = final_pos_x;
-        player_y = final_pos_y;
+        this->player_x = final_pos_x;
+        this->player_y = final_pos_y;
     }
     else if (this->matrix[final_pos_x][final_pos_y] == 2)
     { // if there is a box
-        int deplacement_x = final_pos_x - player_x, deplacement_y = final_pos_y - player_y;
+        int deplacement_x = final_pos_x - this->player_x, deplacement_y = final_pos_y - this->player_y;
         if (this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] == 0)
         {
             this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] = 2; // movement of the box
             this->matrix[final_pos_x][final_pos_y] = 1;                                 // Movement of the player
-            this->matrix[player_x][player_y] = 0;
-            player_x = final_pos_x;
-            player_y = final_pos_y;
+            this->matrix[this->player_x][this->player_y] = 0;
+            this->player_x = final_pos_x;
+            this->player_y = final_pos_y;
         }
     }
     printBoard();
-    std::cout << player_x << player_y;
+    std::cout << this->player_x << this->player_y;
 
     // set le board;
 }

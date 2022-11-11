@@ -11,8 +11,8 @@ private:
 public:
     void move( int final_pos_x, int final_pos_y);
     bool check_move(int final_pos_x, int final_pos_y);
-
-    std::string readFileIntoString(std::string fileName);
+    std::vector<std::vector<int>> getBoard();
+        std::string readFileIntoString(std::string fileName);
     void createBoard(std::string fileContent);
     void printBoard();
 };
