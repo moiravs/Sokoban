@@ -29,7 +29,7 @@ public:
     void mouseMove(Point mouseLoc);
     void mouseClick(Point mouseLoc);
     void keyPressed(int keyCode);
-    void getBoard(std::string fileName);
+    std::vector<std::vector<int>> getBoard(std::string fileContent);
     std::string readFileIntoString(std::string fileName);
 };
 
