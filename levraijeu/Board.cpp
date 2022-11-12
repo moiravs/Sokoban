@@ -30,11 +30,26 @@ void Board::createBoard(std::string fileContent)
         }
         else if (fileContent[index] != ' ')
         {
-            if (atoi(&fileContent[index]) == 1)
+            if (atoi(&fileContent[index]) == PLAYER)
             {
                 this->player_x = this->matrix.size();
                 this->player_y = line.size();
             }
+
+            else if (atoi(&fileContent[index]) == BOX){
+                tuple boxPosition = {this->matrix.size(), line.size()};
+                this->boxesPositions.push_back(boxPosition);
+            }
+
+            else if (atoi(&fileContent[index]) == TELEPORTATION){
+                tuple teleporterPosition = {this->matrix.size(), line.size()};
+            }
+
+            else if (atoi(&fileContent[index]) == BOX_FINAL_POS){
+                tuple correctBoxPos = {this->matrix.size(), line.size()};
+                this->correctBoxesPositions.push_back(correctBoxPos);
+            }
+        }
             line.push_back(atoi(&fileContent[index]));
         }
     }
@@ -52,17 +67,17 @@ void Board::printBoard()
 }
 bool Board::check_move(int final_pos_x, int final_pos_y)
 {
-    if ((final_pos_x < 0) or (final_pos_y < 0))
+    if ((final_pos_x < 0) || (final_pos_y < 0))
         return false;
-    if ((final_pos_x > (int)matrix.size()) or (final_pos_y > (int)matrix[0].size()))
+    if ((final_pos_x > (int)matrix.size()) || (final_pos_y > (int)matrix[0].size()))
         return false;
     return true;
 }
 
 void Board::move(int final_pos_x, int final_pos_y)
 {
-    // check if valid move
-
+    // TODO check if valid move
+    // TODO check if end of game
     if (this->matrix[final_pos_x][final_pos_y] == 0)
     { // if there is nothing
         this->matrix[this->player_x][this->player_y] = 0;
