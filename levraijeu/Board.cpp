@@ -51,9 +51,9 @@ void Board::createBoard(std::string fileContent)
             }
         }
             line.push_back(atoi(&fileContent[index]));
-        }
     }
 }
+
 void Board::printBoard()
 {
     for (size_t i = 0; i < this->matrix.size(); i++)
@@ -101,4 +101,13 @@ void Board::move(int final_pos_x, int final_pos_y)
     std::cout << this->player_x << this->player_y;
 
     // set le board;
+}
+
+void Board::updateBoxPositions(std::vector<tuple> boxPositions){
+
+    return;
+}
+
+std::vector<std::vector<int>> Board::getMatrix(){
+    return this->matrix;
 }
