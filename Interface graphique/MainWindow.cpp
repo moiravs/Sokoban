@@ -1,12 +1,7 @@
 
 #include "MainWindow.hpp"
 
-void MainWindowView::Timer_CB(void *userdata)
-{
-    MainWindowModel *o = static_cast<MainWindowModel *>(userdata);
-    o->redraw();
-    Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
-};
+
 
 class StartWindow : public Fl_Window
 {
