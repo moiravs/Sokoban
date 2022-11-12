@@ -2,11 +2,13 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <iostream>
 class Board
 {
-private:
+public:
     /* data */
-    struct tuple {
+    struct tuple
+    {
         size_t x_axis;
         size_t y_axis;
     };
@@ -29,27 +31,7 @@ public:
 };
 
 
-class DisplayBoard
-{
-    private:
-        Board *boardmodel;
-    public:
-        DisplayBoard(std::shared_ptr<Board> board){
-            //MainWindow MW = new MainWindow();
-            //MW.show();
-            boardmodel = &board;
-        };
-        void printBoard(){
-            for (size_t i = 0; i < boardmodel->matrix.size(); i++)
-            {
-                for (size_t j = 0; j < boardmodel->matrix[0].size(); j++)
-                {
-                    std::cout << this->boardmodel[i][j] << " ";
-                }
-                std::cout << "\n";
-            }
-        }
-};
+/*
 class ControllerBoard{
     private:
         Board board;
@@ -57,4 +39,4 @@ class ControllerBoard{
         ControllerBoard(std::shared_ptr<Board> board){
             Board = board
         };
-};
+};*/

@@ -88,3 +88,29 @@ public:
         Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
     }
 };
+
+class DisplayBoard
+{
+private:
+    std::shared_ptr<Board> boardmodel;
+
+public:
+    DisplayBoard(std::shared_ptr<Board> board)
+    {
+        // MainWindow MW = new MainWindow();
+        // MW.show();
+        this->boardmodel = board;
+    };
+
+    void printBoard()
+    {
+        for (size_t i = 0; i < boardmodel->getMatrix().size(); i++)
+        {
+            for (size_t j = 0; j < boardmodel->getMatrix()[0].size(); j++)
+            {
+                std::cout << boardmodel->getMatrix()[i][j] << " ";
+            }
+            std::cout << "\n";
+        }
+    }
+};
