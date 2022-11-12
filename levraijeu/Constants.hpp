@@ -1,7 +1,16 @@
-/*
-RIEN = 0
-PERSONNAGE = 1 
-BOX = 2
-WALL = 3
-TELEPORTATION = 4*/
+#if !defined(MYLIB_CONSTANTS_H)
+#define MYLIB_CONSTANTS_H 1
 
+// Cases
+const int EMPTY = 0;
+const int PLAYER = 1;
+const int BOX = 2;
+const int WALL = 3;
+const int TELEPORTATION = 4;
+
+// Main Window
+const int windowWidth = 700;
+const int windowHeight = 700;
+const double refreshPerSecond = 60;
+
+#endif

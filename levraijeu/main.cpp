@@ -8,6 +8,6 @@ int main(int argc, char const *argv[])
     std::string buffer = board.readFileIntoString(file);
     std::cout << buffer << std::endl;
     board.createBoard(buffer);
-    board.move(4,2);
+    board.move(4,4);
     return 0;
 }

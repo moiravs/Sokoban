@@ -23,8 +23,8 @@
 #define MYLIB_CONSTANTS_H 1
 
 // Cases
-//int wall = 1;
-//int path = 2;
+const int WALL = 3;
+const int BOX = 2;
 
 // Main Window
 

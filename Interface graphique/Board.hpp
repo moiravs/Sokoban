@@ -29,8 +29,6 @@ public:
     void mouseMove(Point mouseLoc);
     void mouseClick(Point mouseLoc);
     void keyPressed(int keyCode);
-    std::vector<std::vector<int>> getBoard(std::string fileContent);
-    std::string readFileIntoString(std::string fileName);
 };
 
 class BoardView{
