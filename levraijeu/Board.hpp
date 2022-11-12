@@ -27,7 +27,7 @@ public:
     std::string readFileIntoString(std::string fileName);
     void createBoard(std::string fileContent);
     void printBoard();
-    void updateBoxPositions(std::vector<tuple> boxPositions);
+    void updateBoxPositions();
 };
 
 

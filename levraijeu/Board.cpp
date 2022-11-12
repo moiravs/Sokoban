@@ -92,10 +92,17 @@ void Board::move(int final_pos_x, int final_pos_y)
     }
 }
 
-void Board::updateBoxPositions(std::vector<tuple> boxPositions)
+void Board::updateBoxPositions()
 {
-
-    return;
+    this->boxesPositions.clear();
+    for (size_t index_x=0; index_x < this->matrix.size(); index_x++){
+        for (size_t index_y=0; index_y < this->matrix[index_y].size(); index_y++){
+            if (this->matrix[index_x][index_y] == BOX){
+                tuple boxPos = {index_x, index_y};
+                boxesPositions.push_back(boxPos);
+            }
+        }
+    }
 }
 
 std::vector<std::vector<int>> Board::getMatrix()
