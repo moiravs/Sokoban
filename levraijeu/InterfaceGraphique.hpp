@@ -15,6 +15,8 @@
 #include "Constants.hpp"
 
 #include <FL/Fl_Menu_Bar.H>
+#include <memory>
+#include "Board.cpp"
 
 class MainWindow : public Fl_Window
 {

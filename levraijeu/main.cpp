@@ -13,7 +13,6 @@
 #include <iostream>
 #include <random>
 #include <array>
-#include "Board.cpp"
 #include <memory>
 
 int main(int argc, char const *argv[])
