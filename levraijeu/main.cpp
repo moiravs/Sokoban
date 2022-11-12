@@ -20,16 +20,18 @@ int main(int argc, char const *argv[])
     Fl::scheme("gtk+");
     auto b = std::make_shared<Board>();
     DisplayBoard db{b};
+    //DisplayBoard db;
     //ControlBoard controller{b};
-    //MainWindow window;
-    //window.show();
+    MainWindow window(db);
+    
     
     std::string file = "Niveaux/niveau1.txt";
     std::string buffer = b->readFileIntoString(file);
     std::cout << buffer << std::endl;
     b->createBoard(buffer);
-    db.printBoard();
     b->move(4, 2);
-    db.printBoard();
+    puts("here4");
+    window.show();
+    //db.printBoard();
     return Fl::run();
 }

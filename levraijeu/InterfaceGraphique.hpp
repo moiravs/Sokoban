@@ -18,15 +18,148 @@
 #include <memory>
 #include "Board.cpp"
 
-class MainWindow : public Fl_Window
+
+struct Point
 {
+    int x, y;
+};
+
+class Rectangle
+{
+    Point center;
+    int w, h;
+    Fl_Color fillColor, frameColor;
 
 public:
-    MainWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
+    Rectangle(Point center, int w, int h,
+              Fl_Color frameColor = FL_BLACK,
+              Fl_Color fillColor = FL_WHITE);
+    void draw();
+    void setFillColor(Fl_Color newFillColor);
+    void setFrameColor(Fl_Color newFrameColor);
+    bool contains(Point p);
+};
+
+Rectangle::Rectangle(Point center, int w, int h,
+                     Fl_Color frameColor,
+                     Fl_Color fillColor) : center{center}, w{w}, h{h}, fillColor{fillColor}, frameColor{frameColor} {}
+
+void Rectangle::draw()
+{
+    fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, fillColor);
+    fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+}
+
+void Rectangle::setFillColor(Fl_Color newFillColor)
+{
+    fillColor = newFillColor;
+}
+
+void Rectangle::setFrameColor(Fl_Color newFrameColor)
+{
+    frameColor = newFrameColor;
+}
+
+bool Rectangle::contains(Point p)
+{
+    return p.x >= center.x - w / 2 &&
+           p.x < center.x + w / 2 &&
+           p.y >= center.y - h / 2 &&
+           p.y < center.y + h / 2;
+}
+
+class Cell
+{
+    Rectangle r;
+    bool on = false;
+
+public:
+    Cell(Point center, int w, int h);
+    void draw();
+    void mouseMove(Point mouseLoc);
+    void mouseClick(Point mouseLoc);
+};
+
+Cell::Cell(Point center, int w, int h) : r(center, w, h, FL_BLACK, FL_WHITE) {}
+void Cell::draw()
+{
+    r.draw();
+}
+void Cell::mouseMove(Point mouseLoc)
+{
+    if (r.contains(mouseLoc))
     {
+        r.setFrameColor(FL_RED);
+    }
+    else
+    {
+        r.setFrameColor(FL_BLACK);
+    }
+}
+void Cell::mouseClick(Point mouseLoc)
+{
+    if (r.contains(mouseLoc))
+    {
+        on = !on;
+        if (on)
+            r.setFillColor(FL_YELLOW);
+        else
+            r.setFillColor(FL_WHITE);
+    }
+}
+
+
+
+
+class DisplayBoard
+{
+private:
+    std::shared_ptr<Board> boardmodel;
+    std::vector<Cell> cells;
+
+public:
+    DisplayBoard(){
+    };
+    DisplayBoard(std::shared_ptr<Board> board)
+    {
+        // MainWindow MW = new MainWindow();
+        // MW.show();
+        puts("here3");
+        this->boardmodel = board;
+        for (int i = 0; i < 100; i++)
+            cells.push_back(Cell{Point{50 * (i % 10) + 25, 50 * (i / 10) + 25}, 40, 40});
+    };
+
+    void printBoard()
+    {
+        for (size_t i = 0; i < boardmodel->getMatrix().size(); i++)
+        {
+            for (size_t j = 0; j < boardmodel->getMatrix()[0].size(); j++)
+            {
+                std::cout << boardmodel->getMatrix()[i][j] << " ";
+            }
+            std::cout << "\n";
+        }
+    }
+    void draw()
+    {
+        for (auto &c : cells)
+            c.draw();
+    }
+};
+
+class MainWindow : public Fl_Window
+{
+    DisplayBoard boardmodel;
+
+public:
+    MainWindow(DisplayBoard board) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
+    {
+        puts("here");
+        this->boardmodel = board;
         Fl::add_timeout(1.0 / refreshPerSecond, Timer_CB, this);
         resizable(this);
-        
+
         Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
         menu->add("&File/&Open", "^o", MyMenuCallback);
         menu->add("&File/&Save", "^s", MyMenuCallback, 0, FL_MENU_DIVIDER);
@@ -63,7 +196,7 @@ public:
     void draw() override
     {
         Fl_Window::draw();
-        //board.draw();
+        this->boardmodel.draw();
     }
     /*
     int handle(int event) override
@@ -88,31 +221,5 @@ public:
         MainWindow *o = static_cast<MainWindow *>(userdata);
         o->redraw();
         Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
-    }
-};
-
-class DisplayBoard
-{
-private:
-    std::shared_ptr<Board> boardmodel;
-
-public:
-    DisplayBoard(std::shared_ptr<Board> board)
-    {
-        // MainWindow MW = new MainWindow();
-        // MW.show();
-        this->boardmodel = board;
-    };
-
-    void printBoard()
-    {
-        for (size_t i = 0; i < boardmodel->getMatrix().size(); i++)
-        {
-            for (size_t j = 0; j < boardmodel->getMatrix()[0].size(); j++)
-            {
-                std::cout << boardmodel->getMatrix()[i][j] << " ";
-            }
-            std::cout << "\n";
-        }
     }
 };
