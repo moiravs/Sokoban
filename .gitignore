@@ -3,3 +3,4 @@ Cell.o
 MainWindow.o
 Player.o
 jeu.exe
+InterfaceGraphique.o

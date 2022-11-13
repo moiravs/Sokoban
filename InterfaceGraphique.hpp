@@ -31,6 +31,7 @@ class Rectangle
     int type;
     int w, h;
     Fl_Color fillColor, frameColor;
+    Fl_JPEG_Image *personnage;
 
 public:
     Rectangle(Point center, int type, int w, int h,
@@ -44,17 +45,19 @@ public:
 
 Rectangle::Rectangle(Point center, int type, int w, int h,
                      Fl_Color frameColor,
-                     Fl_Color fillColor) : center{center}, type{type}, w{w}, h{h}, fillColor{fillColor}, frameColor{frameColor} {}
+                     Fl_Color fillColor) : center{center}, type{type}, w{w}, h{h}, fillColor{fillColor}, frameColor{frameColor}
+{
+    this->personnage = new Fl_JPEG_Image("index.jpeg");
+}
 
 void Rectangle::draw()
 {
-    Fl_JPEG_Image *personnage;
-    personnage = new Fl_JPEG_Image("index.jpeg");
-    Fl_Image * hihi = personnage;
+
     if (type == PLAYER)
     {
+        Fl_Image *hihi = personnage;
         hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
-            //fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
+        // fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
     }
     else if (type == BOX)
@@ -151,19 +154,19 @@ public:
             {
                 if (boardmodel->getMatrix()[i][j] == EMPTY)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 0, 40, 40});
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 0, 50, 50});
                 }
                 else if (boardmodel->getMatrix()[i][j] == PLAYER)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 1, 40, 40});
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 1, 50, 50});
                 }
                 else if (boardmodel->getMatrix()[i][j] == BOX)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 2, 40, 40});
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 2, 50, 50});
                 }
                 else if (boardmodel->getMatrix()[i][j] == WALL)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 3, 40, 40});
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 3, 50, 50});
                 }
             }
         }

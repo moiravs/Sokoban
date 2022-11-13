@@ -3,7 +3,7 @@ FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE -Werror -lfltk -lfltk_images
 COMPILER=g++
 
 main: main.cpp Board.o Player.o InterfaceGraphique.o
-	${COMPILER} -o jeu2.exe main.cpp ${FLAGS}
+	${COMPILER} -o jeu.exe main.cpp ${FLAGS}
 
 run:
 	make main 
