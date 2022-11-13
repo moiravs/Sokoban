@@ -49,7 +49,7 @@ Rectangle::Rectangle(Point center, int type, int w, int h,
                      Fl_Color frameColor,
                      Fl_Color fillColor) : center{center}, type{type}, w{w}, h{h}, fillColor{fillColor}, frameColor{frameColor}
 {
-    this->personnage = new Fl_JPEG_Image("index.jpeg");
+    this->personnage = new Fl_JPEG_Image("Textures/Test.jpeg");
 }
 
 Cell::Cell(Point center, int type, int w, int h) : r(center, type, w, h, FL_BLACK, FL_WHITE) {}

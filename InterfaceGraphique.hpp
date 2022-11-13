@@ -55,8 +55,6 @@ public:
     void printBoard();
     DisplayBoard(std::shared_ptr<Board> board)
     {
-        // MainWindow MW = new MainWindow();
-        // MW.show();
         this->boardmodel = board;
         for (size_t i = 0; i < boardmodel->getMatrix().size(); i++)
         {
