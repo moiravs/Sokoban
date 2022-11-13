@@ -17,6 +17,8 @@
 #include <FL/Fl_Menu_Bar.H>
 #include <memory>
 #include "Board.cpp"
+#include <FL/Fl_PNG_Image.H>
+#include <FL/Fl_JPEG_Image.H>
 
 struct Point
 {
@@ -46,10 +48,14 @@ Rectangle::Rectangle(Point center, int type, int w, int h,
 
 void Rectangle::draw()
 {
+    Fl_JPEG_Image *personnage;
+    personnage = new Fl_JPEG_Image("index.jpeg");
+    Fl_Image * hihi = personnage;
     if (type == PLAYER)
     {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+        hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
+            //fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
     }
     else if (type == BOX)
     {
