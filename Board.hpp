@@ -17,7 +17,7 @@ public:
     int player_y;
 
 public:
-    bool Board::end_of_party();
+    bool end_of_party();
     std::vector<std::vector<int>> getMatrix();
     void move(int final_pos_x, int final_pos_y);
     bool check_move(int final_pos_x, int final_pos_y);
