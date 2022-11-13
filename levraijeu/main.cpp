@@ -19,10 +19,7 @@ int main(int argc, char const *argv[])
 {
     Fl::scheme("gtk+");
     auto b = std::make_shared<Board>();
-    DisplayBoard db{b};
-    //DisplayBoard db;
-    //ControlBoard controller{b};
-    MainWindow window(db);
+
     
     
     std::string file = "Niveaux/niveau1.txt";
@@ -30,7 +27,10 @@ int main(int argc, char const *argv[])
     std::cout << buffer << std::endl;
     b->createBoard(buffer);
     b->move(4, 2);
-    puts("here4");
+    DisplayBoard db{b};
+    // DisplayBoard db;
+    // ControlBoard controller{b};
+    MainWindow window(db);
     window.show();
     //db.printBoard();
     return Fl::run();

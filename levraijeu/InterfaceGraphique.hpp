@@ -18,7 +18,6 @@
 #include <memory>
 #include "Board.cpp"
 
-
 struct Point
 {
     int x, y;
@@ -27,11 +26,12 @@ struct Point
 class Rectangle
 {
     Point center;
+    int type;
     int w, h;
     Fl_Color fillColor, frameColor;
 
 public:
-    Rectangle(Point center, int w, int h,
+    Rectangle(Point center, int type, int w, int h,
               Fl_Color frameColor = FL_BLACK,
               Fl_Color fillColor = FL_WHITE);
     void draw();
@@ -40,14 +40,32 @@ public:
     bool contains(Point p);
 };
 
-Rectangle::Rectangle(Point center, int w, int h,
+Rectangle::Rectangle(Point center, int type, int w, int h,
                      Fl_Color frameColor,
-                     Fl_Color fillColor) : center{center}, w{w}, h{h}, fillColor{fillColor}, frameColor{frameColor} {}
+                     Fl_Color fillColor) : center{center}, type{type}, w{w}, h{h}, fillColor{fillColor}, frameColor{frameColor} {}
 
 void Rectangle::draw()
 {
-    fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, fillColor);
-    fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+    if (type == PLAYER)
+    {
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+    }
+    else if (type == BOX)
+    {
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_GREEN);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+    }
+    else if (type == EMPTY)
+    {
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_RED);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+    }
+    else if (type == WALL)
+    {
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+    }
 }
 
 void Rectangle::setFillColor(Fl_Color newFillColor)
@@ -74,13 +92,13 @@ class Cell
     bool on = false;
 
 public:
-    Cell(Point center, int w, int h);
+    Cell(Point center, int type, int w, int h);
     void draw();
     void mouseMove(Point mouseLoc);
     void mouseClick(Point mouseLoc);
 };
 
-Cell::Cell(Point center, int w, int h) : r(center, w, h, FL_BLACK, FL_WHITE) {}
+Cell::Cell(Point center, int type, int w, int h) : r(center, type, w, h, FL_BLACK, FL_WHITE) {}
 void Cell::draw()
 {
     r.draw();
@@ -108,9 +126,6 @@ void Cell::mouseClick(Point mouseLoc)
     }
 }
 
-
-
-
 class DisplayBoard
 {
 private:
@@ -118,16 +133,34 @@ private:
     std::vector<Cell> cells;
 
 public:
-    DisplayBoard(){
-    };
+    DisplayBoard(){};
     DisplayBoard(std::shared_ptr<Board> board)
     {
         // MainWindow MW = new MainWindow();
         // MW.show();
-        puts("here3");
         this->boardmodel = board;
-        for (int i = 0; i < 100; i++)
-            cells.push_back(Cell{Point{50 * (i % 10) + 25, 50 * (i / 10) + 25}, 40, 40});
+        for (size_t i = 0; i < boardmodel->getMatrix().size(); i++)
+        {
+            for (size_t j = 0; j < boardmodel->getMatrix()[0].size(); j++)
+            {
+                if (boardmodel->getMatrix()[i][j] == EMPTY)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 0, 40, 40});
+                }
+                else if (boardmodel->getMatrix()[i][j] == PLAYER)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 1, 40, 40});
+                }
+                else if (boardmodel->getMatrix()[i][j] == BOX)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 2, 40, 40});
+                }
+                else if (boardmodel->getMatrix()[i][j] == WALL)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 3, 40, 40});
+                }
+            }
+        }
     };
 
     void printBoard()
@@ -155,7 +188,6 @@ class MainWindow : public Fl_Window
 public:
     MainWindow(DisplayBoard board) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
     {
-        puts("here");
         this->boardmodel = board;
         Fl::add_timeout(1.0 / refreshPerSecond, Timer_CB, this);
         resizable(this);
