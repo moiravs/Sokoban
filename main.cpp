@@ -19,9 +19,6 @@ int main(int argc, char const *argv[])
 {
     Fl::scheme("gtk+");
     auto b = std::make_shared<Board>();
-
-    
-    
     std::string file = "Niveaux/niveau1.txt";
     std::string buffer = b->readFileIntoString(file);
     std::cout << buffer << std::endl;

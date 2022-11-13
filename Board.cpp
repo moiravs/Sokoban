@@ -58,6 +58,10 @@ void Board::createBoard(std::string fileContent)
     }
 }
 
+bool Board::end_of_party(){
+    return (this->boxesPositions == this->correctBoxesPositions);
+}
+
 bool Board::check_move(int final_pos_x, int final_pos_y)
 {
     if ((final_pos_x < 0) || (final_pos_y < 0))

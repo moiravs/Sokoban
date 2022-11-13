@@ -2,7 +2,7 @@
 FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE -Werror -lfltk -lfltk_images
 COMPILER=g++
 
-main:  main.cpp Player.o 
+main:  main.cpp Player.o  Board.o 
 	${COMPILER} -o jeu.exe main.cpp InterfaceGraphique.o Player.o  ${FLAGS}
 
 run:
