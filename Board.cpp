@@ -54,13 +54,18 @@ void Board::createBoard(std::string fileContent)
             }
             line.push_back(atoi(&fileContent[index]));
         }
-        
     }
 }
 
 bool Board::end_of_party(){
-   // (this->boxesPositions == this->correctBoxesPositions);
-    return false;
+    for (auto &correct_pos: this->correctBoxesPositions){
+        for (auto &pos: this->boxesPositions){
+            if (!(correct_pos.x_axis == pos.x_axis && correct_pos.y_axis == pos.x_axis)){
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 bool Board::check_move(int final_pos_x, int final_pos_y)
@@ -74,8 +79,6 @@ bool Board::check_move(int final_pos_x, int final_pos_y)
 
 void Board::move(int final_pos_x, int final_pos_y)
 {
-    // TODO check if valid move
-    // TODO check if end of game
     if (this->matrix[final_pos_x][final_pos_y] == 0)
     { // if there is nothing
         this->matrix[this->player_x][this->player_y] = 0;
