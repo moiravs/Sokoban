@@ -109,8 +109,3 @@ void Board::updateBoxPositions()
         }
     }
 }
-
-std::vector<std::vector<int>> Board::getMatrix()
-{
-    return this->matrix;
-}
