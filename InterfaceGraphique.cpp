@@ -6,7 +6,6 @@ void Rectangle::draw()
     {
         Fl_Image *hihi = this->personnage;
         hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
-        // fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
     }
     else if (type == BOX)

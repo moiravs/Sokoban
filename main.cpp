@@ -32,10 +32,10 @@ int main(int argc, char const *argv[])
     b->createBoard(buffer);
     b->move(4, 2);
     DisplayBoard db{b};
-    // DisplayBoard db;
-    // ControlBoard controller{b};
-    MainWindow window(db);
+    //ControllerBoard controller{b};
+    MainWindow window(b);
     window.show();
+
     //db.printBoard();
     return Fl::run();
 }

@@ -38,16 +38,17 @@ public:
     void mouseClick(Point mouseLoc);
 };
 
-class DisplayBoard
+class DisplayBoard : public Fl_Box
 {
 private:
     std::shared_ptr<Board> boardmodel;
     std::vector<Cell> cells;
 
 public:
-    DisplayBoard(){};
+    DisplayBoard() : Fl_Box(0, 0, 500, 500){};
     void printBoard();
-    DisplayBoard(std::shared_ptr<Board> board)
+
+    DisplayBoard(std::shared_ptr<Board> board) : Fl_Box(0, 0, 500, 500)
     {
         this->boardmodel = board;
         for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
@@ -79,14 +80,17 @@ public:
 
 class MainWindow : public Fl_Window
 {
-    DisplayBoard boardmodel;
+
+    std::shared_ptr<Board> boardi;
 
 public:
-    MainWindow(DisplayBoard board) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
+    MainWindow(std::shared_ptr<Board> boardi) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
     {
-        this->boardmodel = board;
         Fl::add_timeout(1.0 / refreshPerSecond, Timer_CB, this);
         resizable(this);
+        this->boardi = boardi;
+        DisplayBoard *board = new DisplayBoard(boardi);
+        board->show();
 
         Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
         menu->add("&File/&Open", "^o", MyMenuCallback);
@@ -124,7 +128,6 @@ public:
     void draw() override
     {
         Fl_Window::draw();
-        this->boardmodel.draw();
     }
     /*
     int handle(int event) override
