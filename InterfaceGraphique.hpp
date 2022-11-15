@@ -2,7 +2,6 @@
 #include "Constants.hpp"
 #include "Board.hpp"
 
-
 struct Point
 {
     int x, y;
@@ -15,6 +14,7 @@ class Rectangle
     int w, h;
     Fl_Color fillColor, frameColor;
     Fl_JPEG_Image *personnage;
+    Fl_PNG_Image *wall;
 
 public:
     Rectangle(Point center, int type, int w, int h,
@@ -25,10 +25,6 @@ public:
     void setFrameColor(Fl_Color newFrameColor);
     bool contains(Point p);
 };
-
-
-
-
 
 class Cell
 {
@@ -42,8 +38,6 @@ public:
     void mouseClick(Point mouseLoc);
 };
 
-
-
 class DisplayBoard
 {
 private:
@@ -56,23 +50,23 @@ public:
     DisplayBoard(std::shared_ptr<Board> board)
     {
         this->boardmodel = board;
-        for (size_t i = 0; i < boardmodel->getMatrix().size(); i++)
+        for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
         {
-            for (size_t j = 0; j < boardmodel->getMatrix()[0].size(); j++)
+            for (size_t j = 0; j < boardmodel->getBoard()[0].size(); j++)
             {
-                if (boardmodel->getMatrix()[i][j] == EMPTY)
+                if (boardmodel->getBoard()[i][j] == EMPTY)
                 {
                     cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 0, 50, 50});
                 }
-                else if (boardmodel->getMatrix()[i][j] == PLAYER)
+                else if (boardmodel->getBoard()[i][j] == PLAYER)
                 {
                     cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 1, 50, 50});
                 }
-                else if (boardmodel->getMatrix()[i][j] == BOX)
+                else if (boardmodel->getBoard()[i][j] == BOX)
                 {
                     cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 2, 50, 50});
                 }
-                else if (boardmodel->getMatrix()[i][j] == WALL)
+                else if (boardmodel->getBoard()[i][j] == WALL)
                 {
                     cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 3, 50, 50});
                 }
@@ -80,11 +74,8 @@ public:
         }
     };
 
-
     void draw();
 };
-
-
 
 class MainWindow : public Fl_Window
 {

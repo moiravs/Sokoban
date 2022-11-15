@@ -2,10 +2,9 @@
 
 void Rectangle::draw()
 {
-
     if (type == PLAYER)
     {
-        Fl_Image *hihi = personnage;
+        Fl_Image *hihi = this->personnage;
         hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
         // fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
@@ -22,7 +21,8 @@ void Rectangle::draw()
     }
     else if (type == WALL)
     {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);
+        Fl_Image *picture = this->wall;
+        picture->draw(center.x - w / 2, center.y - h / 2, w, h);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
     }
 }
@@ -50,6 +50,7 @@ Rectangle::Rectangle(Point center, int type, int w, int h,
                      Fl_Color fillColor) : center{center}, type{type}, w{w}, h{h}, fillColor{fillColor}, frameColor{frameColor}
 {
     this->personnage = new Fl_JPEG_Image("Textures/Test.jpeg");
+    this->wall = new Fl_PNG_Image("Textures/wall.png");
 }
 
 Cell::Cell(Point center, int type, int w, int h) : r(center, type, w, h, FL_BLACK, FL_WHITE) {}
@@ -89,11 +90,11 @@ void DisplayBoard::draw()
 
 void DisplayBoard::printBoard()
 {
-    for (size_t i = 0; i < boardmodel->getMatrix().size(); i++)
+    for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
     {
-        for (size_t j = 0; j < boardmodel->getMatrix()[0].size(); j++)
+        for (size_t j = 0; j < boardmodel->getBoard()[0].size(); j++)
         {
-            std::cout << boardmodel->getMatrix()[i][j] << " ";
+            std::cout << boardmodel->getBoard()[i][j] << " ";
         }
         std::cout << "\n";
     }

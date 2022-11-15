@@ -1,5 +1,11 @@
-#include "Player.hpp"
+
+
+#include "Board.hpp"
 #include "InterfaceGraphique.hpp"
+
+
+#include "Player.hpp"
+
 #include <iostream>
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
@@ -14,6 +20,7 @@
 #include <random>
 #include <array>
 #include <memory>
+
 
 int main(int argc, char const *argv[])
 {
