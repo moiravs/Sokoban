@@ -1,3 +1,7 @@
+#ifndef BOARD_HPP
+#define BOARD_HPP
+
+
 #include "Constants.hpp"
 
 class Board
@@ -28,12 +32,4 @@ public:
     void updateBoxPositions();
 };
 
-/*
-class ControllerBoard{
-    private:
-        Board board;
-    public:
-        ControllerBoard(std::shared_ptr<Board> board){
-            Board = board
-        };
-};*/
+#endif
