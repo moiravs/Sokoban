@@ -169,11 +169,9 @@ public:
         return 1;
         }
         else if (event == FL_KEYBOARD){
-            if (Fl::event_key() ==  FL_Up){
-                ahhe->key_handle(event);
-                hiia->update();
-                hiia->printBoard();
-            }
+            ahhe->key_handle(event);
+            hiia->update();
+            
         }
         return 0;
         
