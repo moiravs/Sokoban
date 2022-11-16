@@ -78,8 +78,8 @@ bool Board::check_move(int final_pos_x, int final_pos_y)
     return true;
 }
 
-bool Board::isInBoard(){
-
+bool Board::isInBoard(int pos_x, int pos_y){
+    return (0 <= pos_x < (int)matrix.size()) && (0 <= pos_y < (int)matrix[0].size());
 }
 
 void Board::move(int final_player_pos_x, int final_player_pos_y)
@@ -105,7 +105,13 @@ void Board::move(int final_player_pos_x, int final_player_pos_y)
         {
             this->matrix[final_player_pos_x + deplacement_x][final_player_pos_y + deplacement_y] = BOX; // movement of the box
             this->updateBoxPositions();
-            this->matrix[final_player_pos_x][final_player_pos_y] = PLAYER;                                 // Movement of the player
+            if (on_correct_box_pos){
+                this->matrix[final_player_pos_x][final_player_pos_y] = BOX_FINAL_POS;
+                on_correct_box_pos = false;
+            }
+            else {
+                this->matrix[final_player_pos_x][final_player_pos_y] = PLAYER; 
+            }                                // Movement of the player
             this->matrix[this->player_x][this->player_y] = EMPTY;
             this->player_x = final_player_pos_x;
             this->player_y = final_player_pos_y;
@@ -119,6 +125,9 @@ void Board::move(int final_player_pos_x, int final_player_pos_y)
             this->player_x = final_player_pos_x; this->player_y = final_player_pos_y;
             this->on_correct_box_pos = true;
         }
+    }
+    else if (this->matrix[final_player_pos_x][final_player_pos_y] == BOX_FINAL_POS){
+        
     }
 }
 
