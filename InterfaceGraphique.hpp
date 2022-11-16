@@ -118,9 +118,10 @@ class MainWindow : public Fl_Window
 {
 
     std::shared_ptr<Board> boardi;
-    ControllerBoard *ahhe;
-    DisplayBoard *hiia;
+    ControllerBoard *control;
+    DisplayBoard *display;
     Fl_Button *reset;
+    Fl_Choice *levels;
 
 public:
     MainWindow(std::shared_ptr<Board> boardi) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
@@ -129,13 +130,17 @@ public:
         resizable(this);
         this->boardi = boardi;
         DisplayBoard *board = new DisplayBoard(boardi);
-        hiia = board;
+        display = board;
         board->show();
         ControllerBoard *boarda = new ControllerBoard(boardi);
-        ahhe = boarda;
+        control = boarda;
         Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth);
         this->reset = reset;
-        
+        Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey);
+        levels->add("Level1");
+        levels->add("Level 2");
+        this->levels = levels;
+        levels->callback(LevelCallback);
 
         Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
         menu->add("&File/&Open", "^o", MyMenuCallback);
@@ -148,6 +153,9 @@ public:
         menu->add("&Edit/Toggle 1", 0, MyMenuCallback, 0, FL_MENU_TOGGLE);                 // Default: off
         menu->add("&Edit/Toggle 2", 0, MyMenuCallback, 0, FL_MENU_TOGGLE);                 // Default: off
         menu->add("&Edit/Toggle 3", 0, MyMenuCallback, 0, FL_MENU_TOGGLE | FL_MENU_VALUE); // Default: on
+    }
+    static void LevelCallback(Fl_Widget *w, void *)
+    {
     }
     static void MyMenuCallback(Fl_Widget *w, void *)
     {
@@ -181,7 +189,7 @@ public:
         {
             if (event == FL_PUSH)
             {
-                ahhe->board_handle(event);
+                control->board_handle(event);
                 return 1;
             }
         }
@@ -189,18 +197,27 @@ public:
         {
             if (event == FL_PUSH)
             {
-                ahhe->reset_handle();
-                hiia->update();
+                control->reset_handle();
+                display->update();
+            }
+        }
+        if (Fl::event_inside(this->levels)) // if event inside board
+        {
+            if (event == FL_PUSH)
+            {
+                int i = this->levels->value();
+                control->level_change(i);
+                display->update();
             }
         }
 
         if (event == FL_KEYBOARD)
         {
-            ahhe->board_handle(event);
-            hiia->update();
+            control->board_handle(event);
+            display->update();
         }
+        return Fl_Window::handle(event);
 
-        return 0;
     }
     static void Timer_CB(void *userdata)
     {

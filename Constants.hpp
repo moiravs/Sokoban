@@ -48,5 +48,14 @@ const int resety = 10;
 const int resetw = 40;
 const int reseth = 25;
 
+//Level button display
+const int choicex = 60;
+const int choicey = 50;
+const int choicew = 100;
+const int choiceh = 25;
+
+//levels
+const std::string level1 = "Niveaux/niveau1.txt";
+const std::string level2 = "Niveaux/niveau2.txt";
 
 #endif

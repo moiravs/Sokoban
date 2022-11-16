@@ -6,9 +6,9 @@
 #include <stdlib.h> // exit()
 #include <fstream>
 
-std::string Board::readFileIntoString(std::string fileName)
+std::string Board::readFileIntoString()
 {
-    std::ifstream ifs(fileName);
+    std::ifstream ifs(this->filename);
     std::string content((std::istreambuf_iterator<char>(ifs)),
                         (std::istreambuf_iterator<char>()));
     return content;
