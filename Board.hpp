@@ -34,7 +34,7 @@ public:
     std::string readFileIntoString();
     void createBoard(std::string fileContent);
     void printBoard();
-    bool isInBoard();
+    bool isInBoard(int pos_x, int pos_y);
     void updateBoxPositions();
 };
 
