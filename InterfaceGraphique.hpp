@@ -36,7 +36,6 @@ class Cell
 public:
     Cell(Point center, int type, int w, int h);
     void draw();
-    void mouseMove(Point mouseLoc);
     void mouseClick(Point mouseLoc);
 };
 
@@ -47,69 +46,12 @@ private:
     std::vector<Cell> cells;
 
 public:
+    DisplayBoard(std::shared_ptr<Board> board) ;
+
     DisplayBoard() : Fl_Box(boardx, boardy, boardw, boardh){};
     void printBoard();
 
-    DisplayBoard(std::shared_ptr<Board> board) : Fl_Box(boardx, boardy, boardw, boardh)
-    {
-        this->boardmodel = board;
-        for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
-        {
-            for (size_t j = 0; j < boardmodel->getBoard()[0].size(); j++)
-            {
-                if (boardmodel->getBoard()[i][j] == EMPTY)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, EMPTY, 50, 50});
-                }
-                else if (boardmodel->getBoard()[i][j] == PLAYER)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, PLAYER, 50, 50});
-                }
-                else if (boardmodel->getBoard()[i][j] == BOX)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX, 50, 50});
-                }
-                else if (boardmodel->getBoard()[i][j] == WALL)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, WALL, 50, 50});
-                }
-                else if (boardmodel->getBoard()[i][j] == BOX_FINAL_POS)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
-                }
-            }
-        }
-    };
-    void update()
-    {
-        cells.clear();
-        for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
-        {
-            for (size_t j = 0; j < boardmodel->getBoard()[0].size(); j++)
-            {
-                if (boardmodel->getBoard()[i][j] == EMPTY)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, EMPTY, 50, 50});
-                }
-                else if (boardmodel->getBoard()[i][j] == PLAYER)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, PLAYER, 50, 50});
-                }
-                else if (boardmodel->getBoard()[i][j] == BOX)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX, 50, 50});
-                }
-                else if (boardmodel->getBoard()[i][j] == WALL)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, WALL, 50, 50});
-                }
-                else if (boardmodel->getBoard()[i][j] == BOX_FINAL_POS)
-                {
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
-                }
-            }
-        }
-    }
+    void update();
 
     void draw();
 };
@@ -124,39 +66,8 @@ class MainWindow : public Fl_Window
     Fl_Choice *levels;
 
 public:
-    MainWindow(std::shared_ptr<Board> boardi) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
-    {
-        Fl::add_timeout(1.0 / refreshPerSecond, Timer_CB, this);
-        resizable(this);
-        this->boardi = boardi;
-        DisplayBoard *board = new DisplayBoard(boardi);
-        display = board;
-        board->show();
-        ControllerBoard *boarda = new ControllerBoard(boardi);
-        control = boarda;
-        Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth);
-        this->reset = reset;
-        Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey);
-        levels->add("Level1");
-        levels->add("Level 2");
-        this->levels = levels;
-        levels->callback(LevelCallback);
-
-        Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
-        menu->add("&File/&Open", "^o", MyMenuCallback);
-        menu->add("&File/&Save", "^s", MyMenuCallback, 0, FL_MENU_DIVIDER);
-        menu->add("&File/&Quit", "^q", MyMenuCallback);
-        menu->add("&Edit/&Copy", "^c", MyMenuCallback);
-        menu->add("&Edit/&Paste", "^v", MyMenuCallback, 0, FL_MENU_DIVIDER);
-        menu->add("&Edit/Radio 1", 0, MyMenuCallback, 0, FL_MENU_RADIO);
-        menu->add("&Edit/Radio 2", 0, MyMenuCallback, 0, FL_MENU_RADIO | FL_MENU_DIVIDER);
-        menu->add("&Edit/Toggle 1", 0, MyMenuCallback, 0, FL_MENU_TOGGLE);                 // Default: off
-        menu->add("&Edit/Toggle 2", 0, MyMenuCallback, 0, FL_MENU_TOGGLE);                 // Default: off
-        menu->add("&Edit/Toggle 3", 0, MyMenuCallback, 0, FL_MENU_TOGGLE | FL_MENU_VALUE); // Default: on
-    }
-    static void LevelCallback(Fl_Widget *w, void *)
-    {
-    }
+    MainWindow(std::shared_ptr<Board> boardi);
+    
     static void MyMenuCallback(Fl_Widget *w, void *)
     {
         Fl_Menu_Bar *bar = (Fl_Menu_Bar *)w;      // Get the menubar widget
@@ -185,7 +96,7 @@ public:
 
     int handle(int event) override
     {
-        if (Fl::event_inside(boardx, boardy, boardw, boardh)) // if event inside board
+        if (Fl::event_inside(this->display)) // if event inside board
         {
             if (event == FL_PUSH)
             {
@@ -193,7 +104,7 @@ public:
                 return 1;
             }
         }
-        if (Fl::event_inside(resetx, resety, resetw, reseth)) // if event inside board
+        if (Fl::event_inside(this->reset)) // if event inside board
         {
             if (event == FL_PUSH)
             {
