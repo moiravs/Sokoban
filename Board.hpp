@@ -19,6 +19,7 @@ public:
     std::vector<std::vector<tuple>> teleportersPositions;
     int player_x;
     int player_y;
+    bool on_correct_box_pos = false;
 
 public:
     bool end_of_party();
