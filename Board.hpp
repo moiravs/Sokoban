@@ -29,6 +29,7 @@ public:
     std::string readFileIntoString(std::string fileName);
     void createBoard(std::string fileContent);
     void printBoard();
+    bool isInBoard();
     void updateBoxPositions();
 };
 

@@ -89,7 +89,7 @@ void Board::move(int final_pos_x, int final_pos_y)
     else if (this->matrix[final_pos_x][final_pos_y] == BOX)
     { // if there is a box
         int deplacement_x = final_pos_x - this->player_x, deplacement_y = final_pos_y - this->player_y;
-        if (this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] == EMPTY)
+        if (this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] == EMPTY || this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] == BOX_FINAL_POS)
         {
             this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] = BOX; // movement of the box
             this->updateBoxPositions();
