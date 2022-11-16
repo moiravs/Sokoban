@@ -76,7 +76,8 @@ public:
             }
         }
     };
-    void update(){
+    void update()
+    {
         cells.clear();
         for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
         {
@@ -84,19 +85,23 @@ public:
             {
                 if (boardmodel->getBoard()[i][j] == EMPTY)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 0, 50, 50});
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, EMPTY, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == PLAYER)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 1, 50, 50});
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, PLAYER, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == BOX)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 2, 50, 50});
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, BOX, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == WALL)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 3, 50, 50});
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, WALL, 50, 50});
+                }
+                else if (boardmodel->getBoard()[i][j] == BOX_FINAL_POS)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
                 }
             }
         }
@@ -121,7 +126,7 @@ public:
         DisplayBoard *board = new DisplayBoard(boardi);
         hiia = board;
         board->show();
-        ControllerBoard * boarda = new ControllerBoard(boardi);
+        ControllerBoard *boarda = new ControllerBoard(boardi);
         ahhe = boarda;
 
         Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
@@ -161,20 +166,20 @@ public:
     {
         Fl_Window::draw();
     }
-    
+
     int handle(int event) override
     {
-        if (event == FL_PUSH){
-        ahhe->key_handle(event);
-        return 1;
+        if (event == FL_PUSH)
+        {
+            ahhe->key_handle(event);
+            return 1;
         }
-        else if (event == FL_KEYBOARD){
+        else if (event == FL_KEYBOARD)
+        {
             ahhe->key_handle(event);
             hiia->update();
-            
         }
         return 0;
-        
     }
     static void Timer_CB(void *userdata)
     {
