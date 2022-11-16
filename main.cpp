@@ -31,8 +31,8 @@ int main(int argc, char const *argv[])
     std::string buffer = b->readFileIntoString(file);
     std::cout << buffer << std::endl;
     b->createBoard(buffer);
-    b->move(4, 2);
-    DisplayBoard db{b};
+    //b->move(4, 2);
+    //DisplayBoard db{b};
     MainWindow window(b);
     window.show();
 

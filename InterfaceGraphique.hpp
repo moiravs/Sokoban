@@ -76,6 +76,31 @@ public:
             }
         }
     };
+    void update(){
+        cells.clear();
+        for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
+        {
+            for (size_t j = 0; j < boardmodel->getBoard()[0].size(); j++)
+            {
+                if (boardmodel->getBoard()[i][j] == EMPTY)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 0, 50, 50});
+                }
+                else if (boardmodel->getBoard()[i][j] == PLAYER)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 1, 50, 50});
+                }
+                else if (boardmodel->getBoard()[i][j] == BOX)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 2, 50, 50});
+                }
+                else if (boardmodel->getBoard()[i][j] == WALL)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 3, 50, 50});
+                }
+            }
+        }
+    }
 
     void draw();
 };
@@ -85,6 +110,7 @@ class MainWindow : public Fl_Window
 
     std::shared_ptr<Board> boardi;
     ControllerBoard *ahhe;
+    DisplayBoard *hiia;
 
 public:
     MainWindow(std::shared_ptr<Board> boardi) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
@@ -93,6 +119,7 @@ public:
         resizable(this);
         this->boardi = boardi;
         DisplayBoard *board = new DisplayBoard(boardi);
+        hiia = board;
         board->show();
         ControllerBoard * boarda = new ControllerBoard(boardi);
         ahhe = boarda;
@@ -144,6 +171,8 @@ public:
         else if (event == FL_KEYBOARD){
             if (Fl::event_key() ==  FL_Up){
                 ahhe->key_handle(event);
+                hiia->update();
+                hiia->printBoard();
             }
         }
         return 0;

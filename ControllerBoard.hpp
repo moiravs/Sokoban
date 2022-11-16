@@ -10,8 +10,11 @@ private:
 
 public:
     ControllerBoard(){}
-    ControllerBoard(std::shared_ptr<Board> boardi) {};
+    ControllerBoard(std::shared_ptr<Board> boardi) {
+        this->boardi = boardi;
+    };
     int key_handle(int event){
+        boardi->move(4,2);
         puts("hii");
         return 1;
     }
