@@ -79,21 +79,22 @@ bool Board::check_move(int final_pos_x, int final_pos_y)
 
 void Board::move(int final_pos_x, int final_pos_y)
 {
-    if (this->matrix[final_pos_x][final_pos_y] == 0)
+    if (this->matrix[final_pos_x][final_pos_y] == EMPTY)
     { // if there is nothing
-        this->matrix[this->player_x][this->player_y] = 0;
-        this->matrix[final_pos_x][final_pos_y] = 1;
+        this->matrix[this->player_x][this->player_y] = EMPTY;
+        this->matrix[final_pos_x][final_pos_y] = PLAYER;
         this->player_x = final_pos_x;
         this->player_y = final_pos_y;
     }
-    else if (this->matrix[final_pos_x][final_pos_y] == 2)
+    else if (this->matrix[final_pos_x][final_pos_y] == BOX)
     { // if there is a box
         int deplacement_x = final_pos_x - this->player_x, deplacement_y = final_pos_y - this->player_y;
-        if (this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] == 0)
+        if (this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] == EMPTY)
         {
-            this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] = 2; // movement of the box
-            this->matrix[final_pos_x][final_pos_y] = 1;                                 // Movement of the player
-            this->matrix[this->player_x][this->player_y] = 0;
+            this->matrix[final_pos_x + deplacement_x][final_pos_y + deplacement_y] = BOX; // movement of the box
+            this->updateBoxPositions();
+            this->matrix[final_pos_x][final_pos_y] = PLAYER;                                 // Movement of the player
+            this->matrix[this->player_x][this->player_y] = EMPTY;
             this->player_x = final_pos_x;
             this->player_y = final_pos_y;
         }
