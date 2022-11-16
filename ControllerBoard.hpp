@@ -1,21 +1,17 @@
 #include "Constants.hpp"
 #include "Board.hpp"
-class ControllerBoard
+#include "InterfaceGraphique.hpp"
+class ControllerBoard : Fl_Box
 {
 private:
-    std::shared_ptr<Board> boardmodel;
-    Fl_Widget Board;
+    std::shared_ptr<Board> boardi;
 
 public:
-    ControllerBoard(std::shared_ptr<Board> board)
+    ControllerBoard(std::shared_ptr<Board> boardi) : Fl_Box(0,0,500,500)
     {
-        boardmodel = board;
+        this->boardi = boardi;
+        DisplayBoard *board = new DisplayBoard(boardi);
+        board->show();
     };
     //event inside -> inside a widget or not
-    
 };
-ControllerBoard::handle(){
-    if (Fl_Event_Key == FL_Up){
-
-    }
-}

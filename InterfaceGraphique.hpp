@@ -1,4 +1,5 @@
-
+#ifndef INTERFACEGRAPHIQUE_HPP
+#define INTERFACEGRAPHIQUE_HPP
 #include "Constants.hpp"
 #include "Board.hpp"
 
@@ -154,3 +155,4 @@ public:
         Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
     }
 };
+#endif

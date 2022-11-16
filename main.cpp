@@ -2,6 +2,7 @@
 
 #include "Board.hpp"
 #include "InterfaceGraphique.hpp"
+#include "ControllerBoard.hpp"
 
 
 #include "Player.hpp"
@@ -32,7 +33,7 @@ int main(int argc, char const *argv[])
     b->createBoard(buffer);
     b->move(4, 2);
     DisplayBoard db{b};
-    //ControllerBoard controller{b};
+    ControllerBoard controller{b};
     MainWindow window(b);
     window.show();
 
