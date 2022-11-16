@@ -2,6 +2,7 @@
 #define INTERFACEGRAPHIQUE_HPP
 #include "Constants.hpp"
 #include "Board.hpp"
+#include "ControllerBoard.hpp"
 
 struct Point
 {
@@ -83,6 +84,7 @@ class MainWindow : public Fl_Window
 {
 
     std::shared_ptr<Board> boardi;
+    ControllerBoard *ahhe;
 
 public:
     MainWindow(std::shared_ptr<Board> boardi) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
@@ -92,6 +94,8 @@ public:
         this->boardi = boardi;
         DisplayBoard *board = new DisplayBoard(boardi);
         board->show();
+        ControllerBoard * boarda = new ControllerBoard(boardi);
+        ahhe = boarda;
 
         Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
         menu->add("&File/&Open", "^o", MyMenuCallback);
@@ -130,24 +134,21 @@ public:
     {
         Fl_Window::draw();
     }
-    /*
+    
     int handle(int event) override
     {
-
-        switch (event)
-        {
-        case FL_MOVE:
-            canvas.mouseMove(Point{Fl::event_x(), Fl::event_y()});
-            return 1;
-        case FL_PUSH:
-            canvas.mouseClick(Point{Fl::event_x(), Fl::event_y()});
-            return 1;
-        case FL_KEYDOWN:
-            canvas.keyPressed(Fl::event_key());
-            return 1;
+        if (event == FL_PUSH){
+        ahhe->key_handle(event);
+        return 1;
+        }
+        else if (event == FL_KEYBOARD){
+            if (Fl::event_key() ==  FL_Up){
+                ahhe->key_handle(event);
+            }
         }
         return 0;
-    }*/
+        
+    }
     static void Timer_CB(void *userdata)
     {
         MainWindow *o = static_cast<MainWindow *>(userdata);

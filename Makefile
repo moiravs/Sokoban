@@ -1,5 +1,5 @@
 
-FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE -Werror -lfltk -lfltk_images
+FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE  -lfltk -lfltk_images
 COMPILER=g++
 
 main:  Board.o main.cpp InterfaceGraphique.o  Player.o ControllerBoard.o

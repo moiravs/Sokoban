@@ -33,7 +33,6 @@ int main(int argc, char const *argv[])
     b->createBoard(buffer);
     b->move(4, 2);
     DisplayBoard db{b};
-    ControllerBoard controller{b};
     MainWindow window(b);
     window.show();
 
