@@ -31,8 +31,8 @@ const int TELEPORTATION = 4;
 const int BOX_FINAL_POS = 5;
 
 // Main Window
-const int windowWidth = 700;
-const int windowHeight = 700;
+const int windowWidth = 900;
+const int windowHeight = 900;
 const double refreshPerSecond = 60;
 
 #endif

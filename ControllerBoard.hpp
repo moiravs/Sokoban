@@ -32,6 +32,9 @@ public:
         }
         
         puts("hii");
+        if (boardi->end_of_party()){
+            std::cout << "youpi";
+        }
         return 1;
     }
     //event inside -> inside a widget or not

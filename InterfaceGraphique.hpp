@@ -73,6 +73,10 @@ public:
                 {
                     cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 3, 50, 50});
                 }
+                else if (boardmodel->getBoard()[i][j] == BOX_FINAL_POS)
+                {
+                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
+                }
             }
         }
     };
@@ -169,16 +173,21 @@ public:
 
     int handle(int event) override
     {
-        if (event == FL_PUSH)
+        if (Fl::event_inside(0, 0, 500, 500))
         {
-            ahhe->key_handle(event);
-            return 1;
+            if (event == FL_PUSH)
+            {
+                ahhe->key_handle(event);
+                return 1;
+            }
         }
-        else if (event == FL_KEYBOARD)
+
+        if (event == FL_KEYBOARD)
         {
             ahhe->key_handle(event);
             hiia->update();
         }
+
         return 0;
     }
     static void Timer_CB(void *userdata)

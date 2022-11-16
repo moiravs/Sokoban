@@ -24,6 +24,10 @@ void Rectangle::draw()
         picture->draw(center.x - w / 2, center.y - h / 2, w, h);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
     }
+    else if (type == BOX_FINAL_POS){
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_YELLOW);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+    }
 }
 
 void Rectangle::setFillColor(Fl_Color newFillColor)
