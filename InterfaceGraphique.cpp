@@ -1,3 +1,4 @@
+
 #include "InterfaceGraphique.hpp"
 
 void Rectangle::draw()

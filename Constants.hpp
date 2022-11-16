@@ -1,3 +1,5 @@
+#ifndef __CONSTANTS_HPP
+#define __CONSTANTS_HPP
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
 #include <FL/Fl_Double_Window.H>
@@ -19,8 +21,7 @@
 #include <memory>
 #include <string>
 
-#if !defined(MYLIB_CONSTANTS_H)
-#define MYLIB_CONSTANTS_H 1
+
 
 // Cases
 const int EMPTY = 0;
@@ -34,5 +35,18 @@ const int BOX_FINAL_POS = 5;
 const int windowWidth = 900;
 const int windowHeight = 900;
 const double refreshPerSecond = 60;
+
+//Board display
+const int boardx = 100;
+const int boardy = 100;
+const int boardw = 600;
+const int boardh = 600;
+
+//Button reset display
+const int resetx = 10;
+const int resety = 10;
+const int resetw = 40;
+const int reseth = 25;
+
 
 #endif

@@ -47,10 +47,10 @@ private:
     std::vector<Cell> cells;
 
 public:
-    DisplayBoard() : Fl_Box(0, 0, 500, 500){};
+    DisplayBoard() : Fl_Box(boardx, boardy, boardw, boardh){};
     void printBoard();
 
-    DisplayBoard(std::shared_ptr<Board> board) : Fl_Box(0, 0, 500, 500)
+    DisplayBoard(std::shared_ptr<Board> board) : Fl_Box(boardx, boardy, boardw, boardh)
     {
         this->boardmodel = board;
         for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
@@ -59,23 +59,23 @@ public:
             {
                 if (boardmodel->getBoard()[i][j] == EMPTY)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 0, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, EMPTY, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == PLAYER)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 1, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, PLAYER, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == BOX)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 2, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == WALL)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, 3, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, WALL, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == BOX_FINAL_POS)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
                 }
             }
         }
@@ -89,23 +89,23 @@ public:
             {
                 if (boardmodel->getBoard()[i][j] == EMPTY)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, EMPTY, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, EMPTY, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == PLAYER)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, PLAYER, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, PLAYER, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == BOX)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, BOX, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == WALL)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, WALL, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, WALL, 50, 50});
                 }
                 else if (boardmodel->getBoard()[i][j] == BOX_FINAL_POS)
                 {
-                    cells.push_back(Cell{Point{50 * ((int)i % 10) + 25, 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
                 }
             }
         }
@@ -120,6 +120,7 @@ class MainWindow : public Fl_Window
     std::shared_ptr<Board> boardi;
     ControllerBoard *ahhe;
     DisplayBoard *hiia;
+    Fl_Button *reset;
 
 public:
     MainWindow(std::shared_ptr<Board> boardi) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
@@ -132,6 +133,9 @@ public:
         board->show();
         ControllerBoard *boarda = new ControllerBoard(boardi);
         ahhe = boarda;
+        Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth);
+        this->reset = reset;
+        
 
         Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
         menu->add("&File/&Open", "^o", MyMenuCallback);
@@ -173,18 +177,26 @@ public:
 
     int handle(int event) override
     {
-        if (Fl::event_inside(0, 0, 500, 500))
+        if (Fl::event_inside(boardx, boardy, boardw, boardh)) // if event inside board
         {
             if (event == FL_PUSH)
             {
-                ahhe->key_handle(event);
+                ahhe->board_handle(event);
                 return 1;
+            }
+        }
+        if (Fl::event_inside(resetx, resety, resetw, reseth)) // if event inside board
+        {
+            if (event == FL_PUSH)
+            {
+                ahhe->reset_handle();
+                hiia->update();
             }
         }
 
         if (event == FL_KEYBOARD)
         {
-            ahhe->key_handle(event);
+            ahhe->board_handle(event);
             hiia->update();
         }
 
