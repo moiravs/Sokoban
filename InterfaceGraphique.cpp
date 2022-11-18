@@ -1,6 +1,6 @@
 
 #include "InterfaceGraphique.hpp"
-
+#include "ControllerBoard.cpp"
 void Rectangle::draw()
 {
     if (type == PLAYER)
