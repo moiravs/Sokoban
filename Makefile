@@ -17,7 +17,7 @@ ControllerBoard.o: ControllerBoard.cpp ControllerBoard.hpp   Constants.hpp
 Player.o: Player.cpp Player.hpp  Constants.hpp
 	${COMPILER} -c Player.cpp ${FLAGS}
 
-InterfaceGraphique.o: InterfaceGraphique.cpp InterfaceGraphique.hpp Constants.hpp
+InterfaceGraphique.o:  ControllerBoard.o InterfaceGraphique.cpp InterfaceGraphique.hpp Constants.hpp
 	${COMPILER} -c InterfaceGraphique.cpp ${FLAGS}
 
 clean :
