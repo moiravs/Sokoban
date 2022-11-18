@@ -1,7 +1,9 @@
+
 #include "ControllerBoard.hpp"
 
 int ControllerBoard::board_handle(int event)
 {
+    this->pas +=1;
     if (Fl::event_key() == FL_Up)
     {
         boardi->move(boardi->player_x, boardi->player_y - 1);
@@ -24,6 +26,7 @@ int ControllerBoard::board_handle(int event)
     {
         std::cout << "youpi";
     }
+    puts("ahh9");
     return 1;
 }
 void ControllerBoard::reset_handle()

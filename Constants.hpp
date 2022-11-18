@@ -6,6 +6,8 @@
 #include <FL/Fl_Box.H>
 #include <string>
 #include <math.h>
+#include <FL/Fl_Text_Buffer.H>
+#include <FL/Fl_Text_Display.H>
 
 #include <time.h>
 #include <chrono>
@@ -44,9 +46,14 @@ const int boardh = 600;
 
 //Button reset display
 const int resetx = 10;
-const int resety = 10;
+const int resety = 100;
 const int resetw = 40;
 const int reseth = 25;
+
+const int pasx = 600;
+const int pasy = 80;
+const int pasw = 80;
+const int pash = 25;
 
 //Level button display
 const int choicex = 60;

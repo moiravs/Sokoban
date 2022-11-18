@@ -64,10 +64,11 @@ class MainWindow : public Fl_Window
     DisplayBoard *display;
     Fl_Button *reset;
     Fl_Choice *levels;
+    const char *pas;
+    Fl_Text_Buffer *buff;
 
-public:
-    MainWindow(std::shared_ptr<Board> boardi);
-    
+        public : MainWindow(std::shared_ptr<Board> boardi);
+
     static void MyMenuCallback(Fl_Widget *w, void *)
     {
         Fl_Menu_Bar *bar = (Fl_Menu_Bar *)w;      // Get the menubar widget
@@ -100,7 +101,7 @@ public:
         {
             if (event == FL_PUSH)
             {
-                control->board_handle(event);
+                //control->board_handle(event);
                 return 1;
             }
         }
@@ -124,7 +125,14 @@ public:
 
         if (event == FL_KEYBOARD)
         {
+            puts("ahh1");
             control->board_handle(event);
+            puts("ahh2");
+            std::string pas = "pas " + std::to_string(control->pas);
+            puts("ahh3");
+            const char *paschar = pas.c_str();
+            this->buff->text(paschar);
+            puts("ahh");
             display->update();
         }
         return Fl_Window::handle(event);

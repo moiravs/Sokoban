@@ -1,5 +1,6 @@
 
 #include "InterfaceGraphique.hpp"
+#include "ControllerBoard.hpp"
 
 void Rectangle::draw()
 {
@@ -173,7 +174,12 @@ MainWindow::MainWindow(std::shared_ptr<Board> boardi) : Fl_Window(500, 500, wind
     levels->add("Level 1");
     levels->add("Level 2");
     this->levels = levels;
-
+    Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+    this->buff = buff;
+    Fl_Text_Display *disp = new Fl_Text_Display(10, 500, 80, 40);
+    disp->buffer(this->buff);                                 // attach text buffer to display widget
+    this->buff->text("line one\nline two");                   // add some text to buffer
+    
     Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
     menu->add("&File/&Open", "^o", MyMenuCallback);
     menu->add("&File/&Save", "^s", MyMenuCallback, 0, FL_MENU_DIVIDER);

@@ -8,7 +8,9 @@ class ControllerBoard
 private:
     std::shared_ptr<Board> boardi;
 
+
 public:
+    int pas = 0;
     ControllerBoard() {}
     ControllerBoard(std::shared_ptr<Board> boardi)
     {
