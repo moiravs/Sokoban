@@ -6,13 +6,13 @@
 class ControllerBoard
 {
 private:
-    std::shared_ptr<Board> boardi;
+    std::shared_ptr<Board> shared_board;
 
 public:
     ControllerBoard() {}
     ControllerBoard(std::shared_ptr<Board> boardi)
     {
-        this->boardi = boardi;
+        this->shared_board = boardi;
     };
     int board_handle(int event);
     void reset_handle();

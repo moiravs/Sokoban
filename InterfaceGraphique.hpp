@@ -116,8 +116,8 @@ public:
         {
             if (event == FL_PUSH)
             {
-                int i = this->levels->value();
-                control->level_change(i);
+                int level = this->levels->value();
+                control->level_change(level);
                 display->update();
             }
         }
