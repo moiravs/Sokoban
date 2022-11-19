@@ -1,10 +1,9 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
 
-
 #include "Constants.hpp"
 
-class Board
+class BoardModel
 {
 public:
     /* data */
@@ -21,9 +20,11 @@ public:
     int player_y;
     bool on_correct_box_pos = false;
     std::string filename;
+    int pas = 0;
 
 public:
-    Board(std::string filename){
+    BoardModel(std::string filename)
+    {
         this->filename = filename;
     }
     bool end_of_party();

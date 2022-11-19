@@ -6,18 +6,18 @@
 class ControllerBoard
 {
 private:
-    std::shared_ptr<Board> boardi;
+    std::shared_ptr<BoardModel> boardModel;
 
 public:
+    int pas = 0;
     ControllerBoard() {}
-    ControllerBoard(std::shared_ptr<Board> boardi)
+    ControllerBoard(std::shared_ptr<BoardModel> boardModel)
     {
-        this->boardi = boardi;
+        this->boardModel = boardModel;
     };
     int board_handle(int event);
     void reset_handle();
     void level_change(int choice);
-    
 };
 
 #endif

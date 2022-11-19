@@ -4,7 +4,6 @@
 #include "InterfaceGraphique.hpp"
 #include "ControllerBoard.hpp"
 
-
 #include "Player.hpp"
 
 #include <iostream>
@@ -22,21 +21,20 @@
 #include <array>
 #include <memory>
 
-
 int main(int argc, char const *argv[])
 {
     Fl::scheme("gtk+");
     std::string file = "Niveaux/niveau1.txt";
-    auto b = std::make_shared<Board>(file);
-    
-    std::string buffer = b->readFileIntoString();
+    auto boardModel = std::make_shared<BoardModel>(file);
+
+    std::string buffer = boardModel->readFileIntoString();
     std::cout << buffer << std::endl;
-    b->createBoard(buffer);
-    //b->move(4, 2);
-    //DisplayBoard db{b};
-    MainWindow window(b);
+    boardModel->createBoard(buffer);
+    // b->move(4, 2);
+    // DisplayBoard db{b};
+    MainWindow window(boardModel);
     window.show();
 
-    //db.printBoard();
+    // db.printBoard();
     return Fl::run();
 }
