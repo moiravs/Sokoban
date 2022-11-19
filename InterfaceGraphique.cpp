@@ -1,6 +1,5 @@
 
 #include "InterfaceGraphique.hpp"
-#include "ControllerBoard.cpp"
 void Rectangle::draw()
 {
     if (type == PLAYER)
@@ -224,7 +223,7 @@ int MainWindow::handle(int event)
         control->board_handle(event);
         display->update();
     }
-    /*
+    
     if (Fl::event_inside(this->display)) // if event inside board
     {
         if (event == FL_PUSH)
@@ -250,7 +249,7 @@ int MainWindow::handle(int event)
             display->update();
         }
     }
-    */
+    
     return Fl_Window::handle(event);
 }
 
