@@ -1,7 +1,9 @@
+InterfaceGraphique.o
+ControllerBoard.o
 Board.o
 Cell.o
 MainWindow.o
 Player.o
 jeu.exe
-InterfaceGraphique.o
 ControllerBoard.o
+InterfaceGraphique.o
