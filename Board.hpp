@@ -9,8 +9,8 @@ public:
     /* data */
     struct tuple
     {
-        size_t x_axis;
         size_t y_axis;
+        size_t x_axis;
     };
     std::vector<std::vector<int>> matrix;
     std::vector<tuple> boxesPositions;
@@ -29,13 +29,13 @@ public:
     }
     bool end_of_party();
     std::vector<std::vector<int>> getMatrix();
-    void move(int final_pos_x, int final_pos_y);
-    bool check_move(int final_pos_x, int final_pos_y);
+    void move(int final_pos_y, int final_pos_x);
+    bool check_move(int final_pos_y, int final_pos_x);
     std::vector<std::vector<int>> getBoard();
     std::string readFileIntoString();
     void createBoard(std::string fileContent);
     void printBoard();
-    bool isInBoard(int pos_x, int pos_y);
+    bool isInBoard(int pos_y, int pos_x);
     void updateBoxPositions();
 };
 

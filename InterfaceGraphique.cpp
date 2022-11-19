@@ -88,32 +88,7 @@ void DisplayBoard::draw()
 DisplayBoard::DisplayBoard(std::shared_ptr<BoardModel> board) : Fl_Box(boardx, boardy, boardw, boardh)
 {
     this->boardmodel = board;
-    for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
-    {
-        for (size_t j = 0; j < boardmodel->getBoard()[0].size(); j++)
-        {
-            if (boardmodel->getBoard()[i][j] == EMPTY)
-            {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, EMPTY, 50, 50});
-            }
-            else if (boardmodel->getBoard()[i][j] == PLAYER)
-            {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, PLAYER, 50, 50});
-            }
-            else if (boardmodel->getBoard()[i][j] == BOX)
-            {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX, 50, 50});
-            }
-            else if (boardmodel->getBoard()[i][j] == WALL)
-            {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, WALL, 50, 50});
-            }
-            else if (boardmodel->getBoard()[i][j] == BOX_FINAL_POS)
-            {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
-            }
-        }
-    }
+    this->update();
 }
 
 void DisplayBoard::printBoard()
@@ -131,29 +106,29 @@ void DisplayBoard::printBoard()
 void DisplayBoard::update()
 {
     cells.clear();
-    for (size_t i = 0; i < boardmodel->getBoard().size(); i++)
+    for (size_t y = 0; y < boardmodel->getBoard().size(); y++)
     {
-        for (size_t j = 0; j < boardmodel->getBoard()[0].size(); j++)
+        for (size_t x = 0; x < boardmodel->getBoard()[y].size(); x++)
         {
-            if (boardmodel->getBoard()[i][j] == EMPTY)
+            if (boardmodel->getBoard()[y][x] == EMPTY)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, EMPTY, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, EMPTY, 50, 50});
             }
-            else if (boardmodel->getBoard()[i][j] == PLAYER)
+            else if (boardmodel->getBoard()[y][x] == PLAYER)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, PLAYER, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, PLAYER, 50, 50});
             }
-            else if (boardmodel->getBoard()[i][j] == BOX)
+            else if (boardmodel->getBoard()[y][x] == BOX)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX, 50, 50});
             }
-            else if (boardmodel->getBoard()[i][j] == WALL)
+            else if (boardmodel->getBoard()[y][x] == WALL)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, WALL, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, WALL, 50, 50});
             }
-            else if (boardmodel->getBoard()[i][j] == BOX_FINAL_POS)
+            else if (boardmodel->getBoard()[y][x] == BOX_FINAL_POS)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)i % 10) + 25, boardy + 50 * ((int)j) + 25}, BOX_FINAL_POS, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX_FINAL_POS, 50, 50});
             }
         }
     }

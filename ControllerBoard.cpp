@@ -6,19 +6,19 @@ int ControllerBoard::board_handle(int event)
     this->boardModel->pas += 1;
     if (Fl::event_key() == FL_Up)
     {
-        boardModel->move(boardModel->player_x, boardModel->player_y - 1);
+        boardModel->move(boardModel->player_y-1, boardModel->player_x);
     }
     else if (Fl::event_key() == FL_Down)
     {
-        boardModel->move(boardModel->player_x, boardModel->player_y + 1);
+        boardModel->move(boardModel->player_y+1, boardModel->player_x);
     }
     else if (Fl::event_key() == FL_Right)
     {
-        boardModel->move(boardModel->player_x + 1, boardModel->player_y);
+        boardModel->move(boardModel->player_y, boardModel->player_x+1);
     }
     else if (Fl::event_key() == FL_Left)
     {
-        boardModel->move(boardModel->player_x - 1, boardModel->player_y);
+        boardModel->move(boardModel->player_y, boardModel->player_x-1);
     }
 
     puts("hii");

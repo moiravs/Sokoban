@@ -4,3 +4,4 @@ MainWindow.o
 Player.o
 jeu.exe
 InterfaceGraphique.o
+ControllerBoard.o

@@ -73,79 +73,80 @@ bool BoardModel::end_of_party()
     return true;
 }
 
-bool BoardModel::check_move(int final_pos_x, int final_pos_y)
+bool BoardModel::check_move(int final_pos_y, int final_pos_x)
 {
-    if ((final_pos_x < 0) || (final_pos_y < 0))
+    if ((final_pos_y < 0) || (final_pos_x < 0))
         return false;
-    if ((final_pos_x > (int)matrix.size()) || (final_pos_y > (int)matrix[0].size()))
+    if ((final_pos_y > (int)matrix.size()) || (final_pos_x > (int)matrix[0].size()))
         return false;
     return true;
 }
 
-bool BoardModel::isInBoard(int pos_x, int pos_y)
+bool BoardModel::isInBoard(int pos_y, int pos_x)
 {
-    return (0 <= pos_x < (int)matrix.size()) && (0 <= pos_y < (int)matrix[0].size());
+    return (0 <= pos_y < (int)matrix.size()) && (0 <= pos_x < (int)matrix[0].size());
 }
 
-void BoardModel::move(int final_player_pos_x, int final_player_pos_y)
+void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
 {
-    if (this->isInBoard(final_player_pos_x, final_player_pos_y) == true){
-        if (this->matrix[final_player_pos_x][final_player_pos_y] == EMPTY)
+    if (this->isInBoard(final_player_pos_y, final_player_pos_x) == true){
+        if (this->matrix[final_player_pos_y][final_player_pos_x] == EMPTY)
         { // if there is nothing
             if (this->on_correct_box_pos == true){
-                this->matrix[this->player_x][this->player_y] = BOX_FINAL_POS;
+                this->matrix[this->player_y][this->player_x] = BOX_FINAL_POS;
                 this->on_correct_box_pos = false;
             }
             else {
-                this->matrix[this->player_x][this->player_y] = EMPTY;
+                this->matrix[this->player_y][this->player_x] = EMPTY;
             }
-            this->matrix[final_player_pos_x][final_player_pos_y] = PLAYER;
-            this->player_x = final_player_pos_x;
+            this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
             this->player_y = final_player_pos_y;
+            this->player_x = final_player_pos_x;
         }
-        else if (this->matrix[final_player_pos_x][final_player_pos_y] == BOX)
+        else if (this->matrix[final_player_pos_y][final_player_pos_x] == BOX)
         { // if there is a box
             int deplacement_x = final_player_pos_x - this->player_x, deplacement_y = final_player_pos_y - this->player_y;
-            if (this->matrix[final_player_pos_x + deplacement_x][final_player_pos_y + deplacement_y] == EMPTY)
+            if (this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == EMPTY)
             {
-                this->matrix[final_player_pos_x + deplacement_x][final_player_pos_y + deplacement_y] = BOX; // movement of the box
+                this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] = BOX; // movement of the box
                 this->updateBoxPositions();
                 if (on_correct_box_pos){
-                    this->matrix[final_player_pos_x][final_player_pos_y] = BOX_FINAL_POS;
+                    this->matrix[final_player_pos_y][final_player_pos_x] = BOX_FINAL_POS;
                     on_correct_box_pos = false;
                 }
                 else {
-                    this->matrix[final_player_pos_x][final_player_pos_y] = PLAYER; 
+                    this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER; 
                 }                                // Movement of the player
-                this->matrix[this->player_x][this->player_y] = EMPTY;
-                this->player_x = final_player_pos_x;
+                this->matrix[this->player_y][this->player_x] = EMPTY;
                 this->player_y = final_player_pos_y;
+                this->player_x = final_player_pos_x;
             }
 
-        else if (this->matrix[final_player_pos_x + deplacement_x][final_player_pos_y + deplacement_y] == BOX_FINAL_POS){
-            this->matrix[final_player_pos_x + deplacement_x][final_player_pos_y + deplacement_y] = BOX;
+        else if (this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == BOX_FINAL_POS){
+            this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] = BOX;
             this->updateBoxPositions();
-            this->matrix[final_player_pos_x][final_player_pos_y] = PLAYER;
-            this->matrix[this->player_x][this->player_y] = EMPTY;
+            this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
+            this->matrix[this->player_y][this->player_x] = EMPTY;
             this->player_x = final_player_pos_x; this->player_y = final_player_pos_y;
             this->on_correct_box_pos = true;
         }
     }
-    else if (this->matrix[final_player_pos_x][final_player_pos_y] == BOX_FINAL_POS){
+    else if (this->matrix[final_player_pos_y][final_player_pos_x] == BOX_FINAL_POS){
         
+    }
     }
 }
 
 void BoardModel::updateBoxPositions()
 {
     this->boxesPositions.clear();
-    for (size_t index_x = 0; index_x < this->matrix.size(); index_x++)
+    for (size_t index_y = 0; index_y < this->matrix.size(); index_y++)
     {
-        for (size_t index_y = 0; index_y < this->matrix[index_y].size(); index_y++)
+        for (size_t index_x = 0; index_x < this->matrix[index_y].size(); index_x++)
         {
-            if (this->matrix[index_x][index_y] == BOX)
+            if (this->matrix[index_y][index_x] == BOX)
             {
-                tuple boxPos = {index_x, index_y};
+                tuple boxPos = {index_y, index_x};
                 boxesPositions.push_back(boxPos);
             }
         }
