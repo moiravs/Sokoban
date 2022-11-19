@@ -80,7 +80,7 @@ bool BoardModel::check_move(int final_pos_y, int final_pos_x)
     if ((final_pos_y > (int)matrix.size()) || (final_pos_x > (int)matrix[0].size()))
         return false;
     return true;
-}blabla
+}
 
 bool BoardModel::isInBoard(int pos_y, int pos_x)
 {
