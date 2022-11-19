@@ -34,8 +34,8 @@ void BoardModel::createBoard(std::string fileContent)
         {
             if (atoi(&fileContent[index]) == PLAYER)
             {
-                this->player_x = this->matrix.size();
-                this->player_y = line.size();
+                this->player_y = this->matrix.size();
+                this->player_x = line.size();
             }
 
             else if (atoi(&fileContent[index]) == BOX)
