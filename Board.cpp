@@ -84,7 +84,7 @@ bool BoardModel::check_move(int final_pos_y, int final_pos_x)
 
 bool BoardModel::isInBoard(int pos_y, int pos_x)
 {
-    return (0 <= pos_y < (int)matrix.size()) && (0 <= pos_x < (int)matrix[0].size());
+    return (0 <= pos_y && pos_y < (int)matrix.size()) && (0 <= pos_x && pos_x < (int)matrix[pos_y].size());
 }
 
 void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
