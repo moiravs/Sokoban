@@ -34,7 +34,7 @@ int ControllerBoard::board_handle(int event)
     {
         this->boardModel->endofparty = true;
         this->boardModel->winorlose = true;
-        std::cout << "youpi";
+        std::cout << "youpi, gagné avec " << this->boardModel->limitpas - this->boardModel->pas << " restants";
     }
     return 1;
 }
