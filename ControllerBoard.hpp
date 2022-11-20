@@ -9,7 +9,6 @@ private:
     std::shared_ptr<BoardModel> boardModel;
 
 public:
-    int pas = 0;
     ControllerBoard() {}
     ControllerBoard(std::shared_ptr<BoardModel> boardModel)
     {

@@ -21,13 +21,15 @@ public:
     bool on_correct_box_pos = false;
     std::string filename;
     int pas = 0;
+    int minpas = 0;
+    int limitpas = 0;
 
 public:
     BoardModel(std::string filename)
     {
         this->filename = filename;
     }
-    bool end_of_party();
+    void maxpasandlimit(); bool end_of_party();
     std::vector<std::vector<int>> getMatrix();
     bool move(int final_pos_y, int final_pos_x);
     bool check_move(int final_pos_y, int final_pos_x);

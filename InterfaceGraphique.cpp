@@ -83,6 +83,8 @@ void DisplayBoard::draw()
 
     std::string pas = "pas " + std::to_string(this->boardmodel->pas);
     fl_draw(pas.c_str(), pasx, pasy);
+    std::string limitpas = "limite de pas " + std::to_string(this->boardmodel->limitpas);
+    fl_draw(limitpas.c_str(), limitpasx, limitpasy);
 }
 
 DisplayBoard::DisplayBoard(std::shared_ptr<BoardModel> board) : Fl_Box(boardx, boardy, boardw, boardh)

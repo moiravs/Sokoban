@@ -25,7 +25,11 @@ int ControllerBoard::board_handle(int event)
         if (boardModel->move(boardModel->player_y, boardModel->player_x - 1))
             this->boardModel->pas += 1;
     }
-
+    if (this->boardModel->pas == this->boardModel->limitpas){
+        this->reset_handle();
+        //draw text as lost
+        this->boardModel->pas = 0;
+    }
     puts("hii");
     if (boardModel->end_of_party())
     {

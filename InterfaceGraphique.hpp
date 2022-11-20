@@ -67,7 +67,6 @@ class MainWindow : public Fl_Window
     const char *pas;
     Fl_Text_Buffer *buff;
 
-    int iPas;
 
 public:
     MainWindow(std::shared_ptr<BoardModel> boardModel);

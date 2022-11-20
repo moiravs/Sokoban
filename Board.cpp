@@ -19,6 +19,29 @@ std::vector<std::vector<int>> BoardModel::getBoard()
     return (this->matrix);
 }
 
+void BoardModel::maxpasandlimit()
+{
+    int N;
+    if (this->filename == level1)
+    {
+        N = 1;
+    }
+    std::ifstream in("Niveaux/limiteetmaxpas.txt");
+
+    std::string s;
+
+    // skip N lines
+    for (int i = 0; i < N; ++i)
+        std::getline(in, s);
+
+    std::getline(in, s);
+    std::cout << s << std::endl;
+    this->minpas = atoi(s.c_str());
+    std::getline(in, s);
+    std::cout << s << std::endl;
+    this->limitpas = atoi(s.c_str());
+}
+
 void BoardModel::createBoard(std::string fileContent)
 {
     std::vector<int> line;
@@ -139,7 +162,8 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
             this->player_y = final_player_pos_y;
             this->on_correct_box_pos = true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
