@@ -23,6 +23,8 @@ public:
     int pas = 0;
     int minpas = 0;
     int limitpas = 0;
+    bool endofparty = false;
+    bool winorlose;
 
 public:
     BoardModel(std::string filename)

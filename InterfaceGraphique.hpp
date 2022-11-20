@@ -46,12 +46,13 @@ private:
     std::vector<Cell> cells;
 
 public:
+    
     DisplayBoard(std::shared_ptr<BoardModel> board);
 
     DisplayBoard() : Fl_Box(boardx, boardy, boardw, boardh){};
     void printBoard();
-
-    void update();
+   
+     void update();
 
     void draw();
 };
@@ -66,6 +67,7 @@ class MainWindow : public Fl_Window
     Fl_Choice *levels;
     const char *pas;
     Fl_Text_Buffer *buff;
+
 
 
 public:

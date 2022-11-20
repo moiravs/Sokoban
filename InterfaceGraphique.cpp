@@ -191,6 +191,17 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *)
 void MainWindow::draw()
 {
     Fl_Window::draw();
+    if (this->boardModel->endofparty == true)
+    {
+        if (this->boardModel->winorlose == true)
+        {
+            fl_draw("YOU WON, reset or change level", limitpasx + 50, limitpasy + 50);
+        }
+        else
+        {
+            fl_draw("YOU LOSE, reset or change level", limitpasx + 50, limitpasy + 50);
+        }
+    }
 }
 
 int MainWindow::handle(int event)
@@ -200,7 +211,7 @@ int MainWindow::handle(int event)
         control->board_handle(event);
         display->update();
     }
-    
+
     if (Fl::event_inside(this->display)) // if event inside board
     {
         if (event == FL_PUSH)
@@ -226,7 +237,7 @@ int MainWindow::handle(int event)
             display->update();
         }
     }
-    
+
     return Fl_Window::handle(event);
 }
 

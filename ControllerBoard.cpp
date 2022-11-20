@@ -26,26 +26,28 @@ int ControllerBoard::board_handle(int event)
             this->boardModel->pas += 1;
     }
     if (this->boardModel->pas == this->boardModel->limitpas){
-        this->reset_handle();
-        //draw text as lost
-        this->boardModel->pas = 0;
+        this->boardModel->endofparty = true;
+        this->boardModel->winorlose = false;
+
     }
-    puts("hii");
     if (boardModel->end_of_party())
     {
+        this->boardModel->endofparty = true;
+        this->boardModel->winorlose = true;
         std::cout << "youpi";
     }
-    puts("ahh9");
     return 1;
 }
 void ControllerBoard::reset_handle()
 {
+    this->boardModel->pas = 0;
+    this->boardModel->endofparty = false;
     std::string aer = this->boardModel->readFileIntoString();
     this->boardModel->createBoard(aer);
-    puts("aeeaa");
 }
 void ControllerBoard::level_change(int choice)
 {
+    this->boardModel->endofparty = false;
     std::cout << choice << std::endl;
     if (choice == -1)
     {
