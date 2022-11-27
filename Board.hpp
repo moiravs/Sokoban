@@ -13,12 +13,11 @@ public:
         size_t x_axis;
     };
     std::vector<std::vector<int>> matrix;
-    std::vector<tuple> boxesPositions;
-    std::vector<tuple> correctBoxesPositions;
-    std::vector<std::vector<tuple>> teleportersPositions;
+    std::vector<std::tuple<int,int>> boxesPositions;
+    std::vector<std::tuple<int, int>> correctBoxesPositions;
+    std::vector<std::vector<std::tuple<int, int>>> teleportersPositions;
     int player_x;
     int player_y;
-    bool on_correct_box_pos = false;
     std::string filename;
     int pas = 0;
     int minpas = 0;
@@ -31,7 +30,8 @@ public:
     {
         this->filename = filename;
     }
-    void maxpasandlimit(); bool end_of_party();
+    void maxpasandlimit();
+    bool end_of_party();
     std::vector<std::vector<int>> getMatrix();
     bool move(int final_pos_y, int final_pos_x);
     bool check_move(int final_pos_y, int final_pos_x);

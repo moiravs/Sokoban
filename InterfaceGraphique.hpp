@@ -40,8 +40,7 @@ class Cell
     Fl_Color fillColor, frameColor;
     Fl_JPEG_Image *personnage;
     Fl_PNG_Image *wall;
-    bool hasbox;
-    bool hasplayer;
+
 
 public:
     Cell(Point center, int type, int w, int h);
