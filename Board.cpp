@@ -48,6 +48,8 @@ void BoardModel::createBoard(std::string fileContent)
 {
     std::vector<int> line;
     this->matrix.clear();
+    this->correctBoxesPositions.clear();
+    this->boxesPositions.clear();
     for (size_t index = 0; index < fileContent.size(); index++)
     {
         if ((fileContent[index] == '\n'))
@@ -79,15 +81,22 @@ void BoardModel::createBoard(std::string fileContent)
             line.push_back(atoi(&fileContent[index]));
         }
     }
+    std::sort(this->correctBoxesPositions.begin(), this->correctBoxesPositions.end());
 }
 
 bool BoardModel::end_of_party()
 {
-    std::sort(this->correctBoxesPositions.begin(), this->correctBoxesPositions.end());
     std::sort(this->boxesPositions.begin(), this->boxesPositions.end());
     if (this->correctBoxesPositions == this->boxesPositions)
     {
         return true;
+    }
+    for (auto& tuple : this->boxesPositions){
+        std::cout << std::get<0>(tuple) << " " << std::get<1>(tuple) << std::endl;
+    }
+    for (auto &tuple : this->correctBoxesPositions)
+    {
+        std::cout << std::get<0>(tuple) << " " << std::get<1>(tuple) << std::endl;
     }
     return false;
 }
@@ -132,7 +141,7 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
         if (this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == EMPTY)
         {
             this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] = BOX; // movement of the box
-            this->updateBoxPositions();
+            
 
             this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
             // Movement of the player
@@ -146,16 +155,18 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
             }
             this->player_y = final_player_pos_y;
             this->player_x = final_player_pos_x;
+            this->updateBoxPositions();
         }
 
         else if (this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == BOX_FINAL_POS)
         {
             this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] = BOX;
-            this->updateBoxPositions();
+           
             this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
             this->matrix[this->player_y][this->player_x] = EMPTY;
             this->player_x = final_player_pos_x;
             this->player_y = final_player_pos_y;
+            this->updateBoxPositions();
         }
         else
         {
@@ -172,9 +183,10 @@ void BoardModel::updateBoxPositions()
     {
         for (size_t index_x = 0; index_x < this->matrix[index_y].size(); index_x++)
         {
-            if (this->matrix[index_y][index_x] == BOX)
+             if (this->matrix[index_y][index_x] == BOX)
             {
                 this->boxesPositions.push_back(std::tuple(index_y, index_x));
+
             }
         }
     }

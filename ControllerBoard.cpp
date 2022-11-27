@@ -24,6 +24,7 @@ int ControllerBoard::board_handle(int event)
     {
         if (boardModel->move(boardModel->player_y, boardModel->player_x - 1))
             this->boardModel->pas += 1;
+            
     }
     if (this->boardModel->pas == this->boardModel->limitpas){
         this->boardModel->endofparty = true;
