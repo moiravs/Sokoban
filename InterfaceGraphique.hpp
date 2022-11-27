@@ -9,8 +9,11 @@ struct Point
     int x, y;
 };
 
-class Rectangle
+
+
+class Cell
 {
+    bool on = false;
     Point center;
     int type;
     int w, h;
@@ -19,24 +22,9 @@ class Rectangle
     Fl_PNG_Image *wall;
 
 public:
-    Rectangle(Point center, int type, int w, int h,
-              Fl_Color frameColor = FL_BLACK,
-              Fl_Color fillColor = FL_WHITE);
-    void draw();
-    void setFillColor(Fl_Color newFillColor);
-    void setFrameColor(Fl_Color newFrameColor);
-    bool contains(Point p);
-};
-
-class Cell
-{
-    Rectangle r;
-    bool on = false;
-
-public:
     Cell(Point center, int type, int w, int h);
     void draw();
-    void mouseClick(Point mouseLoc);
+    bool mouseClick(Point mouseLoc);
 };
 
 class DisplayBoard : public Fl_Box
@@ -46,13 +34,12 @@ private:
     std::vector<Cell> cells;
 
 public:
-    
     DisplayBoard(std::shared_ptr<BoardModel> board);
 
     DisplayBoard() : Fl_Box(boardx, boardy, boardw, boardh){};
     void printBoard();
-   
-     void update();
+    void mouseClick(Point mouseLoc);
+    void update();
 
     void draw();
 };
@@ -67,8 +54,6 @@ class MainWindow : public Fl_Window
     Fl_Choice *levels;
     const char *pas;
     Fl_Text_Buffer *buff;
-
-
 
 public:
     MainWindow(std::shared_ptr<BoardModel> boardModel);

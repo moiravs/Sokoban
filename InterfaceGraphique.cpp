@@ -1,6 +1,15 @@
 
 #include "InterfaceGraphique.hpp"
-void Rectangle::draw()
+
+
+
+Cell::Cell(Point center, int type, int w, int h) : center{center}, type{type}, w{w}, h{h}
+{
+    this->personnage = new Fl_JPEG_Image("Textures/Test.jpeg");
+    this->wall = new Fl_PNG_Image("Textures/wall.png");
+}
+
+void Cell::draw()
 {
     if (type == PLAYER)
     {
@@ -31,49 +40,13 @@ void Rectangle::draw()
     }
 }
 
-void Rectangle::setFillColor(Fl_Color newFillColor)
+bool Cell::mouseClick(Point mouseLoc)
 {
-    fillColor = newFillColor;
-}
 
-void Rectangle::setFrameColor(Fl_Color newFrameColor)
-{
-    frameColor = newFrameColor;
-}
-
-bool Rectangle::contains(Point p)
-{
-    return p.x >= center.x - w / 2 &&
-           p.x < center.x + w / 2 &&
-           p.y >= center.y - h / 2 &&
-           p.y < center.y + h / 2;
-}
-
-Rectangle::Rectangle(Point center, int type, int w, int h,
-                     Fl_Color frameColor,
-                     Fl_Color fillColor) : center{center}, type{type}, w{w}, h{h}, fillColor{fillColor}, frameColor{frameColor}
-{
-    this->personnage = new Fl_JPEG_Image("Textures/Test.jpeg");
-    this->wall = new Fl_PNG_Image("Textures/wall.png");
-}
-
-Cell::Cell(Point center, int type, int w, int h) : r(center, type, w, h, FL_BLACK, FL_WHITE) {}
-
-void Cell::draw()
-{
-    r.draw();
-}
-
-void Cell::mouseClick(Point mouseLoc)
-{
-    if (r.contains(mouseLoc))
-    {
-        on = !on;
-        if (on)
-            r.setFillColor(FL_YELLOW);
-        else
-            r.setFillColor(FL_WHITE);
-    }
+    //if (r.contains(mouseLoc))
+    //{
+      //  return true;
+    //}
 }
 
 void DisplayBoard::draw()
@@ -103,6 +76,16 @@ void DisplayBoard::printBoard()
         }
         std::cout << "\n";
     }
+}
+void DisplayBoard::mouseClick(Point mouseLoc)
+{
+    /*
+    for (size_t i = 0; i < cells.size(); i++)
+    {
+        if (c.mouseClick(mouseLoc) == true)
+        {
+        };
+    }*/
 }
 
 void DisplayBoard::update()
@@ -206,6 +189,7 @@ void MainWindow::draw()
 
 int MainWindow::handle(int event)
 {
+
     if (event == FL_KEYBOARD)
     {
         control->board_handle(event);
@@ -216,6 +200,8 @@ int MainWindow::handle(int event)
     {
         if (event == FL_PUSH)
         {
+            display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
+
             // control->board_handle(event);
             return 1;
         }
