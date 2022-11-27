@@ -8,8 +8,28 @@ struct Point
 {
     int x, y;
 };
+/*
+class Box
+{
+    Point center;
+    int w, h;
+    Fl_JPEG_Image *wall;
 
+public:
+    Box();
+    void draw();
+};
+class Player
+{
+    Point center;
+    int w, h;
+    Fl_JPEG_Image *personnage;
 
+public:
+    Player();
+    void
+    draw();
+};*/
 
 class Cell
 {
@@ -20,6 +40,8 @@ class Cell
     Fl_Color fillColor, frameColor;
     Fl_JPEG_Image *personnage;
     Fl_PNG_Image *wall;
+    bool hasbox;
+    bool hasplayer;
 
 public:
     Cell(Point center, int type, int w, int h);

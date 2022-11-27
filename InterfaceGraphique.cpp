@@ -1,12 +1,34 @@
+#ifndef INTERFACEGRAPHIQUE_CPP
+#define INTERFACEGRAPHIQUE_CPP
 
 #include "InterfaceGraphique.hpp"
+/*
+Box::Box(){
+    this->wall = new Fl_JPEG_Image(imagewall);
+}
 
+void Box::draw(){
+    Fl_JPEG_Image *wall = new Fl_JPEG_Image(imagewall);
+    Fl_Image *hihi = wall;
+    hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
+    fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
+}
 
+Player::Player(){
+    this->personnage = new Fl_JPEG_Image(imageplayer);
+}
+
+void Player::draw(){
+    Fl_Image *hihi = this->personnage;
+    hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
+    fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
+}
+*/
 
 Cell::Cell(Point center, int type, int w, int h) : center{center}, type{type}, w{w}, h{h}
 {
-    this->personnage = new Fl_JPEG_Image("Textures/Test.jpeg");
-    this->wall = new Fl_PNG_Image("Textures/wall.png");
+    this->personnage = new Fl_JPEG_Image(imageplayer.c_str());
+    this->wall = new Fl_PNG_Image(imagewall.c_str());
 }
 
 void Cell::draw()
@@ -233,3 +255,4 @@ void MainWindow::Timer_CB(void *userdata)
     o->redraw();
     Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
 }
+#endif
