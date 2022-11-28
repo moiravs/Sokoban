@@ -2,6 +2,14 @@
 #define BOARD_HPP
 
 #include "Constants.hpp"
+#include <tuple>
+
+
+class Teleportation{
+    std::tuple<int, int> teleportation_a;
+    std::tuple<int, int> teleporation_b;
+    bool pourpasfaireinfini = false;
+};
 
 class BoardModel
 {
@@ -12,6 +20,7 @@ public:
         size_t y_axis;
         size_t x_axis;
     };
+    std::vector<Teleportation> teleportation;
     std::vector<std::vector<int>> matrix;
     std::vector<std::tuple<int,int>> boxesPositions;
     std::vector<std::tuple<int, int>> correctBoxesPositions;

@@ -32,6 +32,7 @@ const int BOX = 2;
 const int WALL = 3;
 const int TELEPORTATION = 4;
 const int BOX_FINAL_POS = 5;
+const int LIGHT_BOX = 6;
 
 // Main Window
 const int windowWidth = 900;
