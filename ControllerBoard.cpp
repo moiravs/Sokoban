@@ -7,22 +7,22 @@ int ControllerBoard::board_handle(int event)
 
     if (Fl::event_key() == FL_Up)
     {
-        if (boardModel->move(boardModel->player_y - 1, boardModel->player_x))
+        if (boardModel->move(boardModel->player->getY() - 1, boardModel->player->getX()))
             this->boardModel->pas += 1;
     }
     else if (Fl::event_key() == FL_Down)
     {
-        if (boardModel->move(boardModel->player_y + 1, boardModel->player_x))
+        if (boardModel->move(boardModel->player->getY() + 1, boardModel->player->getX()))
             this->boardModel->pas += 1;
     }
     else if (Fl::event_key() == FL_Right)
     {
-        if (boardModel->move(boardModel->player_y, boardModel->player_x + 1))
+        if (boardModel->move(boardModel->player->getY(), boardModel->player->getX()+1))
             this->boardModel->pas += 1;
     }
     else if (Fl::event_key() == FL_Left)
     {
-        if (boardModel->move(boardModel->player_y, boardModel->player_x - 1))
+        if (boardModel->move(boardModel->player->getY(), boardModel->player->getX()-1))
             this->boardModel->pas += 1;
             
     }

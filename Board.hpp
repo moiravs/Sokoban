@@ -10,34 +10,53 @@ class Teleportation{
     std::tuple<int, int> teleporation_b;
     bool pourpasfaireinfini = false;
 };
+class Player
+{
 
+    int x;
+    int y;
+
+public:
+    void setX(int x)
+    {
+        this->x = x;
+    }
+    void setY(int y)
+    {
+        this->y = y;
+    }
+    int getX()
+    {
+        return (this->x);
+    }
+    int getY()
+    {
+        return (this->y);
+    }
+};
 class BoardModel
 {
 public:
     /* data */
-    struct tuple
-    {
-        size_t y_axis;
-        size_t x_axis;
-    };
     std::vector<Teleportation> teleportation;
     std::vector<std::vector<int>> matrix;
     std::vector<std::tuple<int,int>> boxesPositions;
     std::vector<std::tuple<int, int>> correctBoxesPositions;
     std::vector<std::vector<std::tuple<int, int>>> teleportersPositions;
-    int player_x;
-    int player_y;
+
     std::string filename;
     int pas = 0;
     int minpas = 0;
     int limitpas = 0;
     bool endofparty = false;
     bool winorlose;
-
+    Player * player;
 public:
     BoardModel(std::string filename)
     {
         this->filename = filename;
+        Player * player = new Player();
+        this->player = player;
     }
     void maxpasandlimit();
     bool end_of_party();

@@ -4,8 +4,6 @@
 #include "InterfaceGraphique.hpp"
 #include "ControllerBoard.hpp"
 
-#include "Player.hpp"
-
 #include <iostream>
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
