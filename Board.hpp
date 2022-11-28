@@ -2,6 +2,7 @@
 #define BOARD_HPP
 
 #include "Constants.hpp"
+#include "Player.hpp"
 #include <tuple>
 
 
