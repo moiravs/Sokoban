@@ -10,55 +10,8 @@ class Teleportation{
     std::tuple<int, int> teleporation_b;
     bool pourpasfaireinfini = false;
 };
-class Box
-{
 
-    int x;
-    int y;
-    bool bloquée;
 
-public:
-    void setX(int x)
-    {
-        this->x = x;
-    }
-    void setY(int y)
-    {
-        this->y = y;
-    }
-    int getX()
-    {
-        return (this->x);
-    }
-    int getY()
-    {
-        return (this->y);
-    }
-};
-class Player
-{
-
-    int x;
-    int y;
-
-public:
-    void setX(int x)
-    {
-        this->x = x;
-    }
-    void setY(int y)
-    {
-        this->y = y;
-    }
-    int getX()
-    {
-        return (this->x);
-    }
-    int getY()
-    {
-        return (this->y);
-    }
-};
 class BoardModel
 {
 public:
