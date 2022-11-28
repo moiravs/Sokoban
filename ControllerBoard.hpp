@@ -14,6 +14,7 @@ public:
     {
         this->boardModel = boardModel;
     };
+    void custom_handle();
     int board_handle(int event);
     void reset_handle();
     void level_change(int choice);

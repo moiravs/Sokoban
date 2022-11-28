@@ -158,6 +158,8 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     control = boarda;
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth);
     this->reset = reset;
+    Fl_Button *custom = new Fl_Button(customx, customy, customw, customh);
+    this->custom = custom;
     Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey);
     levels->add("Level 1");
     levels->add("Level 2");
@@ -238,6 +240,14 @@ int MainWindow::handle(int event)
         if (event == FL_PUSH)
         {
             control->reset_handle();
+            display->update();
+        }
+    }
+    if (Fl::event_inside(this->custom)) // if event inside board
+    {
+        if (event == FL_PUSH)
+        {
+            control->custom_handle();
             display->update();
         }
     }

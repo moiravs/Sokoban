@@ -51,6 +51,12 @@ const int resety = 100;
 const int resetw = 40;
 const int reseth = 25;
 
+// Button reset display
+const int customx = 10;
+const int customy = 100;
+const int customw = 40;
+const int customh = 25;
+
 const int pasx = 600;
 const int pasy = 80;
 const int pasw = 80;

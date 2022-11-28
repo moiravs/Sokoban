@@ -8,8 +8,6 @@
 #include <algorithm>
 #include <tuple>
 
-
-
 std::string BoardModel::readFileIntoString()
 {
     std::ifstream ifs(this->filename);
@@ -44,6 +42,27 @@ void BoardModel::maxpasandlimit()
     std::getline(in, s);
     std::cout << s << std::endl;
     this->limitpas = atoi(s.c_str());
+}
+
+bool BoardModel::isFailure()
+{
+    for (auto &box : boxesPositions)
+    {
+        if (box == std::tuple(0, 0))
+            ;
+        else if (box == std::tuple(0, matrix.size()-1))
+            ;
+        else if (box == std::tuple(matrix[0].size()-1, 0))
+            ;
+        else if (box == std::tuple(matrix[0].size()-1, matrix.size()-1))
+            ;
+        else 
+            return false;
+    }
+    return true;
+    // bloqué à cause des murs
+    // bloqué à cause des walls
+    // bloqué à cause des autres boites bloquées
 }
 
 void BoardModel::createBoard(std::string fileContent)

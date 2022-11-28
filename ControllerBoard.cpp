@@ -26,7 +26,7 @@ int ControllerBoard::board_handle(int event)
             this->boardModel->pas += 1;
             
     }
-    if (this->boardModel->pas == this->boardModel->limitpas){
+    if ((this->boardModel->pas == this->boardModel->limitpas) || (this->boardModel->isFailure())){
         this->boardModel->endofparty = true;
         this->boardModel->winorlose = false;
 
@@ -46,6 +46,10 @@ void ControllerBoard::reset_handle()
     std::string aer = this->boardModel->readFileIntoString();
     this->boardModel->createBoard(aer);
 }
+void ControllerBoard::custom_handle(){
+    
+}
+
 void ControllerBoard::level_change(int choice)
 {
     this->boardModel->endofparty = false;

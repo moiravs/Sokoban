@@ -72,6 +72,7 @@ class MainWindow : public Fl_Window
     ControllerBoard *control;
     DisplayBoard *display;
     Fl_Button *reset;
+    Fl_Button *custom;
     Fl_Choice *levels;
     const char *pas;
     Fl_Text_Buffer *buff;
