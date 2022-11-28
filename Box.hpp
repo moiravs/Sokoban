@@ -1,10 +1,8 @@
 class Box
 {
-
     int x;
     int y;
-    bool bloquée;
-
+    bool blocked;
 public:
     void setX(int x)
     {
