@@ -15,5 +15,4 @@ public:
     Teleportation get_other_end();
     bool is_done();
     void set_done();
-    
 };
