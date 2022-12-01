@@ -41,7 +41,6 @@ class Cell
     Fl_JPEG_Image *personnage;
     Fl_PNG_Image *wall;
 
-
 public:
     Cell(Point center, int type, int w, int h);
     void draw();
@@ -91,34 +90,33 @@ public:
 class StartWindow : public Fl_Window
 {
 private:
-    Fl_Button *button = new Fl_Button(200, 200, 100, 50, "Start the game");
+    Fl_Button *button = new Fl_Button(300, 300, 400, 50, "Andrius Ezerskis & Moïra Vanderslagmolen");
 
 public:
-    StartWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "Start the game")
+    int wait = 0;
+
+    StartWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "SOKOBAN")
     {
         Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);
         resizable(this);
-        button->tooltip("Make advanced search");
-        button->callback((Fl_Callback *)ad_cb);
         this->show();
-        
     }
     void draw() override
     {
         Fl_Window::draw();
-        Fl_Widget *b = button;
-        b->draw();
+        fl_draw("SOKOBAN", 300, 300);
     }
     static void Time_CB(void *userdata)
     {
         StartWindow *o = static_cast<StartWindow *>(userdata);
-        o->redraw();
-        sleep(2);
-        o->hide();
+        o->wait++;
+        if (o->wait == 10)
+        {
+            sleep(1);
+            o->hide();
+        }
+        Fl::repeat_timeout(1.0 / refreshPerSecond, Time_CB, userdata);
     }
 
-    static void ad_cb(Fl_Button *theButton, void *)
-    {
-    }
 };
 #endif
