@@ -11,7 +11,9 @@
 
 #include <time.h>
 #include <chrono>
+#include <stdlib.h>
 #include <vector>
+
 #include <iostream>
 #include <random>
 #include <array>
@@ -22,8 +24,7 @@
 #include <FL/Fl_Menu_Bar.H>
 #include <memory>
 #include <string>
-
-
+#include <unistd.h>
 
 // Cases
 const int EMPTY = 0;
