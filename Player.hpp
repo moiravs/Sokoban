@@ -1,3 +1,5 @@
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 class Player
 {
     int x;
@@ -10,3 +12,4 @@ public:
     int getY();
     void incrementSteps();
 };
+#endif

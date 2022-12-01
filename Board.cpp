@@ -1,4 +1,6 @@
 #include "Board.hpp"
+#include "Box.cpp"
+#include "Player.cpp"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -7,6 +9,7 @@
 #include <fstream>
 #include <algorithm>
 #include <tuple>
+
 
 std::string BoardModel::readFileIntoString()
 {
@@ -48,32 +51,38 @@ bool BoardModel::isFailure()
 {
     for (auto &box : boxesPositions)
     {
-        std::cout << std::get<0>(box) << " " << std::get<1>(box) << std::endl;
-        if (box == std::tuple(0, 0))
+        std::cout << box.getX() << " " << box.getY() << std::endl;
+        Box *checkbox1 = new Box(0, 0);
+        Box *checkbox2 = new Box(0, matrix.size() - 1);
+        Box *checkbox3 = new Box(matrix[0].size() - 1, 0);
+        Box *checkbox4 = new Box(matrix[0].size() - 1, matrix.size() - 1);
+        if (&box == checkbox1)
             ;
-        else if (box == std::tuple(0, matrix.size() - 1))
+        else if (&box == checkbox2)
             ;
-        else if (box == std::tuple(matrix[0].size() - 1, 0))
+        else if (&box == checkbox3)
             ;
-        else if (box == std::tuple(matrix[0].size() - 1, matrix.size() - 1))
+        else if (&box == checkbox4)
             ;
         // TODO: check if outside the board
-        else if ((matrix[std::get<0>(box)][std::get<1>(box)-1] == WALL) &&(matrix[std::get<0>(box)-1][std::get<1>(box)] == WALL));
-        else if ((matrix[std::get<0>(box)-1][std::get<1>(box)] == WALL) && (matrix[std::get<0>(box)][std::get<1>(box)+1] == WALL));
-        else if ((matrix[std::get<0>(box)][std::get<1>(box)+1] == WALL) && (matrix[std::get<0>(box)+1][std::get<1>(box)] == WALL));
-        else if ((matrix[std::get<0>(box)+1][std::get<1>(box)] == WALL) && (matrix[std::get<0>(box)][std::get<1>(box)-1] == WALL));
+        else if ((matrix[box.getX()][box.getY()-1] == WALL) &&(matrix[box.getX()-1][box.getY()] == WALL));
+        else if ((matrix[box.getX()-1][box.getY()] == WALL) && (matrix[box.getX()][box.getY()+1] == WALL));
+        else if ((matrix[box.getX()][box.getY()+1] == WALL) && (matrix[box.getX()+1][box.getY()] == WALL));
+        else if ((matrix[box.getX()+1][box.getY()] == WALL) && (matrix[box.getX()][box.getY()-1] == WALL));
         
+
+        //TODO: si entouré de boites bloquées
         /*
-        else if ((matrix[std::get<0>(box)][get<1>(box)-1] == BOX) && (matrix[std::get<0>(box)-1][std::get<1>(box)] == BOX))
-            if ((matrix[std::get<0>(box)][std::get<1>(box)-1].isblocked == true)  && (matrix[std::get<0>(box)-1][std::get<1>(box)].isblocked == true))
-        else if ((matrix[std::get<0>(box)-1][std::get<1>(box)] == BOX) && (matrix[std::get<0>(box)][std::get<1>(box)+1] == BOX))
-            if ((matrix[std::get<0>(box)][std::get<1>(box)-1].isblocked == true)  && (matrix[std::get<0>(box)-1][std::get<1>(box)].isblocked == true))
-        else if ((matrix[std::get<0>(box)][std::get<1>(box)+1] == BOX) && (matrix[std::get<0>(box)+1][std::get<1>(box)] == BOX))
-            if ((matrix[std::get<0>(box)][std::get<1>(box)-1].isblocked == true)  && (matrix[std::get<0>(box)-1][std::get<1>(box)].isblocked == true))
-        else if ((matrix[std::get<0>(box)+1][std::get<1>(box)] == BOX) && (matrix[std::get<0>(box)][std::get<1>(box)-1] == BOX))
-            if ((matrix[std::get<0>(box)][std::get<1>(box)-1].isblocked == true)  && (matrix[std::get<0>(box)-1][std::get<1>(box)].isblocked == true))
+        else if ((matrix[box.getX()][get<1>(box)-1] == BOX) && (matrix[box.getX()-1][box.getY()] == BOX)){
+            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
+        else if ((matrix[box.getX()-1][box.getY()] == BOX) && (matrix[box.getX()][box.getY()+1] == BOX)){
+            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
+        else if ((matrix[box.getX()][box.getY()+1] == BOX) && (matrix[box.getX()+1][box.getY()] == BOX)){
+            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
+        else if ((matrix[box.getX()+1][box.getY()] == BOX) && (matrix[box.getX()][box.getY()-1] == BOX)){
+            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}*/
         
-        */
+        
         else
             return false;
     }
@@ -109,16 +118,18 @@ void BoardModel::createBoard(std::string fileContent)
 
             else if (atoi(&fileContent[index]) == BOX)
             {
-                this->boxesPositions.push_back(std::tuple(this->matrix.size(), line.size()));
+                Box * box = new Box(this->matrix.size(), line.size());
+                this->boxesPositions.push_back(*box);
             }
 
             else if (atoi(&fileContent[index]) == TELEPORTATION)
             {
             }
+            /*
             else if (atoi(&fileContent[index]) == LIGHT_BOX)
             {
                 this->boxesPositions.push_back(std::tuple(this->matrix.size(), line.size()));
-            }
+            }*/
 
             else if (atoi(&fileContent[index]) == BOX_FINAL_POS)
             {
@@ -132,9 +143,11 @@ void BoardModel::createBoard(std::string fileContent)
 
 bool BoardModel::end_of_party()
 {
+    /*
     std::sort(this->boxesPositions.begin(), this->boxesPositions.end());
     if (this->correctBoxesPositions == this->boxesPositions)
-        return true;
+        return true;*/
+    //TODO : changer correctboxespositions en instances de box
     return false;
 }
 
@@ -233,8 +246,9 @@ void BoardModel::updateBoxPositions()
     {
         for (size_t index_x = 0; index_x < this->matrix[index_y].size(); index_x++)
         {
-            if (this->matrix[index_y][index_x] == BOX)
-                this->boxesPositions.push_back(std::tuple(index_y, index_x));
+            if (this->matrix[index_y][index_x] == BOX){
+                Box *box = new Box(index_y, index_x);
+                this->boxesPositions.push_back(*box);}
         }
     }
 }

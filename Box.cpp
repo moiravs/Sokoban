@@ -1,3 +1,5 @@
+#ifndef BOX_CPP
+#define BOX_CPP
 #include "Box.hpp"
 
 
@@ -17,3 +19,4 @@ int Box::getY()
 {
     return (this->y);
 }
+#endif

@@ -1,12 +1,15 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
-
+#include "Box.hpp"
+#include "Player.hpp"
 #include "Constants.hpp"
 #include "Player.hpp"
 #include <tuple>
 
 
+
 class Teleportation{
+    //TODO: teleportation
     std::tuple<int, int> teleportation_a;
     std::tuple<int, int> teleporation_b;
     bool pourpasfaireinfini = false;
@@ -19,7 +22,7 @@ public:
     /* data */
     std::vector<Teleportation> teleportation;
     std::vector<std::vector<int>> matrix;
-    std::vector<std::tuple<int,int>> boxesPositions;
+    std::vector<Box> boxesPositions;
     std::vector<std::tuple<int, int>> correctBoxesPositions;
     std::vector<std::vector<std::tuple<int, int>>> teleportersPositions;
 
