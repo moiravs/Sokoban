@@ -219,11 +219,12 @@ void MainWindow::draw()
 int MainWindow::handle(int event)
 {
 
+    if (boardModel->endofparty == false){
     if (event == FL_KEYBOARD)
     {
         control->board_handle(event);
         display->update();
-    }
+    }}
 
     if (Fl::event_inside(this->display)) // if event inside board
     {

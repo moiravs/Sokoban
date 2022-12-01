@@ -66,12 +66,14 @@ bool BoardModel::isFailure()
             ;
         // TODO: check if outside the board
         else if ((matrix[box.getX()][box.getY()-1] == WALL) &&(matrix[box.getX()-1][box.getY()] == WALL));
+            //LA BOITE EST BLOQUEE -> METTRE ATTRIBUT DE LA BOITE A BLOQU
         else if ((matrix[box.getX()-1][box.getY()] == WALL) && (matrix[box.getX()][box.getY()+1] == WALL));
         else if ((matrix[box.getX()][box.getY()+1] == WALL) && (matrix[box.getX()+1][box.getY()] == WALL));
         else if ((matrix[box.getX()+1][box.getY()] == WALL) && (matrix[box.getX()][box.getY()-1] == WALL));
         
 
         //TODO: si entouré de boites bloquées
+        //TODO : faire une fonction getbox(int x, int y)
         /*
         else if ((matrix[box.getX()][get<1>(box)-1] == BOX) && (matrix[box.getX()-1][box.getY()] == BOX)){
             if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
@@ -133,7 +135,9 @@ void BoardModel::createBoard(std::string fileContent)
 
             else if (atoi(&fileContent[index]) == BOX_FINAL_POS)
             {
-                this->correctBoxesPositions.push_back(std::tuple(this->matrix.size(), line.size()));
+                Box *box = new Box(this->matrix.size(), line.size());
+
+                this->correctBoxesPositions.push_back(*box);
             }
             line.push_back(atoi(&fileContent[index]));
         }
@@ -143,11 +147,10 @@ void BoardModel::createBoard(std::string fileContent)
 
 bool BoardModel::end_of_party()
 {
-    /*
+    
     std::sort(this->boxesPositions.begin(), this->boxesPositions.end());
     if (this->correctBoxesPositions == this->boxesPositions)
-        return true;*/
-    //TODO : changer correctboxespositions en instances de box
+        return true;
     return false;
 }
 
@@ -174,7 +177,8 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
 
     if ((this->matrix[final_player_pos_y][final_player_pos_x] == EMPTY) || (this->matrix[final_player_pos_y][final_player_pos_x] == BOX_FINAL_POS))
     { // if there is nothing
-        if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), std::tuple(this->player->getY(), this->player->getX())) != correctBoxesPositions.end())
+        Box *box = new Box(this->player->getY(), this->player->getX());
+        if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), *box) != correctBoxesPositions.end())
             this->matrix[this->player->getY()][this->player->getX()] = BOX_FINAL_POS;
         else
             this->matrix[this->player->getY()][this->player->getX()] = EMPTY;
@@ -184,11 +188,13 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
     }
     else if (this->matrix[final_player_pos_y][final_player_pos_x] == BOX)
     { // if there is a box
+    
         if ((this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == EMPTY) || (this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == BOX_FINAL_POS))
         {
             this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] = BOX; // movement of the box
             this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
-            if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), std::tuple(this->player->getY(), this->player->getX())) != correctBoxesPositions.end())
+            Box *box = new Box(this->player->getY(), this->player->getX());
+            if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), *box) != correctBoxesPositions.end())
                 this->matrix[this->player->getY()][this->player->getX()] = BOX_FINAL_POS;
             else
                 this->matrix[this->player->getY()][this->player->getX()] = EMPTY;
@@ -208,7 +214,8 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
                 this->matrix[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x] = LIGHT_BOX;
                 this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] = LIGHT_BOX;
                 this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
-                if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), std::tuple(this->player->getY(), this->player->getX())) != correctBoxesPositions.end())
+                Box *box = new Box(this->player->getY(), this->player->getX());
+                if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), *box) != correctBoxesPositions.end())
                     this->matrix[this->player->getY()][this->player->getX()] = BOX_FINAL_POS;
                 else
                     this->matrix[this->player->getY()][this->player->getX()] = EMPTY;
@@ -227,7 +234,8 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
 
             this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
             // Movement of the player
-            if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), std::tuple(this->player->getY(), this->player->getX())) != correctBoxesPositions.end())
+            Box *box = new Box(this->player->getY(), this->player->getX());
+            if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), *box) != correctBoxesPositions.end())
                 this->matrix[this->player->getY()][this->player->getX()] = BOX_FINAL_POS;
             else
                 this->matrix[this->player->getY()][this->player->getX()] = EMPTY;

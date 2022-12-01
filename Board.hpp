@@ -23,7 +23,7 @@ public:
     std::vector<Teleportation> teleportation;
     std::vector<std::vector<int>> matrix;
     std::vector<Box> boxesPositions;
-    std::vector<std::tuple<int, int>> correctBoxesPositions;
+    std::vector<Box> correctBoxesPositions;
     std::vector<std::vector<std::tuple<int, int>>> teleportersPositions;
 
     std::string filename;
