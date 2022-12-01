@@ -33,6 +33,7 @@ Cell::Cell(Point center, int type, int w, int h) : center{center}, type{type}, w
 
 void Cell::draw()
 {
+    
     if (type == PLAYER)
     {
         Fl_Image *hihi = this->personnage;
@@ -69,11 +70,12 @@ void Cell::draw()
 
 bool Cell::mouseClick(Point mouseLoc)
 {
-
-    //if (r.contains(mouseLoc))
-    //{
-      //  return true;
-    //}
+    if ((center.x - w / 2 < mouseLoc.x) && (mouseLoc.x < w + center.x - w / 2) && (center.y - h / 2 < mouseLoc.y) && (mouseLoc.y < h + center.y - h / 2))
+    {
+        puts("got it");
+        return true;
+    }
+    return false;
 }
 
 void DisplayBoard::draw()
@@ -106,13 +108,8 @@ void DisplayBoard::printBoard()
 }
 void DisplayBoard::mouseClick(Point mouseLoc)
 {
-    /*
-    for (size_t i = 0; i < cells.size(); i++)
-    {
-        if (c.mouseClick(mouseLoc) == true)
-        {
-        };
-    }*/
+    for (auto &c : cells)
+        c.mouseClick(mouseLoc);
 }
 
 void DisplayBoard::update()
@@ -219,12 +216,14 @@ void MainWindow::draw()
 int MainWindow::handle(int event)
 {
 
-    if (boardModel->endofparty == false){
-    if (event == FL_KEYBOARD)
+    if (boardModel->endofparty == false)
     {
-        control->board_handle(event);
-        display->update();
-    }}
+        if (event == FL_KEYBOARD)
+        {
+            control->board_handle(event);
+            display->update();
+        }
+    }
 
     if (Fl::event_inside(this->display)) // if event inside board
     {
