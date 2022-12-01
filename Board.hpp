@@ -4,23 +4,26 @@
 #include "Player.hpp"
 #include "Constants.hpp"
 #include "Player.hpp"
+#include "Teleportation.hpp"
 #include <tuple>
 
 
 
-class Teleportation{
+/*class Teleportation{
     //TODO: teleportation
     std::tuple<int, int> teleportation_a;
     std::tuple<int, int> teleporation_b;
     bool pourpasfaireinfini = false;
-};
+};*/
 
 
 class BoardModel
 {
+private:
+    bool first_teleportation_on_board = false;
 public:
     /* data */
-    std::vector<Teleportation> teleportation;
+    std::vector<Teleportation *> teleportation;
     std::vector<std::vector<int>> matrix;
     std::vector<Box> boxesPositions;
     std::vector<Box> correctBoxesPositions;
@@ -33,7 +36,6 @@ public:
     bool endofparty = false;
     bool winorlose;
     Player * player;
-public:
     BoardModel(std::string filename)
     {
         this->filename = filename;
@@ -51,6 +53,8 @@ public:
     std::string readFileIntoString();
     void createBoard(std::string fileContent);
     void printBoard();
+    void setFirstTeleportation(bool value);
+    bool getFirstTeleportation();
     bool isInBoard(int pos_y, int pos_x);
     void updateBoxPositions();
 };
