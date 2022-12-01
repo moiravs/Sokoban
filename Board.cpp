@@ -24,6 +24,17 @@ std::vector<std::vector<int>> BoardModel::getBoard()
     return (this->matrix);
 }
 
+void BoardModel::setFirstTeleportation(bool value)
+{
+    if (!(this->first_teleportation_on_board == value))
+        this->first_teleportation_on_board = value;
+}
+
+bool BoardModel::getFirstTeleportation()
+{
+    return this->first_teleportation_on_board;
+}
+
 void BoardModel::maxpasandlimit()
 {
     int N;
@@ -40,7 +51,9 @@ void BoardModel::maxpasandlimit()
         std::getline(in, s);
 
     std::getline(in, s);
-    std::cout << s << std::endl;
+    std::cout << s << std::endl;Box *box = new Box(this->matrix.size(), line.size());
+
+                this->correctBoxesPositions.push_back(*box);
     this->minpas = atoi(s.c_str());
     std::getline(in, s);
     std::cout << s << std::endl;
@@ -126,6 +139,16 @@ void BoardModel::createBoard(std::string fileContent)
 
             else if (atoi(&fileContent[index]) == TELEPORTATION)
             {
+                if (this->getFirstTeleportation() == false)
+                {
+                    Teleportation *firstTeleportationCell = new Teleportation(this->matrix.size(), line.size(), NULL);
+                    this->teleportation.push_back(firstTeleportationCell);
+                    this->setFirstTeleportation(true);
+                }
+                else 
+                {
+                    Teleportation *secondTeleportationCell = new Teleportation(this->matrix.size(), line.size(), teleportation[0]);
+                }
             }
             /*
             else if (atoi(&fileContent[index]) == LIGHT_BOX)
