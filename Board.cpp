@@ -48,18 +48,37 @@ bool BoardModel::isFailure()
 {
     for (auto &box : boxesPositions)
     {
+        std::cout << std::get<0>(box) << " " << std::get<1>(box) << std::endl;
         if (box == std::tuple(0, 0))
             ;
-        else if (box == std::tuple(0, matrix.size()-1))
+        else if (box == std::tuple(0, matrix.size() - 1))
             ;
-        else if (box == std::tuple(matrix[0].size()-1, 0))
+        else if (box == std::tuple(matrix[0].size() - 1, 0))
             ;
-        else if (box == std::tuple(matrix[0].size()-1, matrix.size()-1))
+        else if (box == std::tuple(matrix[0].size() - 1, matrix.size() - 1))
             ;
-        else 
+        // TODO: check if outside the board
+        else if ((matrix[std::get<0>(box)][std::get<1>(box)-1] == WALL) &&(matrix[std::get<0>(box)-1][std::get<1>(box)] == WALL));
+        else if ((matrix[std::get<0>(box)-1][std::get<1>(box)] == WALL) && (matrix[std::get<0>(box)][std::get<1>(box)+1] == WALL));
+        else if ((matrix[std::get<0>(box)][std::get<1>(box)+1] == WALL) && (matrix[std::get<0>(box)+1][std::get<1>(box)] == WALL));
+        else if ((matrix[std::get<0>(box)+1][std::get<1>(box)] == WALL) && (matrix[std::get<0>(box)][std::get<1>(box)-1] == WALL));
+        
+        /*
+        else if ((matrix[std::get<0>(box)][get<1>(box)-1] == BOX) && (matrix[std::get<0>(box)-1][std::get<1>(box)] == BOX))
+            if ((matrix[std::get<0>(box)][std::get<1>(box)-1].isblocked == true)  && (matrix[std::get<0>(box)-1][std::get<1>(box)].isblocked == true))
+        else if ((matrix[std::get<0>(box)-1][std::get<1>(box)] == BOX) && (matrix[std::get<0>(box)][std::get<1>(box)+1] == BOX))
+            if ((matrix[std::get<0>(box)][std::get<1>(box)-1].isblocked == true)  && (matrix[std::get<0>(box)-1][std::get<1>(box)].isblocked == true))
+        else if ((matrix[std::get<0>(box)][std::get<1>(box)+1] == BOX) && (matrix[std::get<0>(box)+1][std::get<1>(box)] == BOX))
+            if ((matrix[std::get<0>(box)][std::get<1>(box)-1].isblocked == true)  && (matrix[std::get<0>(box)-1][std::get<1>(box)].isblocked == true))
+        else if ((matrix[std::get<0>(box)+1][std::get<1>(box)] == BOX) && (matrix[std::get<0>(box)][std::get<1>(box)-1] == BOX))
+            if ((matrix[std::get<0>(box)][std::get<1>(box)-1].isblocked == true)  && (matrix[std::get<0>(box)-1][std::get<1>(box)].isblocked == true))
+        
+        */
+        else
             return false;
     }
     return true;
+
     // bloqué à cause des murs
     // bloqué à cause des walls
     // bloqué à cause des autres boites bloquées
