@@ -27,7 +27,6 @@ int main(int argc, char const *argv[])
     auto boardModel = std::make_shared<BoardModel>(file);
 
     std::string buffer = boardModel->readFileIntoString();
-    std::cout << buffer << std::endl;
     boardModel->createBoard(buffer);
     boardModel->maxpasandlimit();
     // b->move(4, 2);

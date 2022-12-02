@@ -38,24 +38,16 @@ void BoardModel::maxpasandlimit()
 {
     int N;
     if (this->filename == level1)
-    {
-        std::cout << "bouuu" << std::endl;
         N = 1;
-    }
     //TODO : multiple files
     std::ifstream in("Niveaux/limiteetmaxpas.txt");
-
     std::string line;
-
     // skip N lines
     for (int i = 0; i < N; ++i){
         std::getline(in, line);}
-
     std::getline(in, line);
-
     this->minpas = atoi(line.c_str());
     std::getline(in, line);
-    std::cout << line << std::endl;
     this->limitpas = atoi(line.c_str());
 }
 
@@ -64,7 +56,6 @@ bool BoardModel::isFailure()
     
     for (auto &box : boxesPositions)
     {
-        std::cout << box.getX() << " " << box.getY() << std::endl;
         Box *checkbox1 = new Box(0, 0);
         Box *checkbox2 = new Box(0, matrix.size() - 1);
         Box *checkbox3 = new Box(matrix[0].size() - 1, 0);
@@ -130,7 +121,6 @@ void BoardModel::createBoard(std::string fileContent)
         }
         else if (fileContent[index] != ' ')
         {
-            puts("ahhh");
             if (atoi(&fileContent[index]) == EMPTY)
             {
                 LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);

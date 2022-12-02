@@ -33,7 +33,6 @@ int ControllerBoard::board_handle(int event)
     {
         this->boardModel->endofparty = true;
         this->boardModel->winorlose = true;
-        std::cout << "youpi, gagné avec " << this->boardModel->limitpas - this->boardModel->pas << " restants";
     }
     return 1;
 }
@@ -51,7 +50,6 @@ void ControllerBoard::custom_handle()
 void ControllerBoard::level_change(int choice)
 {
     this->boardModel->endofparty = false;
-    std::cout << choice << std::endl;
     if (choice == -1)
     {
         return;

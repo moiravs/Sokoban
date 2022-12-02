@@ -62,7 +62,8 @@ void MainWindow::draw()
     {
         if (this->boardModel->winorlose == true)
         {
-            fl_draw("YOU WON, reset or change level", limitpasx + 50, limitpasy + 50);
+            std::string wonstring = "YOU WON with " + std::to_string(boardModel->limitpas - boardModel->pas) + " pas restants, reset or change level";
+            fl_draw(wonstring.c_str(), limitpasx + 50, limitpasy + 50);
         }
         else
         {

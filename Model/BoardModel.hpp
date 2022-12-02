@@ -40,7 +40,6 @@ public:
     Player * player;
     BoardModel(std::string filename)
     {
-        std::cout << filename << std::endl;
         this->filename = filename;
         Player * player = new Player();
         this->player = player;
