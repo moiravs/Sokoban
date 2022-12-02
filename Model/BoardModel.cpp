@@ -137,9 +137,12 @@ void BoardModel::createBoard(std::string fileContent)
             if (atoi(&fileContent[index]) == PLAYER)
             {
                 LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                LogicCellVectortest[this->matrix.size()][line.size()] =  logiccell;
                 this->player->setY(this->matrix.size());
                 this->player->setX(line.size());
+                logiccell->setPlayer(player);
+                LogicCellVectortest[this->matrix.size()][line.size()] =  logiccell;
+                
+                
             }
 
             else if (atoi(&fileContent[index]) == BOX)
