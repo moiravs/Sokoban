@@ -1,6 +1,6 @@
 
 #include "ControllerBoard.hpp"
-#include "Board.hpp"
+#include "Model/BoardModel.hpp"
 
 int ControllerBoard::board_handle(int event)
 {
@@ -17,19 +17,18 @@ int ControllerBoard::board_handle(int event)
     }
     else if (Fl::event_key() == FL_Right)
     {
-        if (boardModel->move(boardModel->player->getY(), boardModel->player->getX()+1))
+        if (boardModel->move(boardModel->player->getY(), boardModel->player->getX() + 1))
             this->boardModel->pas += 1;
     }
     else if (Fl::event_key() == FL_Left)
     {
-        if (boardModel->move(boardModel->player->getY(), boardModel->player->getX()-1))
+        if (boardModel->move(boardModel->player->getY(), boardModel->player->getX() - 1))
             this->boardModel->pas += 1;
-            
     }
-    if ((this->boardModel->pas == this->boardModel->limitpas) || (this->boardModel->isFailure())){
+    if ((this->boardModel->pas == this->boardModel->limitpas) || (this->boardModel->isFailure()))
+    {
         this->boardModel->endofparty = true;
         this->boardModel->winorlose = false;
-
     }
     if (boardModel->end_of_party())
     {
@@ -46,8 +45,8 @@ void ControllerBoard::reset_handle()
     std::string aer = this->boardModel->readFileIntoString();
     this->boardModel->createBoard(aer);
 }
-void ControllerBoard::custom_handle(){
-    
+void ControllerBoard::custom_handle()
+{
 }
 
 void ControllerBoard::level_change(int choice)

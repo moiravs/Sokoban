@@ -1,6 +1,6 @@
 #ifndef BOX_CPP
 #define BOX_CPP
-#include "Box.hpp"
+#include "BoxModel.hpp"
 
 
 void Box::setX(int x)

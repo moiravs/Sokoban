@@ -2,7 +2,8 @@
 #define CONTROLLERBOARD_HPP
 
 #include "Constants.hpp"
-#include "Board.hpp"
+#include "../Model/BoardModel.hpp"
+
 class ControllerBoard
 {
 private:

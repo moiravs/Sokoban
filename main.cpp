@@ -1,6 +1,7 @@
 
 
-#include "Board.hpp"
+#include "Model/BoardModel.hpp"
+
 #include "InterfaceGraphique.hpp"
 #include "ControllerBoard.hpp"
 
@@ -35,7 +36,6 @@ int main(int argc, char const *argv[])
     MainWindow window(boardModel);
     window.show();
     StartWindow start;
-
 
     // db.printBoard();
     return Fl::run();

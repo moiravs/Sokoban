@@ -1,8 +1,8 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
-#include "Box.hpp"
+#include "BoxModel.hpp"
 #include "Player.hpp"
-#include "Constants.hpp"
+#include "../Constants.hpp"
 #include "Player.hpp"
 #include "Teleportation.hpp"
 #include <tuple>
