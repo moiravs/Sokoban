@@ -44,20 +44,20 @@ void BoardModel::maxpasandlimit()
     }
     std::ifstream in("Niveaux/limiteetmaxpas.txt");
 
-    std::string s;
+    std::string line;
 
     // skip N lines
     for (int i = 0; i < N; ++i)
-        std::getline(in, s);
+        std::getline(in, line);
 
-    std::getline(in, s);
-    std::cout << s << std::endl;Box *box = new Box(this->matrix.size(), line.size());
+    std::getline(in, line);
+    std::cout << line << std::endl;Box *box = new Box(this->matrix.size(), line.size());
 
                 this->correctBoxesPositions.push_back(*box);
-    this->minpas = atoi(s.c_str());
-    std::getline(in, s);
-    std::cout << s << std::endl;
-    this->limitpas = atoi(s.c_str());
+    this->minpas = atoi(line.c_str());
+    std::getline(in, line);
+    std::cout << line << std::endl;
+    this->limitpas = atoi(line.c_str());
 }
 
 bool BoardModel::isFailure()
@@ -148,6 +148,7 @@ void BoardModel::createBoard(std::string fileContent)
                 else 
                 {
                     Teleportation *secondTeleportationCell = new Teleportation(this->matrix.size(), line.size(), teleportation[0]);
+                    this->teleportation.push_back(secondTeleportationCell);
                 }
             }
             /*
