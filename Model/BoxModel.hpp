@@ -5,8 +5,9 @@ class Box
 {
     int x;
     int y;
-    bool blocked;
+    
 public:
+    bool blocked = false;
     Box(int x, int y){
         this->x = x;
         this->y = y;

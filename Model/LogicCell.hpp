@@ -2,13 +2,14 @@
 #define LOGICCELL_HPP
 
 
-
+#include "BoxModel.hpp"
 #include <iostream>
 
 class LogicCell
 {
 private:
     size_t line, column;
+    Box *box = nullptr;
 protected:
 
 public:
@@ -26,6 +27,15 @@ public:
     cellType getType(){
         return this->type;
     };
+    bool isBoxBlocked(){
+        if (this->box != nullptr){
+            return this->box->blocked;
+        }
+        return false;
+    }
+    void setBox(Box * box){
+        this->box = box;
+    }
     
 };
 #endif

@@ -57,29 +57,34 @@ bool BoardModel::isFailure()
 
     for (auto &box : boxesPositions)
     {
+        //si la boite est bloquée par les bords
         Box *checkbox1 = new Box(0, 0);
         Box *checkbox2 = new Box(0, matrix.size() - 1);
         Box *checkbox3 = new Box(matrix[0].size() - 1, 0);
         Box *checkbox4 = new Box(matrix[0].size() - 1, matrix.size() - 1);
-        if (&box == checkbox1)
-            ;
-        else if (&box == checkbox2)
-            ;
-        else if (&box == checkbox3)
-            ;
-        else if (&box == checkbox4)
-            ;
+        if ((&box == checkbox1) || (&box == checkbox2) ||  (&box == checkbox3) ||  (&box == checkbox4)){
+            box.blocked = true;
+        }
         // TODO: check if outside the board
+
+        // si la boite est bloquée par des murs
         else if ((LogicCellVector[box.getX()][box.getY() - 1]->getType() == WALL) && (LogicCellVector[box.getX() - 1][box.getY()]->getType() == WALL))
-            ;
-        // LA BOITE EST BLOQUEE -> METTRE ATTRIBUT DE LA BOITE A BLOQU
+        {
+            box.blocked = true;
+        }
         else if ((LogicCellVector[box.getX() - 1][box.getY()]->getType() == WALL) && (LogicCellVector[box.getX()][box.getY() + 1]->getType() == WALL))
-            ;
+        {
+            box.blocked = true;
+        }
         else if ((LogicCellVector[box.getX()][box.getY() + 1]->getType() == WALL) && (LogicCellVector[box.getX() + 1][box.getY()]->getType() == WALL))
-            ;
+        {
+            box.blocked = true;
+        }
         else if ((LogicCellVector[box.getX() + 1][box.getY()]->getType() == WALL) && (LogicCellVector[box.getX()][box.getY() - 1]->getType() == WALL))
-            ;
-        
+        {
+            box.blocked = true;
+        }
+
         // TODO: si entouré de boites bloquées
         // TODO : faire une fonction getbox(int x, int y)
         /*
@@ -143,6 +148,7 @@ void BoardModel::createBoard(std::string fileContent)
                 LogicCellVectortest[this->matrix.size()][line.size()] =  logiccell;
                 Box *box = new Box(this->matrix.size(), line.size());
                 this->boxesPositions.push_back(*box);
+                logiccell->setBox(box);
             }
             else if (atoi(&fileContent[index]) == WALL)
             {
