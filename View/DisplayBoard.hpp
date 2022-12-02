@@ -55,7 +55,6 @@ private:
 
 public:
     DisplayBoard(std::shared_ptr<BoardModel> board);
-
     DisplayBoard() : Fl_Box(boardx, boardy, boardw, boardh){};
     void printBoard();
     void mouseClick(Point mouseLoc);

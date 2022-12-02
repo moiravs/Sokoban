@@ -95,7 +95,7 @@ bool BoardModel::isFailure()
             return false;
     }
     
-    return false;
+    return true;
 
     // bloqué à cause des murs
     // bloqué à cause des walls
