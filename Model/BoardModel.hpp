@@ -6,6 +6,7 @@
 #include "Player.hpp"
 #include "Teleportation.hpp"
 #include <tuple>
+#include "LogicCell.hpp"
 
 
 
@@ -27,7 +28,7 @@ public:
     std::vector<std::vector<int>> matrix;
     std::vector<Box> boxesPositions;
     std::vector<Box> correctBoxesPositions;
-    std::vector<std::vector<LogicCell>> LogicCellVector;
+    std::vector<std::vector<LogicCell *>> LogicCellVector;
 
     std::vector<std::vector<std::tuple<int, int>>> teleportersPositions;
 
