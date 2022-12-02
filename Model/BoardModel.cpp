@@ -39,15 +39,17 @@ void BoardModel::maxpasandlimit()
     int N;
     if (this->filename == level1)
     {
+        std::cout << "bouuu" << std::endl;
         N = 1;
     }
+    //TODO : multiple files
     std::ifstream in("Niveaux/limiteetmaxpas.txt");
 
     std::string line;
 
     // skip N lines
-    for (int i = 0; i < N; ++i)
-        std::getline(in, line);
+    for (int i = 0; i < N; ++i){
+        std::getline(in, line);}
 
     std::getline(in, line);
 
@@ -59,6 +61,7 @@ void BoardModel::maxpasandlimit()
 
 bool BoardModel::isFailure()
 {
+    
     for (auto &box : boxesPositions)
     {
         std::cout << box.getX() << " " << box.getY() << std::endl;
@@ -84,7 +87,7 @@ bool BoardModel::isFailure()
             ;
         else if ((matrix[box.getX() + 1][box.getY()] == WALL) && (matrix[box.getX()][box.getY() - 1] == WALL))
             ;
-
+        
         // TODO: si entouré de boites bloquées
         // TODO : faire une fonction getbox(int x, int y)
         /*
@@ -95,12 +98,13 @@ bool BoardModel::isFailure()
         else if ((matrix[box.getX()][box.getY()+1] == BOX) && (matrix[box.getX()+1][box.getY()] == BOX)){
             if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
         else if ((matrix[box.getX()+1][box.getY()] == BOX) && (matrix[box.getX()][box.getY()-1] == BOX)){
-            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}*/
-
+            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
+*/
         else
             return false;
     }
-    return true;
+    
+    return false;
 
     // bloqué à cause des murs
     // bloqué à cause des walls
@@ -112,8 +116,11 @@ void BoardModel::createBoard(std::string fileContent)
 
     std::vector<int> line;
     this->matrix.clear();
+    
     this->correctBoxesPositions.clear();
     this->boxesPositions.clear();
+    //TODO : capter comment faire un vector dynamique ig
+    std::vector<std::vector<LogicCell>> LogicCellVectortest(8, std::vector<LogicCell>(8));
     for (size_t index = 0; index < fileContent.size(); index++)
     {
         if ((fileContent[index] == '\n'))
@@ -123,21 +130,38 @@ void BoardModel::createBoard(std::string fileContent)
         }
         else if (fileContent[index] != ' ')
         {
+            puts("ahhh");
+            if (atoi(&fileContent[index]) == EMPTY)
+            {
+                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
+                LogicCellVectortest[this->matrix.size()].push_back(*logiccell);
+            }
             if (atoi(&fileContent[index]) == PLAYER)
             {
-
+                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
+                LogicCellVectortest[this->matrix.size()].push_back(*logiccell);
                 this->player->setY(this->matrix.size());
                 this->player->setX(line.size());
             }
 
             else if (atoi(&fileContent[index]) == BOX)
             {
+                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
+                LogicCellVectortest[this->matrix.size()].push_back(*logiccell);
                 Box *box = new Box(this->matrix.size(), line.size());
                 this->boxesPositions.push_back(*box);
+            }
+            else if (atoi(&fileContent[index]) == WALL)
+            {
+                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
+                LogicCellVectortest[this->matrix.size()].push_back(*logiccell);
             }
 
             else if (atoi(&fileContent[index]) == TELEPORTATION)
             {
+                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
+                LogicCellVectortest[this->matrix.size()].push_back(*logiccell);
+
                 if (this->getFirstTeleportation() == false)
                 {
                     Teleportation *firstTeleportationCell = new Teleportation(this->matrix.size(), line.size(), NULL);
@@ -158,13 +182,15 @@ void BoardModel::createBoard(std::string fileContent)
 
             else if (atoi(&fileContent[index]) == BOX_FINAL_POS)
             {
+                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
+                LogicCellVectortest[this->matrix.size()].push_back(*logiccell);
                 Box *box = new Box(this->matrix.size(), line.size());
-
                 this->correctBoxesPositions.push_back(*box);
             }
             line.push_back(atoi(&fileContent[index]));
         }
     }
+    this->LogicCellVector = LogicCellVectortest;
     std::sort(this->correctBoxesPositions.begin(), this->correctBoxesPositions.end());
 }
 

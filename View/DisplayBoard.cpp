@@ -1,6 +1,3 @@
-#ifndef DISPLAYBOARD_CPP
-#define DISPLAYBOARD_CPP
-
 #include "DisplayBoard.hpp"
 /*
 Box::Box(){
@@ -142,5 +139,3 @@ void DisplayBoard::update()
         }
     }
 }
-
-#endif

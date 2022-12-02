@@ -1,7 +1,7 @@
 #ifndef CONTROLLERBOARD_HPP
 #define CONTROLLERBOARD_HPP
 
-#include "Constants.hpp"
+#include "../Constants.hpp"
 #include "../Model/BoardModel.hpp"
 
 class ControllerBoard

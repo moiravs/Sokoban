@@ -1,6 +1,5 @@
 
 #include "ControllerBoard.hpp"
-#include "Model/BoardModel.hpp"
 
 int ControllerBoard::board_handle(int event)
 {

@@ -27,6 +27,8 @@ public:
     std::vector<std::vector<int>> matrix;
     std::vector<Box> boxesPositions;
     std::vector<Box> correctBoxesPositions;
+    std::vector<std::vector<LogicCell>> LogicCellVector;
+
     std::vector<std::vector<std::tuple<int, int>>> teleportersPositions;
 
     std::string filename;
@@ -38,6 +40,7 @@ public:
     Player * player;
     BoardModel(std::string filename)
     {
+        std::cout << filename << std::endl;
         this->filename = filename;
         Player * player = new Player();
         this->player = player;

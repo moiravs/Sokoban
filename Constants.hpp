@@ -72,14 +72,14 @@ const int choiceh = 25;
 const int limitpasx = 700;
 const int limitpasy = 80;
 
-const std::string limitemaxpas = "limiteetmaxpas.txt";
+const std::string limitemaxpas = "../Niveaux/limiteetmaxpas.txt";
 
 //levels
 const std::string level1 = "Niveaux/niveau1.txt";
-const std::string level2 = "Niveaux/niveau2.txt";
+const std::string level2 = "../Niveaux/niveau2.txt";
 
 //Images
-const std::string imageplayer = "Textures/Test.jpeg";
-const std::string imagewall = "Textures/wall.png";
+const std::string imageplayer = "../Textures/Test.jpeg";
+const std::string imagewall = "../Textures/wall.png";
 
 #endif

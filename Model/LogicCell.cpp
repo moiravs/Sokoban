@@ -5,5 +5,6 @@ LogicCell::LogicCell(size_t line, size_t column, cellType type){
         case Normal:
         case Teleportation:
             LogicCell(this->line, this->column, Teleportation);
+        case Wall:
     }
 }

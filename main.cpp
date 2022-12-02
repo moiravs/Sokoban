@@ -1,9 +1,9 @@
 
 
 #include "Model/BoardModel.hpp"
-
-#include "InterfaceGraphique.hpp"
-#include "ControllerBoard.hpp"
+#include "View/DisplayBoard.hpp"
+#include "View/MainWindow.hpp"
+#include "Controller/ControllerBoard.hpp"
 
 #include <iostream>
 #include <FL/Fl.H>
