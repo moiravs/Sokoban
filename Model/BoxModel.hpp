@@ -7,6 +7,7 @@ class Box
     int y;
     
 public:
+    bool light = false;
     bool blocked = false;
     Box(int x, int y){
         this->x = x;

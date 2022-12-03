@@ -98,38 +98,34 @@ void BoardModel::createBoard(std::string fileContent)
         }
         else if (fileContent[index] != ' ')
         {
+            LogicCell *logiccell;
             if (atoi(&fileContent[index]) == EMPTY)
             {
-                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
+                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
             }
-            if (atoi(&fileContent[index]) == PLAYER)
+            else if (atoi(&fileContent[index]) == PLAYER)
             {
-                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
+                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 this->player->setY(this->matrix.size());
                 this->player->setX(line.size());
                 logiccell->setPlayer(player);
-                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
             }
 
             else if (atoi(&fileContent[index]) == BOX)
             {
-                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
+                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
                 this->boxesPositions.push_back(*box);
                 logiccell->setBox(box);
             }
             else if (atoi(&fileContent[index]) == WALL)
             {
-                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
-                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
+                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
             }
 
             else if (atoi(&fileContent[index]) == TELEPORTATION)
             {
-                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
-                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
+                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
 
                 if (this->getFirstTeleportation() == false)
                 {
@@ -143,25 +139,26 @@ void BoardModel::createBoard(std::string fileContent)
                     this->teleportation.push_back(secondTeleportationCell);
                 }
             }
-            /*
+            
             else if (atoi(&fileContent[index]) == LIGHT_BOX)
             {
-                this->boxesPositions.push_back(std::tuple(this->matrix.size(), line.size()));
-            }*/
-
+                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
+                Box *box = new Box(this->matrix.size(), line.size());
+                box->light = true;
+                this->boxesPositions.push_back(*box);
+                logiccell->setBox(box);
+            }
             else if (atoi(&fileContent[index]) == BOX_FINAL_POS)
             {
-                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
-                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
+                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 Box *box = new Box(this->matrix.size(), line.size());
                 this->correctBoxesPositions.push_back(*box);
             }
             else
             {
-
-                LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
+                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
             }
+            LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
             line.push_back(atoi(&fileContent[index]));
         }
     }
@@ -183,11 +180,15 @@ void BoardModel::createBoard(std::string fileContent)
 
 bool BoardModel::end_of_party()
 {
-
-    std::sort(this->boxesPositions.begin(), this->boxesPositions.end());
-    if (this->correctBoxesPositions == this->boxesPositions)
-        return true;
-    return false;
+    for (size_t i = 0; i < 7; i++)
+    {
+        for (size_t j = 0; j < 7; j++)
+        {
+            if (!((LogicCellVector[i][j]->hasBox()) && (LogicCellVector[i][j]->getType() == BOX_FINAL_POS)))
+                return false;
+        }
+    }
+    return true;
 }
 
 bool BoardModel::check_move(int final_pos_y, int final_pos_x)
@@ -212,7 +213,39 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
     int deplacement_x = final_player_pos_x - this->player->getX(), deplacement_y = final_player_pos_y - this->player->getY();
     if (LogicCellVector[final_player_pos_y][final_player_pos_x]->hasBox())
     {
-        if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == BOX_FINAL_POS))
+        if  (LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox()->light ==true)
+        {
+            puts("lighti");
+            if (LogicCellVector[final_player_pos_y+ deplacement_y][final_player_pos_x+deplacement_x]->getBox()->light == true){
+                if ((LogicCellVector[final_player_pos_y + 2*deplacement_y][final_player_pos_x + 2*deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + 2*deplacement_y][final_player_pos_x + 2*deplacement_x]->getType() == BOX_FINAL_POS)){
+                    LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]
+                        ->setBox(LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox());
+                    LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
+                        ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
+                    LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
+                    LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
+                    LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
+                    this->player->setY(final_player_pos_y);
+                    this->player->setX(final_player_pos_x);
+                    this->updateBoxPositions();
+                }
+            }
+            else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == BOX_FINAL_POS))
+            {
+                LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
+                    ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
+                LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
+                LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
+                LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
+                this->player->setY(final_player_pos_y);
+                this->player->setX(final_player_pos_x);
+                this->updateBoxPositions();
+            }
+            else {
+                return false;
+            }
+        }
+        else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == BOX_FINAL_POS))
         {
             LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
                 ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
@@ -230,48 +263,6 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
         LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
         this->player->setY(final_player_pos_y);
         this->player->setX(final_player_pos_x);
-    }
-    else if (this->matrix[final_player_pos_y][final_player_pos_x] == LIGHT_BOX)
-    {
-        if (this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == LIGHT_BOX)
-        {
-            if (!this->isInBoard(final_player_pos_y + 2 * deplacement_y, final_player_pos_x + 2 * deplacement_x))
-                return false;
-            if ((this->matrix[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x] == EMPTY) || (this->matrix[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x] == BOX_FINAL_POS))
-            {
-                this->matrix[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x] = LIGHT_BOX;
-                this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] = LIGHT_BOX;
-                this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
-                Box *box = new Box(this->player->getY(), this->player->getX());
-                if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), *box) != correctBoxesPositions.end())
-                    this->matrix[this->player->getY()][this->player->getX()] = BOX_FINAL_POS;
-                else
-                    this->matrix[this->player->getY()][this->player->getX()] = EMPTY;
-                this->player->setY(final_player_pos_y);
-                this->player->setX(final_player_pos_x);
-                this->updateBoxPositions();
-            }
-            else
-            {
-                return false;
-            }
-        }
-        if ((this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == EMPTY) || (this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == BOX_FINAL_POS))
-        {
-            this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] = LIGHT_BOX; // movement of the box
-
-            this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
-            // Movement of the player
-            Box *box = new Box(this->player->getY(), this->player->getX());
-            if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), *box) != correctBoxesPositions.end())
-                this->matrix[this->player->getY()][this->player->getX()] = BOX_FINAL_POS;
-            else
-                this->matrix[this->player->getY()][this->player->getX()] = EMPTY;
-            this->player->setY(final_player_pos_y);
-            this->player->setX(final_player_pos_x);
-            this->updateBoxPositions();
-        }
-        return true;
     }
 }
 
