@@ -6,7 +6,9 @@ class Box
     int x;
     int y;
     
+    
 public:
+    int color = 0;
     bool light = false;
     bool blocked = false;
     Box(int x, int y){

@@ -2,7 +2,10 @@
 #define LOGICCELL_HPP
 
 #include "BoxModel.hpp"
+#include "Player.hpp"
+#include "../Constants.hpp"
 #include <iostream>
+
 
 class LogicCell
 {
@@ -10,6 +13,7 @@ private:
     size_t line, column;
     Box *box = nullptr;
     Player *player = nullptr;
+    int color = 0;
 
 protected:
 public:
@@ -39,7 +43,7 @@ public:
     bool isComplete(){
         if (this->type == Box_final_pos){
             if (this->box !=nullptr){
-                return true;
+                return (this->box->color == this->color);
             }
             return false;
         }
