@@ -62,37 +62,22 @@ bool BoardModel::isFailure()
             if (LogicCellVector[i][j]->hasBox())
             {
                 if ((i == 0 && j == 0) || (i == 0 && j == matrix.size() - 1) || (i == matrix[0].size() && j == 0) || (i == matrix[0].size() - 1 && j == matrix.size() - 1))
-                {
                     LogicCellVector[i][j]->setBoxblocked();
-                }
                 // TODO: check if outside the board
-                // si la boite est bloquée par des murs
-                else if (((LogicCellVector[i][j - 1]->getType() == WALL) && (LogicCellVector[i - 1][j]->getType() == WALL)) 
-                || ((LogicCellVector[i - 1][j]->getType() == WALL) && (LogicCellVector[i][j + 1]->getType() == WALL)) 
-                || ((LogicCellVector[i][j + 1]->getType() == WALL) && (LogicCellVector[i + 1][j]->getType() == WALL)) 
-                || ((LogicCellVector[i + 1][j]->getType() == WALL) && (LogicCellVector[i][j - 1]->getType() == WALL)))
+                // si la boite est bloquée par des murs ou par une boite bloquée
+                else if (((LogicCellVector[i][j - 1]->isBlocked()) && (LogicCellVector[i - 1][j]->isBlocked())) 
+                || ((LogicCellVector[i - 1][j]->isBlocked()) && (LogicCellVector[i][j + 1]->isBlocked())) 
+                || ((LogicCellVector[i][j + 1]->isBlocked()) && (LogicCellVector[i + 1][j]->isBlocked())) 
+                || ((LogicCellVector[i + 1][j]->isBlocked()) && (LogicCellVector[i][j - 1]->isBlocked())))
                 {
                     LogicCellVector[i][j]->setBoxblocked();
                 }
-                else if (((LogicCellVector[i][j - 1]->isBoxBlocked()) && (LogicCellVector[i - 1][j]->isBoxBlocked()))
-                ||((LogicCellVector[i-1][j]->isBoxBlocked()) && (LogicCellVector[i][j+1]->isBoxBlocked()))
-                ||((LogicCellVector[i][j + 1]->isBoxBlocked()) && (LogicCellVector[i +1][j]->isBoxBlocked()))
-                || ((LogicCellVector[i+1][j]->isBoxBlocked()) && (LogicCellVector[i][j-1]->isBoxBlocked())))
-                {
-                    LogicCellVector[i][j]->setBoxblocked();
-                }
-
                 else
                     return false;
             }
         }
     }
-
     return true;
-
-    // bloqué à cause des murs
-    // bloqué à cause des walls
-    // bloqué à cause des autres boites bloquées
 }
 
 void BoardModel::createBoard(std::string fileContent)
@@ -100,13 +85,10 @@ void BoardModel::createBoard(std::string fileContent)
 
     std::vector<int> line;
     this->matrix.clear();
-
     this->correctBoxesPositions.clear();
     this->boxesPositions.clear();
     // TODO : capter comment faire un vector dynamique ig
-
     std::vector<std::vector<LogicCell *>> LogicCellVectortest(8, std::vector<LogicCell *>(8));
-
     for (size_t index = 0; index < fileContent.size(); index++)
     {
         if ((fileContent[index] == '\n'))

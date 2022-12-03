@@ -123,6 +123,7 @@ void DisplayBoard::update()
         {
             if (boardmodel->LogicCellVector[y][x]->hasPlayer())
             {
+
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, PLAYER, 50, 50});
             }
             else if (boardmodel->LogicCellVector[y][x]->hasBox())

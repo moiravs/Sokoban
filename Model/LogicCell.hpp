@@ -36,6 +36,18 @@ public:
         }
         return false;
     }
+    bool isBlocked(){
+        if (this->type == WALL){
+            return true;
+        }
+        else if (this->isBoxBlocked() == true){
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
     void setBoxblocked()
     {
         if (this->box != nullptr)

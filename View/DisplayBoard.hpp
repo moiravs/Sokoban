@@ -18,7 +18,8 @@ class Box
 public:
     Box();
     void draw();
-};
+};*/
+/*
 class Player
 {
     Point center;
