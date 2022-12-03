@@ -162,13 +162,8 @@ bool BoardModel::end_of_party()
     {
         for (size_t j = 0; j < 7; j++)
         {
-            if (LogicCellVector[i][j]->hasBox())
-            {
-                if (LogicCellVector[i][j]->getType() == BOX_FINAL_POS)
-                    ;
-                else
-                    return false;
-            }
+            if (!LogicCellVector[i][j]->isComplete())
+                return false;
         }
     }
     return true;

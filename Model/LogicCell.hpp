@@ -36,6 +36,15 @@ public:
         }
         return false;
     }
+    bool isComplete(){
+        if (this->type == Box_final_pos){
+            if (this->box !=nullptr){
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
     bool isBlocked(){
         if (this->type == WALL){
             return true;
