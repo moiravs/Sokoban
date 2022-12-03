@@ -14,12 +14,10 @@ class MainWindow : public Fl_Window
 
 public:
     MainWindow(std::shared_ptr<BoardModel> boardModel);
-
     static void MyMenuCallback(Fl_Widget *w, void *);
     void draw() override;
-
     int handle(int event) override;
-
+    static void window_cb(Fl_Widget *widget, void *);
     static void Timer_CB(void *userdata);
 };
 

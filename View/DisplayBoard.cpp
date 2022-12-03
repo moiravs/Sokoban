@@ -54,8 +54,7 @@ void Cell::draw()
     }
     else if (type == WALL)
     {
-        Fl_Image *picture = this->wall;
-        picture->draw(center.x - w / 2, center.y - h / 2, w, h);
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_DARK_YELLOW);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
     }
     else if (type == BOX_FINAL_POS)
@@ -89,6 +88,8 @@ void DisplayBoard::draw()
     fl_draw(pas.c_str(), pasx, pasy);
     std::string limitpas = "limite de pas " + std::to_string(this->boardmodel->limitpas);
     fl_draw(limitpas.c_str(), limitpasx, limitpasy);
+    std::string minpas = "min pas for this level" + std::to_string(this->boardmodel->minpas);
+    fl_draw(minpas.c_str(), limitpasx + 20, limitpasy + 80);
 }
 
 DisplayBoard::DisplayBoard(std::shared_ptr<BoardModel> board) : Fl_Box(boardx, boardy, boardw, boardh)

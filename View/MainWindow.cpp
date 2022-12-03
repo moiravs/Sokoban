@@ -5,6 +5,7 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
 {
     Fl::add_timeout(1.0 / refreshPerSecond, Timer_CB, this);
     resizable(this);
+    this->callback(this->window_cb);
     this->boardModel = boardModel;
     DisplayBoard *board = new DisplayBoard(boardModel);
     display = board;
@@ -128,4 +129,10 @@ void MainWindow::Timer_CB(void *userdata)
     MainWindow *o = static_cast<MainWindow *>(userdata);
     o->redraw();
     Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
+}
+
+void MainWindow::window_cb(Fl_Widget *widget, void *)
+{
+    puts("breie");
+    widget->hide();
 }
