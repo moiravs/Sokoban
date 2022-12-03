@@ -15,10 +15,10 @@ protected:
 public:
     enum cellType
     {
-        Normal = 0,
-        Wall = 3,
-        Teleportation = 4,
-        Box_final_pos = 6,
+        Normal = EMPTY,
+        Wall = WALL,
+        Teleportation = TELEPORTATION,
+        Box_final_pos = BOX_FINAL_POS,
     };
     cellType type;
 
@@ -36,6 +36,13 @@ public:
         }
         return false;
     }
+    void setBoxblocked()
+    {
+        if (this->box != nullptr)
+            this->box->blocked = true;
+        else
+            puts("no box");
+    }
     void setBox(Box *box)
     {
         this->box = box;
@@ -44,9 +51,32 @@ public:
     {
         this->player = player;
     }
+    void setType(cellType type)
+    {
+        this->type = type;
+    }
     bool hasBox()
     {
         if (this->box != nullptr)
+        {
+            return true;
+        }
+        return false;
+    }
+    Box *getBox()
+    {
+        if (this->box != nullptr)
+        {
+            return this->box;
+        }
+        else
+        {
+            std::cout << "error";
+        }
+    }
+    bool hasPlayer()
+    {
+        if (this->player != nullptr)
         {
             return true;
         }

@@ -38,12 +38,14 @@ void BoardModel::maxpasandlimit()
     int N;
     if (this->filename == level1)
         N = 1;
-    //TODO : multiple files
+    // TODO : multiple files
     std::ifstream in("Niveaux/limiteetmaxpas.txt");
     std::string line;
     // skip N lines
-    for (int i = 0; i < N; ++i){
-        std::getline(in, line);}
+    for (int i = 0; i < N; ++i)
+    {
+        std::getline(in, line);
+    }
     std::getline(in, line);
     this->minpas = atoi(line.c_str());
     std::getline(in, line);
@@ -53,54 +55,54 @@ void BoardModel::maxpasandlimit()
 bool BoardModel::isFailure()
 {
 
-    
-
-    for (auto &box : boxesPositions)
+    for (size_t i = 0; i < 7; i++)
     {
-        //si la boite est bloquée par les bords
-        Box *checkbox1 = new Box(0, 0);
-        Box *checkbox2 = new Box(0, matrix.size() - 1);
-        Box *checkbox3 = new Box(matrix[0].size() - 1, 0);
-        Box *checkbox4 = new Box(matrix[0].size() - 1, matrix.size() - 1);
-        if ((&box == checkbox1) || (&box == checkbox2) ||  (&box == checkbox3) ||  (&box == checkbox4)){
-            box.blocked = true;
-        }
-        // TODO: check if outside the board
+        for (size_t j = 0; j < 7; j++)
+        {
+            if (LogicCellVector[i][j]->hasBox())
+            {
+                if ((i == 0 && j == 0) || (i == 0 && j == matrix.size() - 1) || (i == matrix[0].size() && j == 0) || (i == matrix[0].size() - 1&& j == matrix.size() - 1))
+                {
+                    LogicCellVector[i][j]->setBoxblocked();
+                }
+                // TODO: check if outside the board
 
-        // si la boite est bloquée par des murs
-        else if ((LogicCellVector[box.getX()][box.getY() - 1]->getType() == WALL) && (LogicCellVector[box.getX() - 1][box.getY()]->getType() == WALL))
-        {
-            box.blocked = true;
-        }
-        else if ((LogicCellVector[box.getX() - 1][box.getY()]->getType() == WALL) && (LogicCellVector[box.getX()][box.getY() + 1]->getType() == WALL))
-        {
-            box.blocked = true;
-        }
-        else if ((LogicCellVector[box.getX()][box.getY() + 1]->getType() == WALL) && (LogicCellVector[box.getX() + 1][box.getY()]->getType() == WALL))
-        {
-            box.blocked = true;
-        }
-        else if ((LogicCellVector[box.getX() + 1][box.getY()]->getType() == WALL) && (LogicCellVector[box.getX()][box.getY() - 1]->getType() == WALL))
-        {
-            box.blocked = true;
-        }
+                // si la boite est bloquée par des murs
+                else if ((LogicCellVector[i][j - 1]->getType() == WALL) && (LogicCellVector[i- 1][j]->getType() == WALL))
+                {
+                    LogicCellVector[i][j]->setBoxblocked();
+                }
+                else if ((LogicCellVector[i - 1][j]->getType() == WALL) && (LogicCellVector[i][j + 1]->getType() == WALL))
+                {
+                    LogicCellVector[i][j]->setBoxblocked();
+                }
+                else if ((LogicCellVector[i][j + 1]->getType() == WALL) && (LogicCellVector[i + 1][j]->getType() == WALL))
+                {
+                    LogicCellVector[i][j]->setBoxblocked();
+                }
+                else if ((LogicCellVector[i + 1][j]->getType() == WALL) && (LogicCellVector[i][j - 1]->getType() == WALL))
+                {
+                    LogicCellVector[i][j]->setBoxblocked();
+                }
 
-        // TODO: si entouré de boites bloquées
-        // TODO : faire une fonction getbox(int x, int y)
-        /*
-        else if ((LogicCellVector[box.getX()][get<1>(box)-1] == BOX) && (matrix[box.getX()-1][box.getY()] == BOX)){
-            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
-        else if ((matrix[box.getX()-1][box.getY()] == BOX) && (matrix[box.getX()][box.getY()+1] == BOX)){
-            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
-        else if ((matrix[box.getX()][box.getY()+1] == BOX) && (matrix[box.getX()+1][box.getY()] == BOX)){
-            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
-        else if ((matrix[box.getX()+1][box.getY()] == BOX) && (matrix[box.getX()][box.getY()-1] == BOX)){
-            if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
-*/
-        else
-            return false;
+                // TODO: si entouré de boites bloquées
+                // TODO : faire une fonction getbox(int x, int y)
+                /*
+                else if ((LogicCellVector[i][get<1>(box)-1] == BOX) && (matrix[box.getX()-1][box.getY()] == BOX)){
+                    if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
+                else if ((matrix[box.getX()-1][box.getY()] == BOX) && (matrix[box.getX()][box.getY()+1] == BOX)){
+                    if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
+                else if ((matrix[box.getX()][box.getY()+1] == BOX) && (matrix[box.getX()+1][box.getY()] == BOX)){
+                    if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
+                else if ((matrix[box.getX()+1][box.getY()] == BOX) && (matrix[box.getX()][box.getY()-1] == BOX)){
+                    if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
+        */
+                else
+                    return false;
+            }
+        }
     }
-    
+
     return true;
 
     // bloqué à cause des murs
@@ -113,12 +115,12 @@ void BoardModel::createBoard(std::string fileContent)
 
     std::vector<int> line;
     this->matrix.clear();
-    
+
     this->correctBoxesPositions.clear();
     this->boxesPositions.clear();
-    //TODO : capter comment faire un vector dynamique ig
+    // TODO : capter comment faire un vector dynamique ig
 
-    std::vector<std::vector<LogicCell*>> LogicCellVectortest(8, std::vector<LogicCell*>(8));
+    std::vector<std::vector<LogicCell *>> LogicCellVectortest(8, std::vector<LogicCell *>(8));
 
     for (size_t index = 0; index < fileContent.size(); index++)
     {
@@ -140,15 +142,13 @@ void BoardModel::createBoard(std::string fileContent)
                 this->player->setY(this->matrix.size());
                 this->player->setX(line.size());
                 logiccell->setPlayer(player);
-                LogicCellVectortest[this->matrix.size()][line.size()] =  logiccell;
-                
-                
+                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
             }
 
             else if (atoi(&fileContent[index]) == BOX)
             {
                 LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                LogicCellVectortest[this->matrix.size()][line.size()] =  logiccell;
+                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
                 Box *box = new Box(this->matrix.size(), line.size());
                 this->boxesPositions.push_back(*box);
                 logiccell->setBox(box);
@@ -156,13 +156,13 @@ void BoardModel::createBoard(std::string fileContent)
             else if (atoi(&fileContent[index]) == WALL)
             {
                 LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
-                LogicCellVectortest[this->matrix.size()][line.size()] =  logiccell;
+                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
             }
 
             else if (atoi(&fileContent[index]) == TELEPORTATION)
             {
                 LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
-                LogicCellVectortest[this->matrix.size()][line.size()] =  logiccell;
+                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
 
                 if (this->getFirstTeleportation() == false)
                 {
@@ -185,18 +185,32 @@ void BoardModel::createBoard(std::string fileContent)
             else if (atoi(&fileContent[index]) == BOX_FINAL_POS)
             {
                 LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
-                LogicCellVectortest[this->matrix.size()][line.size()] =  logiccell;
+                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
                 Box *box = new Box(this->matrix.size(), line.size());
                 this->correctBoxesPositions.push_back(*box);
             }
-            else {
+            else
+            {
+
                 LogicCell *logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                LogicCellVectortest[this->matrix.size()][line.size()] =  logiccell;
+                LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
             }
             line.push_back(atoi(&fileContent[index]));
         }
     }
+
     this->LogicCellVector = LogicCellVectortest;
+    for (size_t i = 0; i < 7; i++)
+    {
+        for (size_t j = 0; j < 7; j++)
+        {
+            if (LogicCellVector[i][j]->hasBox())
+            {
+                puts("réussi");
+            }
+        }
+    }
+
     std::sort(this->correctBoxesPositions.begin(), this->correctBoxesPositions.end());
 }
 
@@ -229,34 +243,26 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
     if (this->isInBoard(final_player_pos_y, final_player_pos_x) == false)
         return false;
     int deplacement_x = final_player_pos_x - this->player->getX(), deplacement_y = final_player_pos_y - this->player->getY();
-
-    if ((this->matrix[final_player_pos_y][final_player_pos_x] == EMPTY) || (this->matrix[final_player_pos_y][final_player_pos_x] == BOX_FINAL_POS))
-    { // if there is nothing
-        Box *box = new Box(this->player->getY(), this->player->getX());
-        if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), *box) != correctBoxesPositions.end())
-            this->matrix[this->player->getY()][this->player->getX()] = BOX_FINAL_POS;
-        else
-            this->matrix[this->player->getY()][this->player->getX()] = EMPTY;
-        this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
-        this->player->setY(final_player_pos_y);
-        this->player->setX(final_player_pos_x);
-    }
-    else if (this->matrix[final_player_pos_y][final_player_pos_x] == BOX)
-    { // if there is a box
-
-        if ((this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == EMPTY) || (this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] == BOX_FINAL_POS))
+    if (LogicCellVector[final_player_pos_y][final_player_pos_x]->hasBox())
+    {
+        if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == BOX_FINAL_POS))
         {
-            this->matrix[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x] = BOX; // movement of the box
-            this->matrix[final_player_pos_y][final_player_pos_x] = PLAYER;
-            Box *box = new Box(this->player->getY(), this->player->getX());
-            if (std::find(correctBoxesPositions.begin(), correctBoxesPositions.end(), *box) != correctBoxesPositions.end())
-                this->matrix[this->player->getY()][this->player->getX()] = BOX_FINAL_POS;
-            else
-                this->matrix[this->player->getY()][this->player->getX()] = EMPTY;
+            LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
+                ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
+            LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
+            LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
+            LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
             this->player->setY(final_player_pos_y);
             this->player->setX(final_player_pos_x);
             this->updateBoxPositions();
         }
+    }
+    else if ((LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == BOX_FINAL_POS))
+    {
+        LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
+        LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
+        this->player->setY(final_player_pos_y);
+        this->player->setX(final_player_pos_x);
     }
     else if (this->matrix[final_player_pos_y][final_player_pos_x] == LIGHT_BOX)
     {

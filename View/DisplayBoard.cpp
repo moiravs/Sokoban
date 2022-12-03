@@ -36,8 +36,10 @@ void Cell::draw()
     
     if (type == PLAYER)
     {
-        Fl_Image *hihi = this->personnage;
-        hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
+        //Fl_Image *hihi = this->personnage;
+        //hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
+
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
     }
     else if (type == BOX)
@@ -119,25 +121,28 @@ void DisplayBoard::update()
     {
         for (size_t x = 0; x < boardmodel->getBoard()[y].size(); x++)
         {
-            if (boardmodel->getBoard()[y][x] == EMPTY)
-            {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, EMPTY, 50, 50});
-            }
-            else if (boardmodel->getBoard()[y][x] == PLAYER)
+            if (boardmodel->LogicCellVector[y][x]->hasPlayer())
             {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, PLAYER, 50, 50});
             }
-            else if (boardmodel->getBoard()[y][x] == BOX)
+            else if (boardmodel->LogicCellVector[y][x]->hasBox())
             {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX, 50, 50});
             }
-            else if (boardmodel->getBoard()[y][x] == WALL)
+            else if (boardmodel->LogicCellVector[y][x]->getType() == WALL)
             {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, WALL, 50, 50});
             }
-            else if (boardmodel->getBoard()[y][x] == BOX_FINAL_POS)
+            else if (boardmodel->LogicCellVector[y][x]->getType() == BOX_FINAL_POS)
             {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX_FINAL_POS, 50, 50});
+            }
+            else if (boardmodel->LogicCellVector[y][x]->getType() == EMPTY)
+            {
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, EMPTY, 50, 50});
+            }
+            else {
+                //std::cout << boardmodel->LogicCellVector[y][x]->getType() << std::endl;
             }
         }
     }
