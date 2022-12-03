@@ -68,8 +68,10 @@ void ControllerBoard::level_change(int choice)
 void ControllerBoard::saveminpas(){
     if (((this->boardModel->pas < this->boardModel->minpas) && (this->boardModel->winorlose == true)) || ((this->boardModel->minpas == 0) && (this->boardModel->winorlose == true))){
         //TODO: for multiple files il faut noter dans le niveau le pas max et le min pas
-        std::string strReplace = std::to_string(this->boardModel->minpas);
-        std::string strNew = std::to_string(this->boardModel->pas);
+        puts("ahhh");
+        std::string strReplace = "l"+std::to_string(this->boardModel->minpas);
+        std::string strNew = "l"+std::to_string(this->boardModel->pas);
+        std::cout << "strNew" << strNew << "strremplace" << strReplace<< std::endl;
         std::ifstream filein(level1);   // File to read from
         std::ofstream fileout("fileout.txt"); // Temporary file
         if (!filein || !fileout)
