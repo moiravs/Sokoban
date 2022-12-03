@@ -61,42 +61,27 @@ bool BoardModel::isFailure()
         {
             if (LogicCellVector[i][j]->hasBox())
             {
-                if ((i == 0 && j == 0) || (i == 0 && j == matrix.size() - 1) || (i == matrix[0].size() && j == 0) || (i == matrix[0].size() - 1&& j == matrix.size() - 1))
+                if ((i == 0 && j == 0) || (i == 0 && j == matrix.size() - 1) || (i == matrix[0].size() && j == 0) || (i == matrix[0].size() - 1 && j == matrix.size() - 1))
                 {
                     LogicCellVector[i][j]->setBoxblocked();
                 }
                 // TODO: check if outside the board
-
                 // si la boite est bloquée par des murs
-                else if ((LogicCellVector[i][j - 1]->getType() == WALL) && (LogicCellVector[i- 1][j]->getType() == WALL))
+                else if (((LogicCellVector[i][j - 1]->getType() == WALL) && (LogicCellVector[i - 1][j]->getType() == WALL)) 
+                || ((LogicCellVector[i - 1][j]->getType() == WALL) && (LogicCellVector[i][j + 1]->getType() == WALL)) 
+                || ((LogicCellVector[i][j + 1]->getType() == WALL) && (LogicCellVector[i + 1][j]->getType() == WALL)) 
+                || ((LogicCellVector[i + 1][j]->getType() == WALL) && (LogicCellVector[i][j - 1]->getType() == WALL)))
                 {
                     LogicCellVector[i][j]->setBoxblocked();
                 }
-                else if ((LogicCellVector[i - 1][j]->getType() == WALL) && (LogicCellVector[i][j + 1]->getType() == WALL))
-                {
-                    LogicCellVector[i][j]->setBoxblocked();
-                }
-                else if ((LogicCellVector[i][j + 1]->getType() == WALL) && (LogicCellVector[i + 1][j]->getType() == WALL))
-                {
-                    LogicCellVector[i][j]->setBoxblocked();
-                }
-                else if ((LogicCellVector[i + 1][j]->getType() == WALL) && (LogicCellVector[i][j - 1]->getType() == WALL))
+                else if (((LogicCellVector[i][j - 1]->isBoxBlocked()) && (LogicCellVector[i - 1][j]->isBoxBlocked()))
+                ||((LogicCellVector[i-1][j]->isBoxBlocked()) && (LogicCellVector[i][j+1]->isBoxBlocked()))
+                ||((LogicCellVector[i][j + 1]->isBoxBlocked()) && (LogicCellVector[i +1][j]->isBoxBlocked()))
+                || ((LogicCellVector[i+1][j]->isBoxBlocked()) && (LogicCellVector[i][j-1]->isBoxBlocked())))
                 {
                     LogicCellVector[i][j]->setBoxblocked();
                 }
 
-                // TODO: si entouré de boites bloquées
-                // TODO : faire une fonction getbox(int x, int y)
-                /*
-                else if ((LogicCellVector[i][get<1>(box)-1] == BOX) && (matrix[box.getX()-1][box.getY()] == BOX)){
-                    if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
-                else if ((matrix[box.getX()-1][box.getY()] == BOX) && (matrix[box.getX()][box.getY()+1] == BOX)){
-                    if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
-                else if ((matrix[box.getX()][box.getY()+1] == BOX) && (matrix[box.getX()+1][box.getY()] == BOX)){
-                    if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
-                else if ((matrix[box.getX()+1][box.getY()] == BOX) && (matrix[box.getX()][box.getY()-1] == BOX)){
-                    if ((matrix[box.getX()][box.getY()-1].blocked == true)  && (matrix[box.getX()-1][box.getY()].blocked == true))}
-        */
                 else
                     return false;
             }
