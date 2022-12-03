@@ -1,9 +1,0 @@
-level1
-0
-20
-level2
-0
-20
-level3
-0
-20

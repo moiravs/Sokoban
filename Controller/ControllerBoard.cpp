@@ -1,5 +1,6 @@
 
 #include "ControllerBoard.hpp"
+#include <fstream>
 
 int ControllerBoard::board_handle(int event)
 {
@@ -62,4 +63,34 @@ void ControllerBoard::level_change(int choice)
         this->boardModel->filename = level2;
     std::string buffer = this->boardModel->readFileIntoString();
     this->boardModel->createBoard(buffer);
+}
+
+void ControllerBoard::saveminpas(){
+    if ((this->boardModel->pas < this->boardModel->minpas) && (this->boardModel->winorlose == true) || ((this->boardModel->minpas == 0) && (this->boardModel->winorlose == true))){
+        //TODO: for multiple files il faut noter dans le niveau le pas max et le min pas
+        std::string strReplace = std::to_string(this->boardModel->minpas);
+        std::string strNew = std::to_string(this->boardModel->pas);
+        std::ifstream filein("Niveaux/limiteetmaxpas.txt");   // File to read from
+        std::ofstream fileout("fileout.txt"); // Temporary file
+        if (!filein || !fileout)
+        {
+            std::cout << "Error opening files!" << std::endl;
+        }
+
+        std::string strTemp;
+        bool found = false;
+        while (filein >> strTemp)
+        {
+            if ((strTemp == strReplace) && (found == false))
+            {
+                strTemp = strNew;
+                found = true;
+            }
+            strTemp += "\n";
+            fileout << strTemp;
+        }
+        filein.close();
+        remove("Niveaux/limiteetmaxpas.txt");
+        std::rename("fileout.txt", "Niveaux/limiteetmaxpas.txt");
+    }
 }

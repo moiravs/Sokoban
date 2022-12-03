@@ -18,6 +18,7 @@ public:
     void custom_handle();
     int board_handle(int event);
     void reset_handle();
+    void saveminpas();
     void level_change(int choice);
 };
 

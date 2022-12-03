@@ -5,13 +5,14 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
 {
     Fl::add_timeout(1.0 / refreshPerSecond, Timer_CB, this);
     resizable(this);
-    this->callback(this->window_cb);
+    
     this->boardModel = boardModel;
     DisplayBoard *board = new DisplayBoard(boardModel);
     display = board;
     board->show();
     ControllerBoard *boarda = new ControllerBoard(boardModel);
     control = boarda;
+    this->callback(this->window_cb, control);
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth);
     this->reset = reset;
     Fl_Button *custom = new Fl_Button(customx, customy, customw, customh);
@@ -131,8 +132,10 @@ void MainWindow::Timer_CB(void *userdata)
     Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
 }
 
-void MainWindow::window_cb(Fl_Widget *widget, void *)
+void MainWindow::window_cb(Fl_Widget *widget, void * controllerboard)
 {
+    ControllerBoard * boardcontrol = (ControllerBoard *) controllerboard;
     puts("breie");
     widget->hide();
+    boardcontrol->saveminpas();
 }

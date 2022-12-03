@@ -33,25 +33,6 @@ bool BoardModel::getFirstTeleportation()
     return this->first_teleportation_on_board;
 }
 
-void BoardModel::maxpasandlimit()
-{
-    int N;
-    if (this->filename == level1)
-        N = 1;
-    // TODO : multiple files
-    std::ifstream in("Niveaux/limiteetmaxpas.txt");
-    std::string line;
-    // skip N lines
-    for (int i = 0; i < N; ++i)
-    {
-        std::getline(in, line);
-    }
-    std::getline(in, line);
-    this->minpas = atoi(line.c_str());
-    std::getline(in, line);
-    this->limitpas = atoi(line.c_str());
-}
-
 bool BoardModel::isFailure()
 {
 
@@ -86,7 +67,28 @@ void BoardModel::createBoard(std::string fileContent)
     std::vector<std::vector<LogicCell *>> LogicCellVectortest(8, std::vector<LogicCell *>(8));
     for (size_t index = 0; index < fileContent.size(); index++)
     {
-        if ((fileContent[index] == '\n'))
+        if ((fileContent[index] == 'l'))
+        {
+            std::string minpas = "";
+            while (fileContent[index] != '\n')
+            {
+                index++;
+                minpas += fileContent[index];
+                
+            }
+            this->minpas = atoi(minpas.c_str());
+        }
+        else if ((fileContent[index] == 'm'))
+        {
+            std::string limitpas = "";
+            while (fileContent[index] != '\n')
+            {
+                index++;
+                limitpas += fileContent[index];
+            }
+            this->limitpas = atoi(limitpas.c_str());
+        }
+        else if ((fileContent[index] == '\n'))
         {
             this->matrix.push_back(line);
             line.clear();
