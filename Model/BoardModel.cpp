@@ -153,6 +153,7 @@ void BoardModel::createBoard(std::string fileContent)
             line.push_back(atoi(&fileContent[index]));
         }
     }
+    this->LogicCellVector = LogicCellVectortest;
 }
 
 bool BoardModel::end_of_party()
@@ -189,7 +190,6 @@ bool BoardModel::isInBoard(int pos_y, int pos_x)
 
 bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
 {
-
     if (this->isInBoard(final_player_pos_y, final_player_pos_x) == false)
         return false;
     int deplacement_x = final_player_pos_x - this->player->getX(), deplacement_y = final_player_pos_y - this->player->getY();

@@ -121,9 +121,9 @@ void DisplayBoard::update()
     {
         for (size_t x = 0; x < boardmodel->getBoard()[y].size(); x++)
         {
+            
             if (boardmodel->LogicCellVector[y][x]->hasPlayer())
             {
-
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, PLAYER, 50, 50});
             }
             else if (boardmodel->LogicCellVector[y][x]->hasBox())
@@ -146,7 +146,7 @@ void DisplayBoard::update()
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, EMPTY, 50, 50});
             }
             else {
-                //std::cout << boardmodel->LogicCellVector[y][x]->getType() << std::endl;
+                std::cout << boardmodel->LogicCellVector[y][x]->getType() << std::endl;
             }
         }
     }
