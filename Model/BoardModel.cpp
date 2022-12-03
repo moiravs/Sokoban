@@ -65,10 +65,7 @@ bool BoardModel::isFailure()
                     LogicCellVector[i][j]->setBoxblocked();
                 // TODO: check if outside the board
                 // si la boite est bloquée par des murs ou par une boite bloquée
-                else if (((LogicCellVector[i][j - 1]->isBlocked()) && (LogicCellVector[i - 1][j]->isBlocked())) 
-                || ((LogicCellVector[i - 1][j]->isBlocked()) && (LogicCellVector[i][j + 1]->isBlocked())) 
-                || ((LogicCellVector[i][j + 1]->isBlocked()) && (LogicCellVector[i + 1][j]->isBlocked())) 
-                || ((LogicCellVector[i + 1][j]->isBlocked()) && (LogicCellVector[i][j - 1]->isBlocked())))
+                else if (((LogicCellVector[i][j - 1]->isBlocked()) && (LogicCellVector[i - 1][j]->isBlocked())) || ((LogicCellVector[i - 1][j]->isBlocked()) && (LogicCellVector[i][j + 1]->isBlocked())) || ((LogicCellVector[i][j + 1]->isBlocked()) && (LogicCellVector[i + 1][j]->isBlocked())) || ((LogicCellVector[i + 1][j]->isBlocked()) && (LogicCellVector[i][j - 1]->isBlocked())))
                 {
                     LogicCellVector[i][j]->setBoxblocked();
                 }
@@ -139,7 +136,7 @@ void BoardModel::createBoard(std::string fileContent)
                     this->teleportation.push_back(secondTeleportationCell);
                 }
             }
-            
+
             else if (atoi(&fileContent[index]) == LIGHT_BOX)
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
@@ -184,8 +181,13 @@ bool BoardModel::end_of_party()
     {
         for (size_t j = 0; j < 7; j++)
         {
-            if (!((LogicCellVector[i][j]->hasBox()) && (LogicCellVector[i][j]->getType() == BOX_FINAL_POS)))
-                return false;
+            if (LogicCellVector[i][j]->hasBox())
+            {
+                if (LogicCellVector[i][j]->getType() == BOX_FINAL_POS)
+                    ;
+                else
+                    return false;
+            }
         }
     }
     return true;
@@ -213,11 +215,12 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
     int deplacement_x = final_player_pos_x - this->player->getX(), deplacement_y = final_player_pos_y - this->player->getY();
     if (LogicCellVector[final_player_pos_y][final_player_pos_x]->hasBox())
     {
-        if  (LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox()->light ==true)
+        if (LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox()->light == true)
         {
-            puts("lighti");
-            if (LogicCellVector[final_player_pos_y+ deplacement_y][final_player_pos_x+deplacement_x]->getBox()->light == true){
-                if ((LogicCellVector[final_player_pos_y + 2*deplacement_y][final_player_pos_x + 2*deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + 2*deplacement_y][final_player_pos_x + 2*deplacement_x]->getType() == BOX_FINAL_POS)){
+            if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->light == true)
+            {
+                if ((LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]->getType() == BOX_FINAL_POS))
+                {
                     LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]
                         ->setBox(LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox());
                     LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
@@ -241,7 +244,8 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
                 this->player->setX(final_player_pos_x);
                 this->updateBoxPositions();
             }
-            else {
+            else
+            {
                 return false;
             }
         }
