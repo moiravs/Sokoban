@@ -26,8 +26,6 @@ public:
     /* data */
     std::vector<Teleportation *> teleportation;
     std::vector<std::vector<int>> matrix;
-    std::vector<Box> boxesPositions;
-    std::vector<Box> correctBoxesPositions;
     std::vector<std::vector<LogicCell *>> LogicCellVector;
 
     std::vector<std::vector<std::tuple<int, int>>> teleportersPositions;
@@ -59,7 +57,6 @@ public:
     void setFirstTeleportation(bool value);
     bool getFirstTeleportation();
     bool isInBoard(int pos_y, int pos_x);
-    void updateBoxPositions();
 };
 
 #endif

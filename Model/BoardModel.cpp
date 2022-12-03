@@ -82,8 +82,6 @@ void BoardModel::createBoard(std::string fileContent)
 
     std::vector<int> line;
     this->matrix.clear();
-    this->correctBoxesPositions.clear();
-    this->boxesPositions.clear();
     // TODO : capter comment faire un vector dynamique ig
     std::vector<std::vector<LogicCell *>> LogicCellVectortest(8, std::vector<LogicCell *>(8));
     for (size_t index = 0; index < fileContent.size(); index++)
@@ -112,7 +110,6 @@ void BoardModel::createBoard(std::string fileContent)
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
-                this->boxesPositions.push_back(*box);
                 logiccell->setBox(box);
             }
             else if (atoi(&fileContent[index]) == WALL)
@@ -142,14 +139,11 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
                 box->light = true;
-                this->boxesPositions.push_back(*box);
                 logiccell->setBox(box);
             }
             else if (atoi(&fileContent[index]) == BOX_FINAL_POS)
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
-                Box *box = new Box(this->matrix.size(), line.size());
-                this->correctBoxesPositions.push_back(*box);
             }
             else
             {
@@ -159,20 +153,6 @@ void BoardModel::createBoard(std::string fileContent)
             line.push_back(atoi(&fileContent[index]));
         }
     }
-
-    this->LogicCellVector = LogicCellVectortest;
-    for (size_t i = 0; i < 7; i++)
-    {
-        for (size_t j = 0; j < 7; j++)
-        {
-            if (LogicCellVector[i][j]->hasBox())
-            {
-                puts("réussi");
-            }
-        }
-    }
-
-    std::sort(this->correctBoxesPositions.begin(), this->correctBoxesPositions.end());
 }
 
 bool BoardModel::end_of_party()
@@ -230,7 +210,6 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
                     LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
                     this->player->setY(final_player_pos_y);
                     this->player->setX(final_player_pos_x);
-                    this->updateBoxPositions();
                 }
             }
             else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == BOX_FINAL_POS))
@@ -242,7 +221,6 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
                 LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
                 this->player->setY(final_player_pos_y);
                 this->player->setX(final_player_pos_x);
-                this->updateBoxPositions();
             }
             else
             {
@@ -258,7 +236,6 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
             LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
             this->player->setY(final_player_pos_y);
             this->player->setX(final_player_pos_x);
-            this->updateBoxPositions();
         }
     }
     else if ((LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == BOX_FINAL_POS))
@@ -267,21 +244,5 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
         LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
         this->player->setY(final_player_pos_y);
         this->player->setX(final_player_pos_x);
-    }
-}
-
-void BoardModel::updateBoxPositions()
-{
-    this->boxesPositions.clear();
-    for (size_t index_y = 0; index_y < this->matrix.size(); index_y++)
-    {
-        for (size_t index_x = 0; index_x < this->matrix[index_y].size(); index_x++)
-        {
-            if (this->matrix[index_y][index_x] == BOX)
-            {
-                Box *box = new Box(index_y, index_x);
-                this->boxesPositions.push_back(*box);
-            }
-        }
     }
 }
