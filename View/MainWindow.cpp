@@ -145,7 +145,6 @@ void MainWindow::Timer_CB(void *userdata)
 void MainWindow::window_cb(Fl_Widget *widget, void * controllerboard)
 {
     ControllerBoard * boardcontrol = (ControllerBoard *) controllerboard;
-    puts("breie");
     widget->hide();
     boardcontrol->saveminpas();
 }

@@ -75,7 +75,6 @@ void ControllerBoard::resetminpas(){
 void ControllerBoard::saveminpas(){
     if (((this->boardModel->pas < this->boardModel->minpas) && (this->boardModel->winorlose == true)) || ((this->boardModel->minpas == 0) && (this->boardModel->winorlose == true))){
         //TODO: for multiple files il faut noter dans le niveau le pas max et le min pas
-        puts("ahhh");
         std::string strReplace = "l"+std::to_string(this->boardModel->minpas);
         std::string strNew = "l"+std::to_string(this->boardModel->pas);
         std::ifstream filein(level1);   // File to read from
