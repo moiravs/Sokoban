@@ -13,11 +13,13 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     ControllerBoard *boarda = new ControllerBoard(boardModel);
     control = boarda;
     this->callback(this->window_cb, control);
-    Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth);
+    Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
     this->reset = reset;
     Fl_Button *custom = new Fl_Button(customx, customy, customw, customh);
     this->custom = custom;
-    Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey);
+    Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min pas");
+    this->resetminpas = resetminpas;
+    Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey, "levels");
     levels->add("Level 1");
     levels->add("Level 2");
     this->levels = levels;
@@ -109,6 +111,14 @@ int MainWindow::handle(int event)
         if (event == FL_PUSH)
         {
             control->custom_handle();
+            display->update();
+        }
+    }
+    if (Fl::event_inside(this->resetminpas)) // if event inside board
+    {
+        if (event == FL_PUSH)
+        {
+            control->resetminpas();
             display->update();
         }
     }

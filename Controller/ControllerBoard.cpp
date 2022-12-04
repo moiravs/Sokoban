@@ -66,7 +66,11 @@ void ControllerBoard::level_change(int choice)
     this->boardModel->createBoard(buffer);
 }
 
-void ControllerBoard::resetminpas(){}
+void ControllerBoard::resetminpas(){
+    this->boardModel->pas = 0;
+    this->boardModel->winorlose = true;
+    this->saveminpas();
+}
 
 void ControllerBoard::saveminpas(){
     if (((this->boardModel->pas < this->boardModel->minpas) && (this->boardModel->winorlose == true)) || ((this->boardModel->minpas == 0) && (this->boardModel->winorlose == true))){

@@ -8,6 +8,7 @@ class MainWindow : public Fl_Window
     DisplayBoard *display;
     Fl_Button *reset;
     Fl_Button *custom;
+    Fl_Button *resetminpas;
     Fl_Choice *levels;
     const char *pas;
     Fl_Text_Buffer *buff;
