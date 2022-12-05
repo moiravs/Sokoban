@@ -2,33 +2,55 @@
 #define DISPLAYBOARD_CPP
 
 #include "DisplayBoard.hpp"
-/*
-Box::Box(){
-    this->wall = new Fl_JPEG_Image(imagewall);
+
+
+
+BoxDisplay::BoxDisplay(Point center, int w, int h)
+{
+    this->wall = new Fl_PNG_Image(imagewall.c_str());
+    this->center = center;
+    this->w = w;
+    this->h = h;
 }
 
-void Box::draw(){
-    Fl_JPEG_Image *wall = new Fl_JPEG_Image(imagewall);
-    Fl_Image *hihi = wall;
+void BoxDisplay::draw(){
+    Fl_Image *hihi = this->wall;
     hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
     fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
 }
 
-Player::Player(){
-    this->personnage = new Fl_JPEG_Image(imageplayer);
+PlayerDisplay::PlayerDisplay(Point center, int w, int h)
+{
+    this->personnage = new Fl_JPEG_Image(imageplayer.c_str());
+    this->center = center;
+    this->w = w;
+    this->h = h;
 }
 
-void Player::draw(){
+void PlayerDisplay::draw(){
     Fl_Image *hihi = this->personnage;
     hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
     fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
 }
-*/
+
 
 Cell::Cell(Point center, int type, int w, int h) : center{center}, type{type}, w{w}, h{h}
 {
-    this->personnage = new Fl_JPEG_Image(imageplayer.c_str());
     this->wall = new Fl_PNG_Image(imagewall.c_str());
+    if (type == PLAYER){
+        PlayerDisplay *player = new PlayerDisplay(center, w, h);
+        this->personnage = player;
+    }
+    else if (type == BOX){
+        BoxDisplay *box = new BoxDisplay(center, w, h);
+        this->box = box;
+    }
+}
+
+bool Cell::contains(Point p) const
+{
+    return p.x >= center.x - w / 2 && p.x < center.x + w / 2 &&
+           p.y >= center.y - h / 2 && p.y < center.y + h / 2;
 }
 
 void Cell::draw()
@@ -36,16 +58,11 @@ void Cell::draw()
     
     if (type == PLAYER)
     {
-        //Fl_Image *hihi = this->personnage;
-        //hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
-
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
+        this->personnage->draw();
     }
     else if (type == BOX)
     {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_GREEN);
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+        this->box->draw();
     }
     else if (type == EMPTY)
     {

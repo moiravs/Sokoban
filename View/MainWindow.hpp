@@ -12,6 +12,7 @@ class MainWindow : public Fl_Window
     Fl_Choice *levels;
     const char *pas;
     Fl_Text_Buffer *buff;
+    bool customlevel;
 
 public:
     MainWindow(std::shared_ptr<BoardModel> boardModel);

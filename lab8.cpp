@@ -114,64 +114,6 @@ bool Rectangle::contains(Point p) const {
 }
 
 /*--------------------------------------------------
-Circle class.
-
-Use to display a filled-in circle on the screen
-with different colors for the fill and the border
---------------------------------------------------*/
-class Circle : public Sketchable {
-  Point    center;
-  int      r;
-  Fl_Color fillColor, frameColor;
-
- public:
-  Circle(Point center, int r, Fl_Color frameColor = FL_BLACK,
-         Fl_Color fillColor = FL_WHITE);
-  void     draw() override;
-  void     setFillColor(Fl_Color newFillColor);
-  Fl_Color getFillColor() { return fillColor; }
-  void     setFrameColor(Fl_Color newFrameColor);
-  Fl_Color getFrameColor() { return frameColor; }
-  bool     contains(Point p) const override;
-  Point    getCenter() const override { return center; }
-};
-
-Circle::Circle(Point center, int r, Fl_Color frameColor, Fl_Color fillColor)
-    : center{center}, r{r}, fillColor{fillColor}, frameColor{frameColor} {}
-
-void Circle::draw() {
-  array<Point, 37> points;
-  for (unsigned i = 0; i < 36; i++)
-    points[i] = {static_cast<int>(center.x + r * sin(i * 10 * pi / 180)),
-                 static_cast<int>(center.y + r * cos(i * 10 * pi / 180))};
-  points[36] = points[0];
-  fl_color(fillColor);
-  fl_begin_polygon();
-  for (auto &point : points) {
-    fl_vertex(point.x, point.y);
-  }
-  fl_end_polygon();
-  fl_color(frameColor);
-  fl_begin_line();
-  for (auto &point : points) {
-    fl_vertex(point.x, point.y);
-  }
-  fl_end_line();
-}
-
-void Circle::setFillColor(Fl_Color newFillColor) { fillColor = newFillColor; }
-
-void Circle::setFrameColor(Fl_Color newFrameColor) {
-  frameColor = newFrameColor;
-}
-
-bool Circle::contains(Point p) const {
-  return ((p.x - center.x) * (p.x - center.x) +
-              (p.y - center.y) * (p.y - center.y) <=
-          r * r);
-}
-
-/*--------------------------------------------------
 Translation Class
 --------------------------------------------------*/
 struct Translation {
@@ -216,43 +158,6 @@ class Animation : public Sketchable {
   Point getCenter() const override { return toAnimate->getCenter(); }
 };
 
-/*--------------------------------------------------
-Spin Class
---------------------------------------------------*/
-class Spin : public Animation {
-  int    duration;
-  bool   spinning = false;
-  int    time{0};
-  double currentRotation();
-
- public:
-  explicit Spin(shared_ptr<Sketchable> clickableCellToAnimate,
-                int                    duration = 100)
-      : Animation{clickableCellToAnimate}, duration{duration} {}
-  void draw() override;
-  bool isComplete() override;
-  void start() override {
-    Animation::start();
-    spinning = true;
-    time     = 0;
-  }
-};
-
-void Spin::draw() {
-  if (spinning) ++time;
-  Rotation r{toAnimate->getCenter(), currentRotation()};
-  toAnimate->draw();
-  if (isComplete()) spinning = false;
-}
-
-double Spin::currentRotation() {
-  if (!isComplete())
-    return time * 360.0 / duration;
-  else
-    return 0;
-}
-
-bool Spin::isComplete() { return time > duration; }
 
 /*--------------------------------------------------
 Bounce Class
@@ -355,13 +260,7 @@ class Canvas {
 Canvas::Canvas() {
   for (int x = 50; x < 500; x += 100) {
     cells.emplace_back(
-        make_shared<Bounce>(make_shared<Circle>(Point{x, 400}, 20)));
-    cells.emplace_back(
         make_shared<Bounce>(make_shared<Rectangle>(Point{x, 300}, 35, 35)));
-    cells.emplace_back(
-        make_shared<Spin>(make_shared<Rectangle>(Point{x, 200}, 35, 35)));
-    cells.emplace_back(make_shared<Bounce>(
-        make_shared<Spin>(make_shared<Rectangle>(Point{x, 100}, 35, 35))));
   }
 }
 
