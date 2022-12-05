@@ -124,18 +124,6 @@ struct Translation {
   ~Translation() { fl_pop_matrix(); }
 };
 
-/*--------------------------------------------------
-Rotation Class
---------------------------------------------------*/
-struct Rotation {
-  Rotation(Point center, double angle) {
-    fl_push_matrix();
-    fl_translate(center.x, center.y);
-    fl_rotate(angle);
-    fl_translate(-1 * center.x, -1 * center.y);
-  }
-  ~Rotation() { fl_pop_matrix(); }
-};
 
 /*--------------------------------------------------
 Animation class

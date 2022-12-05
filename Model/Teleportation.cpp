@@ -1,10 +1,14 @@
 #include "Teleportation.hpp"
+#include "LogicCell.hpp"
 
-Teleportation Teleportation::get_other_end()
+LogicCell * Teleportation::get_second_end()
 {
-    return *this->other_end;
+    return this->second_end;
 }
-
+LogicCell *Teleportation::get_first_end()
+{
+    return this->first_end;
+}
 bool Teleportation::is_done()
 {
     return this->teleportation_done;

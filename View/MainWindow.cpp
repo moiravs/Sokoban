@@ -83,7 +83,9 @@ int MainWindow::handle(int event)
     {
         if (event == FL_KEYBOARD)
         {
+
             control->board_handle(event);
+            puts("whuttt");
             display->update();
         }
     }

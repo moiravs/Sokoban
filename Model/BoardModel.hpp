@@ -28,8 +28,6 @@ public:
     std::vector<std::vector<int>> matrix;
     std::vector<std::vector<LogicCell *>> LogicCellVector;
 
-    std::vector<std::vector<std::tuple<int, int>>> teleportersPositions;
-
     std::string filename;
     int pas = 0;
     int minpas = 0;
@@ -46,7 +44,7 @@ public:
     void maxpasandlimit();
     bool end_of_party();
     bool isFailure();
-
+    void teleport();
     std::vector<std::vector<int>> getMatrix();
     bool move(int final_pos_y, int final_pos_x);
     bool check_move(int final_pos_y, int final_pos_x);

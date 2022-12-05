@@ -27,11 +27,17 @@ public:
     cellType type;
 
     LogicCell(){};
-    LogicCell(size_t line, size_t column, cellType type) : line{line}, column{column}, type{type} {};
+    LogicCell(size_t line, size_t column, cellType type) : line{line}, column{column}, type{type}{} ;
     cellType getType()
     {
         return this->type;
     };
+    int getX(){
+        return this->column;
+    }
+    int getY(){
+        return this->line;
+    }
     bool isBoxBlocked()
     {
         if (this->box != nullptr)

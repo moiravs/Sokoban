@@ -84,6 +84,11 @@ void Cell::draw()
         fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_DARK_BLUE);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
     }
+    else if (type == TELEPORTATION)
+    {
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_DARK_GREEN);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+    }
 }
 
 bool Cell::mouseClick(Point mouseLoc)
@@ -162,6 +167,10 @@ void DisplayBoard::update()
             else if (boardmodel->LogicCellVector[y][x]->getType() == EMPTY)
             {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, EMPTY, 50, 50});
+            }
+            else if (boardmodel->LogicCellVector[y][x]->getType() == TELEPORTATION)
+            {
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, TELEPORTATION, 50, 50});
             }
             else {
                 std::cout << boardmodel->LogicCellVector[y][x]->getType() << std::endl;

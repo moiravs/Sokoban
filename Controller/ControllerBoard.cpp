@@ -4,7 +4,7 @@
 
 int ControllerBoard::board_handle(int event)
 {
-
+    puts("ahhh");
     if (Fl::event_key() == FL_Up)
     {
         if (boardModel->move(boardModel->player->getY() - 1, boardModel->player->getX()))
@@ -25,11 +25,18 @@ int ControllerBoard::board_handle(int event)
         if (boardModel->move(boardModel->player->getY(), boardModel->player->getX() - 1))
             this->boardModel->pas += 1;
     }
+    else if (Fl::event_key(97)){
+        boardModel->teleport();
+    }
+    puts("ahhbh");
+
     if ((this->boardModel->pas == this->boardModel->limitpas) || (this->boardModel->isFailure()))
     {
         this->boardModel->endofparty = true;
         this->boardModel->winorlose = false;
     }
+    puts("ahhfhuih");
+
     if (boardModel->end_of_party())
     {
         this->boardModel->endofparty = true;
