@@ -22,6 +22,7 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey, "levels");
     levels->add("Level 1");
     levels->add("Level 2");
+    levels->add("Level 3");
     this->levels = levels;
 
     Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..

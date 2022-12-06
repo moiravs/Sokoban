@@ -4,7 +4,6 @@
 
 int ControllerBoard::board_handle(int event)
 {
-    puts("ahhh");
     if (Fl::event_key() == FL_Up)
     {
         if (boardModel->move(boardModel->player->getY() - 1, boardModel->player->getX()))
@@ -25,17 +24,16 @@ int ControllerBoard::board_handle(int event)
         if (boardModel->move(boardModel->player->getY(), boardModel->player->getX() - 1))
             this->boardModel->pas += 1;
     }
-    else if (Fl::event_key(97)){
+    else if (Fl::event_key(97))
+    {
         boardModel->teleport();
     }
-    puts("ahhbh");
 
     if ((this->boardModel->pas == this->boardModel->limitpas) || (this->boardModel->isFailure()))
     {
         this->boardModel->endofparty = true;
         this->boardModel->winorlose = false;
     }
-    puts("ahhfhuih");
 
     if (boardModel->end_of_party())
     {
@@ -59,33 +57,43 @@ void ControllerBoard::level_change(int choice)
 {
     this->saveminpas();
     this->boardModel->endofparty = false;
-    if (choice == -1)
+    std::cout << choice << std::endl;
+    switch (choice)
     {
+    case -1:
         return;
-    }
-    if (choice == 0)
-    {
+    case 0:
         this->boardModel->filename = level1;
-    }
-    else if (choice == 1)
+        break;
+    case 1:
+        puts("level2");
         this->boardModel->filename = level2;
+        break;
+    case 2:
+        puts("level3");
+        this->boardModel->filename = level3;
+        break;
+        
+    }
     std::string buffer = this->boardModel->readFileIntoString();
     this->boardModel->createBoard(buffer);
 }
 
-void ControllerBoard::resetminpas(){
+void ControllerBoard::resetminpas()
+{
     this->boardModel->pas = 0;
     this->boardModel->winorlose = true;
     this->saveminpas();
 }
 
-void ControllerBoard::saveminpas(){
-    if (((this->boardModel->pas < this->boardModel->minpas) && (this->boardModel->winorlose == true)) || ((this->boardModel->minpas == 0) && (this->boardModel->winorlose == true))){
-        //TODO: for multiple files il faut noter dans le niveau le pas max et le min pas
-        std::string strReplace = "l"+std::to_string(this->boardModel->minpas);
-        std::string strNew = "l"+std::to_string(this->boardModel->pas);
-        std::ifstream filein(level1);   // File to read from
-        std::ofstream fileout("fileout.txt"); // Temporary file
+void ControllerBoard::saveminpas()
+{
+    if (((this->boardModel->pas < this->boardModel->minpas) && (this->boardModel->winorlose == true)) || ((this->boardModel->minpas == 0) && (this->boardModel->winorlose == true)))
+    {
+        std::string strReplace = "l" + std::to_string(this->boardModel->minpas);
+        std::string strNew = "l" + std::to_string(this->boardModel->pas);
+        std::ifstream filein(this->boardModel->filename); // File to read from
+        std::ofstream fileout("fileout.txt");             // Temporary file
         if (!filein || !fileout)
         {
             std::cout << "Error opening files!" << std::endl;
@@ -104,7 +112,7 @@ void ControllerBoard::saveminpas(){
             fileout << strTemp;
         }
         filein.close();
-        remove(level1.c_str());
-        std::rename("fileout.txt", level1.c_str());
+        remove(this->boardModel->filename.c_str());
+        std::rename("fileout.txt", this->boardModel->filename.c_str());
     }
 }

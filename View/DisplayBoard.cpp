@@ -133,8 +133,11 @@ void DisplayBoard::printBoard()
 }
 void DisplayBoard::mouseClick(Point mouseLoc)
 {
-    for (auto &c : cells)
-        c.mouseClick(mouseLoc);
+    for (size_t i = 0; i < 63; i++)
+    {
+        cells[i].mouseClick(mouseLoc);
+    }
+        
 }
 
 void DisplayBoard::update()

@@ -11,6 +11,7 @@
 
 std::string BoardModel::readFileIntoString()
 {
+    std::cout << this->filename;
     std::ifstream ifs(this->filename);
     std::string content((std::istreambuf_iterator<char>(ifs)),
                         (std::istreambuf_iterator<char>()));
