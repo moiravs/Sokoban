@@ -48,13 +48,13 @@ const int boardh = 600;
 
 //Button reset display
 const int resetx = 10;
-const int resety = 100;
-const int resetw = 40;
+const int resety = 115;
+const int resetw = 75;
 const int reseth = 25;
 
 // Button reset display
 const int customx = 10;
-const int customy = 100;
+const int customy = 120;
 const int customw = 40;
 const int customh = 25;
 
