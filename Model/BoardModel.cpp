@@ -203,8 +203,8 @@ void BoardModel::teleport()
     {
         LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
         LogicCellVector[this->teleportation[0]->get_first_end()->getY()][this->teleportation[0]->get_first_end()->getX()]->setPlayer(this->player);
-        this->player->setX(this->teleportation[0]->get_first_end()->getY());
-        this->player->setY(this->teleportation[0]->get_first_end()->getX());
+        this->player->setX(this->teleportation[0]->get_first_end()->getX());
+        this->player->setY(this->teleportation[0]->get_first_end()->getY());
     }
 }
 
