@@ -15,8 +15,8 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     this->callback(this->window_cb, control);
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
     this->reset = reset;
-    Fl_Button *custom = new Fl_Button(customx, customy, customw, customh);
-    this->custom = custom;
+    //Fl_Button *custom = new Fl_Button(customx, customy, customw, customh);
+    //this->custom = custom;
     Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min pas");
     this->resetminpas = resetminpas;
     Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey, "levels");
