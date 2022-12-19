@@ -9,15 +9,6 @@
 #include "LogicCell.hpp"
 
 
-
-/*class Teleportation{
-    //TODO: teleportation
-    std::tuple<int, int> teleportation_a;
-    std::tuple<int, int> teleporation_b;
-    bool pourpasfaireinfini = false;
-};*/
-
-
 class BoardModel
 {
 private:

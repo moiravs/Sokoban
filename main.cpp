@@ -29,6 +29,7 @@ int main(int argc, char const *argv[])
     boardModel->createBoard(buffer);
     MainWindow window(boardModel);
     window.show();
+    
     StartWindow start;
     // db.printBoard();
     return Fl::run();

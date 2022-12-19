@@ -42,42 +42,11 @@ int ControllerBoard::board_handle(int event)
     }
     return 1;
 }
-void ControllerBoard::reset_handle()
-{
-    this->boardModel->pas = 0;
-    this->boardModel->endofparty = false;
-    std::string aer = this->boardModel->readFileIntoString();
-    this->boardModel->createBoard(aer);
-}
+
 void ControllerBoard::custom_handle()
 {
 }
 
-void ControllerBoard::level_change(int choice)
-{
-    this->saveminpas();
-    this->boardModel->endofparty = false;
-    std::cout << choice << std::endl;
-    switch (choice)
-    {
-    case -1:
-        return;
-    case 0:
-        this->boardModel->filename = level1;
-        break;
-    case 1:
-        puts("level2");
-        this->boardModel->filename = level2;
-        break;
-    case 2:
-        puts("level3");
-        this->boardModel->filename = level3;
-        break;
-        
-    }
-    std::string buffer = this->boardModel->readFileIntoString();
-    this->boardModel->createBoard(buffer);
-}
 
 void ControllerBoard::resetminpas()
 {

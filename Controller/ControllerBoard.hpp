@@ -20,7 +20,7 @@ public:
     void reset_handle();
     void resetminpas();
     void saveminpas();
-    void level_change(int choice);
+
 };
 
 #endif

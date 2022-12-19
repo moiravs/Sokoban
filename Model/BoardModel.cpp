@@ -11,7 +11,7 @@
 
 std::string BoardModel::readFileIntoString()
 {
-    std::cout << this->filename;
+    std::cout << this->filename << std::endl;
     std::ifstream ifs(this->filename);
     std::string content((std::istreambuf_iterator<char>(ifs)),
                         (std::istreambuf_iterator<char>()));
@@ -123,7 +123,6 @@ void BoardModel::createBoard(std::string fileContent)
 
             else if (charcontent == TELEPORTATION)
             {
-                puts("blockeqd");
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
                 Teleportation *firstTeleportationCell;
 
@@ -137,7 +136,6 @@ void BoardModel::createBoard(std::string fileContent)
                     firstTeleportationCell->set_second_end(logiccell);
                     this->teleportation.push_back(firstTeleportationCell);
                 }
-                puts("blockeqdhruji");
             }
 
             else if (charcontent == LIGHT_BOX)

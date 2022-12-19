@@ -66,7 +66,7 @@ void Cell::draw()
     }
     else if (type == EMPTY)
     {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_RED);
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
     }
     else if (type == WALL)
@@ -147,7 +147,6 @@ void DisplayBoard::update()
     {
         for (size_t x = 0; x < boardmodel->getBoard()[y].size(); x++)
         {
-            
             if (boardmodel->LogicCellVector[y][x]->hasPlayer())
             {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, PLAYER, 50, 50});

@@ -2,7 +2,6 @@
 
 class MainWindow : public Fl_Window
 {
-
     std::shared_ptr<BoardModel> boardModel;
     ControllerBoard *control;
     DisplayBoard *display;
@@ -15,12 +14,15 @@ class MainWindow : public Fl_Window
     bool customlevel;
 
 public:
-    MainWindow(std::shared_ptr<BoardModel> boardModel);
+    MainWindow(std::shared_ptr<BoardModel > boardModel);
     static void MyMenuCallback(Fl_Widget *w, void *);
     void draw() override;
     int handle(int event) override;
     static void window_cb(Fl_Widget *widget, void *);
     static void Timer_CB(void *userdata);
+    static void reset_level_cb(Fl_Widget *widget, void * board_model);
+    static void reset_min_pas_cb(Fl_Widget *widget, void *);
+    static void level_change(Fl_Widget *widget, void *board_Model);
 };
 
 class StartWindow : public Fl_Window
