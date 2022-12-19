@@ -1,6 +1,6 @@
 #include "MainWindow.hpp"
 
-MainWindow::MainWindow(std::shared_ptr<BoardModel > boardModel) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
+MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
 {
     Fl::add_timeout(1.0 / refreshPerSecond, Timer_CB, this);
     resizable(this);
@@ -11,7 +11,7 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel > boardModel) : Fl_Window(500,
     board->show();
     ControllerBoard *boarda = new ControllerBoard(boardModel);
     control = boarda;
-    //TODO :auto ptr1 = reinterpret_cast<void *>(&this->boardModel);
+    // TODO :auto ptr1 = reinterpret_cast<void *>(&this->boardModel);
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
     this->reset = reset;
 
@@ -26,9 +26,8 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel > boardModel) : Fl_Window(500,
     this->levels = levels;
 
     this->callback(this->window_cb);
-    std::shared_ptr<void> spVoid = this->boardModel;
-    this->reset->callback(reset_level_cb, &spVoid);
-    this->levels->callback(level_change, &spVoid);
+    this->reset->callback(reset_level_cb, (void *)this);
+    this->levels->callback(level_change, (void *)this);
     Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
     menu->add("&File/&Open", "^o", MyMenuCallback);
     menu->add("&File/&Save", "^s", MyMenuCallback, 0, FL_MENU_DIVIDER);
@@ -98,7 +97,7 @@ int MainWindow::handle(int event)
     {
         if (event == FL_PUSH)
         {
-            //display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
+            // display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
             display->update();
             // control->board_handle(event);
         }
@@ -130,48 +129,58 @@ void MainWindow::Timer_CB(void *userdata)
     Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
 }
 
-void MainWindow::window_cb(Fl_Widget *widget, void * )
+void MainWindow::window_cb(Fl_Widget *widget, void *)
 {
-    //ControllerBoard * boardcontrol = (ControllerBoard *) controllerboard;
+    // ControllerBoard * boardcontrol = (ControllerBoard *) controllerboard;
     widget->hide();
-    //boardcontrol->saveminpas();
+    // boardcontrol->saveminpas();
 }
 
-void MainWindow::reset_level_cb(Fl_Widget *widget, void *board_Model)
+void MainWindow::reset_level_non_static(Fl_Widget *widget)
 {
-    auto ptr2 = *reinterpret_cast<std::shared_ptr<BoardModel> *>(board_Model);
-    ptr2->pas = 0;
-    std::cout << &ptr2 << std::endl;
-    ptr2->endofparty = false;
-    std::string aer = ptr2->readFileIntoString();
-    ptr2->createBoard(aer);
+    this->boardModel->pas = 0;
+    this->boardModel->endofparty = false;
+    std::string aer = this->boardModel->readFileIntoString();
+    this->boardModel->createBoard(aer);
+    this->display->update();
     puts("blu");
 }
 
-void MainWindow::level_change(Fl_Widget *widget, void * board_Model){
-    BoardModel * boardModel = (BoardModel*)board_Model;
-    Fl_Choice * levels = (Fl_Choice *) widget;
+void MainWindow::reset_level_cb(Fl_Widget *w, void *f)
+{
+    ((MainWindow *)f)->reset_level_non_static(w);
+}
+
+void MainWindow::level_change_non_static(Fl_Widget *widget)
+{
+    Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
-    //this->saveminpas();
-    //TODO : saveminpas
+    // this->saveminpas();
+    // TODO : saveminpas
     std::cout << choice << std::endl;
-    boardModel->endofparty = false;
+    this->boardModel->endofparty = false;
     switch (choice)
     {
     case -1:
         return;
     case 0:
-        boardModel->filename = level1;
+        this->boardModel->filename = level1;
         break;
     case 1:
-        boardModel->filename = level2;
+        this->boardModel->filename = level2;
         break;
     case 2:
-        boardModel->filename = level3;
+        this->boardModel->filename = level3;
         break;
     }
-    std::string buffer = boardModel->readFileIntoString();
+    std::string buffer = this->boardModel->readFileIntoString();
     std::cout << buffer << std::endl;
-    std::cout << boardModel->filename << std::endl;
-    boardModel->createBoard(buffer);
+    std::cout << this->boardModel->filename << std::endl;
+    this->boardModel->createBoard(buffer);
+    this->display->update();
+}
+
+void MainWindow::level_change(Fl_Widget *w, void *f)
+{
+    ((MainWindow *)f)->level_change_non_static(w);
 }

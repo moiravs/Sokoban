@@ -23,6 +23,8 @@ public:
     static void reset_level_cb(Fl_Widget *widget, void * board_model);
     static void reset_min_pas_cb(Fl_Widget *widget, void *);
     static void level_change(Fl_Widget *widget, void *board_Model);
+    void level_change_non_static(Fl_Widget *widget);
+    void reset_level_non_static(Fl_Widget *widget);
 };
 
 class StartWindow : public Fl_Window
