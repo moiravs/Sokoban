@@ -16,7 +16,7 @@ void DisplayBoard::draw()
     fl_draw(minpas.c_str(), limitpasx + 20, limitpasy + 80);
 }
 
-DisplayBoard::DisplayBoard(std::shared_ptr<BoardModel> board) : Fl_Box(boardx, boardy, boardw, boardh)
+DisplayBoard::DisplayBoard(std::shared_ptr<BoardModel> board) : Fl_Box(boardx, boardy, boardw, boardh) 
 {
     this->boardmodel = board;
     this->update();

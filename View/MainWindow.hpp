@@ -30,9 +30,8 @@ class StartWindow : public Fl_Window
 {
 private:
     Fl_Button *button = new Fl_Button(300, 300, 400, 50, "Andrius Ezerskis & Moïra Vanderslagmolen");
-
-public:
     int wait = 0;
+public:
     StartWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "SOKOBAN")
     {
         Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);

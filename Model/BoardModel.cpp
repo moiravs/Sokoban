@@ -117,8 +117,8 @@ void BoardModel::createBoard(std::string fileContent)
             case PLAYER:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                this->player->setY(this->matrix.size());
-                this->player->setX(line.size());
+                this->player->y = this->matrix.size();
+                this->player->x = line.size();
                 logiccell->setPlayer(player);
                 break;
             }
@@ -190,7 +190,6 @@ void BoardModel::createBoard(std::string fileContent)
         }}
     
     }
-    puts("fbuid,kls");
 }
 
 bool BoardModel::end_of_party()
@@ -222,28 +221,27 @@ bool BoardModel::isInBoard(int pos_y, int pos_x)
 
 void BoardModel::teleport()
 {
-    if ((this->player->getY() == this->teleportation[0]->get_first_end()->getY()) && this->player->getX() == this->teleportation[0]->get_first_end()->getX())
+    if ((this->player->y == this->teleportation[0]->get_first_end()->getY()) && this->player->y == this->teleportation[0]->get_first_end()->getX())
     {
-        LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
+        LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
         LogicCellVector[this->teleportation[0]->get_second_end()->getY()][this->teleportation[0]->get_second_end()->getX()]->setPlayer(this->player);
-        this->player->setX(this->teleportation[0]->get_second_end()->getX());
-        this->player->setY(this->teleportation[0]->get_second_end()->getY());
+        this->player->x = this->teleportation[0]->get_second_end()->getX();
+        this->player->y = this->teleportation[0]->get_second_end()->getY();
     }
-    else if ((this->player->getX() == this->teleportation[0]->get_second_end()->getX()) && this->player->getY() == this->teleportation[0]->get_second_end()->getY())
+    else if ((this->player->x == this->teleportation[0]->get_second_end()->getX()) && this->player->y == this->teleportation[0]->get_second_end()->getY())
     {
-        LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
+        LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
         LogicCellVector[this->teleportation[0]->get_first_end()->getY()][this->teleportation[0]->get_first_end()->getX()]->setPlayer(this->player);
-        this->player->setX(this->teleportation[0]->get_first_end()->getX());
-        this->player->setY(this->teleportation[0]->get_first_end()->getY());
+        this->player->x = this->teleportation[0]->get_first_end()->getX();
+        this->player->y = this->teleportation[0]->get_first_end()->getY();
     }
 }
 
 void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
 {
-    puts("whut");
     if (this->isInBoard(final_player_pos_y, final_player_pos_x) == false)
         return;
-    int deplacement_x = final_player_pos_x - this->player->getX(), deplacement_y = final_player_pos_y - this->player->getY();
+    int deplacement_x = final_player_pos_x - this->player->x, deplacement_y = final_player_pos_y - this->player->y;
     if (LogicCellVector[final_player_pos_y][final_player_pos_x]->hasBox())
     {
         if (LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox()->getLight() == true)
@@ -271,9 +269,9 @@ void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
     }
     else if ((LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() != EMPTY) && (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() != BOX_FINAL_POS) && (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() != TELEPORTATION))
         return;
-    LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
+    LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
     LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
-    this->player->setY(final_player_pos_y);
-    this->player->setX(final_player_pos_x);
+    this->player->y = final_player_pos_y;
+    this->player->x = final_player_pos_x;
     this->pas += 1;
 }

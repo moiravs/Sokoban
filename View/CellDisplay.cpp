@@ -1,11 +1,8 @@
 #include "CellDisplay.hpp"
 
-PlayerDisplay::PlayerDisplay(Point center, int w, int h)
+PlayerDisplay::PlayerDisplay(Point center, int w, int h) : center{center}, w{w}, h{h}
 {
     this->personnage = new Fl_JPEG_Image(imageplayer.c_str());
-    this->center = center;
-    this->w = w;
-    this->h = h;
 }
 
 void PlayerDisplay::draw()

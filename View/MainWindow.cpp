@@ -25,13 +25,6 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     menu->add("&File/&Open", "^o", MyMenuCallback);
     menu->add("&File/&Save", "^s", MyMenuCallback, 0, FL_MENU_DIVIDER);
     menu->add("&File/&Quit", "^q", MyMenuCallback);
-    menu->add("&Edit/&Copy", "^c", MyMenuCallback);
-    menu->add("&Edit/&Paste", "^v", MyMenuCallback, 0, FL_MENU_DIVIDER);
-    menu->add("&Edit/Radio 1", 0, MyMenuCallback, 0, FL_MENU_RADIO);
-    menu->add("&Edit/Radio 2", 0, MyMenuCallback, 0, FL_MENU_RADIO | FL_MENU_DIVIDER);
-    menu->add("&Edit/Toggle 1", 0, MyMenuCallback, 0, FL_MENU_TOGGLE);                 // Default: off
-    menu->add("&Edit/Toggle 2", 0, MyMenuCallback, 0, FL_MENU_TOGGLE);                 // Default: off
-    menu->add("&Edit/Toggle 3", 0, MyMenuCallback, 0, FL_MENU_TOGGLE | FL_MENU_VALUE); // Default: on
 }
 
 void MainWindow::MyMenuCallback(Fl_Widget *w, void *)
@@ -119,8 +112,7 @@ void MainWindow::reset_level_non_static(Fl_Widget *widget)
 {
     this->boardModel->pas = 0;
     this->boardModel->endofparty = false;
-    std::string aer = this->boardModel->readFileIntoString();
-    this->boardModel->createBoard(aer);
+    this->boardModel->createBoard(this->boardModel->readFileIntoString());
     this->display->update();
 }
 
