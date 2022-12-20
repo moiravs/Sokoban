@@ -101,43 +101,50 @@ void BoardModel::createBoard(std::string fileContent)
         {
             LogicCell *logiccell;
             int charcontent = fileContent[index] - '0';
-            if (charcontent == EMPTY)
+            switch (charcontent){
+            case EMPTY:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
+                break;
             }
-            else if (charcontent == PLAYER)
+            case PLAYER:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 this->player->setY(this->matrix.size());
                 this->player->setX(line.size());
                 logiccell->setPlayer(player);
+                break;
             }
 
-            else if (charcontent == BOX)
+            case BOX:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
                 box->setColor(FL_BLUE);
                 logiccell->setBox(box);
+                break;
             }
-            else if (charcontent == RED_BOX - '0')
+            case RED_BOX - '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
                 box->setColor(FL_RED);
                 logiccell->setBox(box);
+                break;
             }
-            else if (charcontent == RED_BOX_FINAL_POS - '0')
+            case RED_BOX_FINAL_POS - '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_RED);
+                break;
             }
-            else if (charcontent == WALL)
+            case WALL:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
+                break;
             }
 
-            else if (charcontent == TELEPORTATION)
+            case TELEPORTATION:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
                 Teleportation *firstTeleportationCell;
@@ -152,24 +159,23 @@ void BoardModel::createBoard(std::string fileContent)
                     firstTeleportationCell->set_second_end(logiccell);
                     this->teleportation.push_back(firstTeleportationCell);
                 }
+                break;
             }
-
-            else if (charcontent == LIGHT_BOX)
+            case LIGHT_BOX:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
                 box->setLight(true);
                 logiccell->setBox(box);
+                break;
             }
-            else if (charcontent == BOX_FINAL_POS)
+            case BOX_FINAL_POS:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_BLUE);
-            }
-            else
-            {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-            }
+                break;
+            }}
+
 
             testouille.push_back(logiccell);
             line.push_back(charcontent);
@@ -206,8 +212,6 @@ bool BoardModel::isInBoard(int pos_y, int pos_x)
 
 void BoardModel::teleport()
 {
-    std::cout << "player x" << this->player->getX() << "player y" << this->player->getY() << std::endl;
-    std::cout << "tele x" << this->teleportation[0]->get_second_end()->getX() << "tele y" << this->teleportation[0]->get_second_end()->getY() << std::endl;
     if ((this->player->getY() == this->teleportation[0]->get_first_end()->getY()) && this->player->getX() == this->teleportation[0]->get_first_end()->getX())
     {
         LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
