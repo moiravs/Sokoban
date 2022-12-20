@@ -32,22 +32,35 @@
 \section{Introduction}
 \par
 \indent
+Nous avons séparé ce rapport en plusieurs parties. Tout d'abord, nous présentons
+les tâches accomplies. Ensuite, nous verrons les différentes classes
+implémentées et nous les expliquerons. Par après, nous parlerons de la logique
+du jeu, nous décrirons le déroulement d'un début de jeu, d'une fin de jeu, de
+l'enregistrement des pas et enfin des widgets. Pour finir, nous discuterons du
+modèle MVC dans notre projet.
+
 \par
 
 \section{Tâches Accomplies}
+
 \par
 \indent
-Nous avons accompli 10 tâches.
-Nous avons tout d'abord implémenté les boîtes de couleur.
-Cases de téléportation
-Boites légères
-Compteur de par
-Meilleur score de pas
-Ecran daccueil
-Niveaux et sélection de Niveaux 
-limite de pas
-déplacement automatique à la souris et détection d'échec
 
+Nous avons accompli 10 tâches.
+Nous avons implémenté :
+
+\begin{itemize}
+    \item Les boîtes de couleur
+    \item Les cases de téléportation
+    \item Les boîtes légères
+    \item Le compteur de pas
+    \item Le meilleur score de pas
+    \item L'écran d'accueil
+    \item Les niveaux et sélection de niveaux 
+    \item La limite de pas
+    \item Le déplacement automatique à la souris
+    \item La détection d'échec
+  \end{itemize}
 
 \par
 
@@ -62,55 +75,118 @@ déplacement automatique à la souris et détection d'échec
 \subsubsection{BoardModel}
 \par
 \indent
-Nous avons le BoardModel, qui s'occupe de gérer la logique du plateau. Elle fait bouger le personnage,
-compte le nombre de pas, 
-Ensuite
+Nous avons le BoardModel, qui s'occupe de gérer la logique du plateau. Elle fait
+bouger le personnage, compte le nombre de pas, détermine si la partie est
+terminée ou si elle ne peut plus être résolue. Elle peut aussi téléporter le
+personnage d'une case de téléportation à une autre Ensuite
 \par
 \subsubsection{BoxModel}
 \par
 \indent
+Cette classe représente le modèle de la boîte. Elle contient plusieurs attributs
+: la couleur de la boîte, si elle est bloquée et son type (légère ou lourde)
+ainsi que la position de la boîte.
 \par
 \subsubsection{LogicCell}
 \par
 \indent
+Cette classe représente une cellule ou une case. Elle a une position, peut avoir
+un joueur ou alors une boîte. Elle a aussi une couleur et un type. Elle peut
+avoir 4 types différents (mur, vide, téléportation ou position finale d'une
+boîte). Si le type est la position finale d'une boîte, alors elle est "complète"
+que si la couleur de LogicCell correspond à celle de la boîte.
 \par
 \subsubsection{Player}
 \par
 \indent
+La classe Player contient uniquement la position du joueur.
 \par
 \subsubsection{Téléportation}
 \par
 \indent
+La classe téléportation est un peu plus complexe. En effet, elle prend deux
+LogicCell en paramètre. Elle est terminée uniquement lorsqu'elle a ses deux bords(ses deux LogicCell)
 \par
 
 \subsection{Classes de la Vue}
 \subsubsection{CellDisplay}
 \par
 \indent
+
 \par
 \subsubsection{DisplayBoard}
 \par
 \indent
+Le DisplayBoard va itérer à travers les LogicCell et créer des instances de
+CellDisplay. Il va aussi dessiner les limite de pas, le compteur de pas et le
+nombre de pas minimum sur la fenêtre. Enfin, lorsque l'utilisateur clique sur le
+DisplayBoard, il va demander à chaque Cell si elle a été cliquée et renverra le
+résultat au MainWindow.
 \par
 \subsubsection{MainWindow}
 \par
 \indent
+MainWindow s'occupe de tous les widgets, ainsi qu'envoyer les commandes de
+l'utilisateur au ControllerBoard. Il s'occupe donc de sauvegarder le nombre
+minimum de pas, de gérer les événements et de gérer la fenêtre principale du
+jeu.
 \par
+\subsection{StartWindow}
+\par
+\indent
+Cette fenêtre permet d'afficher un écran d'accueil. Elle se lance en premier et
+disparaît après 10 secondes.
+\par
+
 
 \subsection{Classes du Controlleur}
 \subsubsection{ControllerBoard}
 \par
 \indent
+Cette classe gère les commandes entrées par l'utilisateur. Il s'occupe aussi des
+clicks.
 \par
 
 \par
 \section{Logique du jeu}
 \par
 \indent
+\subsection{Démarrer le jeu}
 \par
+\indent
+Lorsque nous démarrons le jeu, nous donnons un fichier au BoardModel, qui va
+créer un vecteur de LogicCell. Ensuite, nous allons créer MainWindow, qui va
+lui-même créer ControllerBoard et un DisplayBoard, ainsi que tous les widgets.
+
+
+\par
+\subsection{Jouer}
+\par
+\indent
+\par
+
+\subsection{Widgets}
+\par
+\indent
+\par
+\subsection{Quitter le jeu}
+\par
+\indent
+Lorsque nous quittons le jeu, le callback s'occupant de fermer la fenêtre va enregistrer les pas
+\par
+\subsection{Enregistrer les pas}
+\par
+\indent
+\par
+
 \section{Modèle-Vue-Controlleur}
 \par
 \indent
+Nous avons implémenté le modèle MVC uniquement pour le board. Premièrement, nous
+avons d'abord implémenté tout le jeu en modèle MVC, mais FLTK n'est pas adapté
+au modèle MVC. En effet, les callback des widgets sont premièrement statiques,
+nous étions donc obligés d'appeller notre Controller dans la Vue, ce qui n'avait
+pas beaucoup de sens.
 \par
 \section{Conclusion}
 \par

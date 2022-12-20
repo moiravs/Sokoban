@@ -18,5 +18,4 @@ public:
     void set_second_end(LogicCell *second_end){
         this->second_end = second_end;
     }
-    void set_activity(bool activity);
 };

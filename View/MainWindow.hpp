@@ -33,7 +33,6 @@ private:
 
 public:
     int wait = 0;
-
     StartWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "SOKOBAN")
     {
         Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);

@@ -3,25 +3,22 @@
 
 int ControllerBoard::board_handle(int event)
 {
+    puts("what");
     if (Fl::event_key() == FL_Up)
     {
-        if (boardModel->move(boardModel->player->getY() - 1, boardModel->player->getX()))
-            this->boardModel->pas += 1;
+        boardModel->move(boardModel->player->getY() - 1, boardModel->player->getX());
     }
     else if (Fl::event_key() == FL_Down)
     {
-        if (boardModel->move(boardModel->player->getY() + 1, boardModel->player->getX()))
-            this->boardModel->pas += 1;
+        boardModel->move(boardModel->player->getY() + 1, boardModel->player->getX());
     }
     else if (Fl::event_key() == FL_Right)
     {
-        if (boardModel->move(boardModel->player->getY(), boardModel->player->getX() + 1))
-            this->boardModel->pas += 1;
+        boardModel->move(boardModel->player->getY(), boardModel->player->getX() + 1);
     }
     else if (Fl::event_key() == FL_Left)
     {
-        if (boardModel->move(boardModel->player->getY(), boardModel->player->getX() - 1))
-            this->boardModel->pas += 1;
+        boardModel->move(boardModel->player->getY(), boardModel->player->getX() - 1);
     }
     else if (Fl::event_key(97))
     {

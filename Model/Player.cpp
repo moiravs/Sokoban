@@ -19,7 +19,3 @@ int Player::getY()
     return (this->y);
 }
 
-void Player::incrementSteps()
-{
-    stepsCount++;
-}

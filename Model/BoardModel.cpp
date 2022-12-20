@@ -70,8 +70,6 @@ void BoardModel::createBoard(std::string fileContent)
     for (size_t index = 0; index < fileContent.size(); index++)
     {
         switch (fileContent[index]){
-        case ' ':
-            break;
         case 'l':
         {
             std::string minpas = "";
@@ -102,18 +100,21 @@ void BoardModel::createBoard(std::string fileContent)
             this->matrix.push_back(line);
             line.clear();
             break;
-        }
+        
+        case ' ':
+            break;
         default:
         {
             LogicCell *logiccell;
-            switch (fileContent[index] )
+            int charcontent = fileContent[index] - '0';
+            switch (charcontent)
             {
-            case EMPTY + '0':
+            case EMPTY:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 break;
             }
-            case PLAYER + '0':
+            case PLAYER:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 this->player->setY(this->matrix.size());
@@ -121,7 +122,7 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell->setPlayer(player);
                 break;
             }
-            case BOX + '0':
+            case BOX:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
@@ -129,7 +130,7 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell->setBox(box);
                 break;
             }
-            case RED_BOX :
+            case RED_BOX - '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
@@ -137,19 +138,19 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell->setBox(box);
                 break;
             }
-            case RED_BOX_FINAL_POS:
+            case RED_BOX_FINAL_POS - '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_RED);
                 break;
             }
-            case WALL + '0':
+            case WALL:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
                 break;
             }
 
-            case TELEPORTATION + '0':
+            case TELEPORTATION:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
                 Teleportation *firstTeleportationCell;
@@ -166,7 +167,7 @@ void BoardModel::createBoard(std::string fileContent)
                 }
                 break;
             }
-            case LIGHT_BOX + '0':
+            case LIGHT_BOX:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
@@ -174,21 +175,22 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell->setBox(box);
                 break;
             }
-            case BOX_FINAL_POS + '0':
+            case BOX_FINAL_POS:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_BLUE);
                 break;
             }
             }
-            int charcontent = fileContent[index] - '0';
+
             testouille.push_back(logiccell);
             line.push_back(charcontent);
             break;
         }
-        
-        }
+        }}
+    
     }
+    puts("fbuid,kls");
 }
 
 bool BoardModel::end_of_party()
@@ -236,10 +238,11 @@ void BoardModel::teleport()
     }
 }
 
-bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
+void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
 {
+    puts("whut");
     if (this->isInBoard(final_player_pos_y, final_player_pos_x) == false)
-        return false;
+        return;
     int deplacement_x = final_player_pos_x - this->player->getX(), deplacement_y = final_player_pos_y - this->player->getY();
     if (LogicCellVector[final_player_pos_y][final_player_pos_x]->hasBox())
     {
@@ -255,22 +258,22 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
                 }
             }
             else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != EMPTY) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != BOX_FINAL_POS))
-                return false;
+                return;
         }
         else if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox() || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == WALL))
         {
             if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == WALL) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->getLight() == false))
-                return false;
+                return;
         }
         LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
             ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
         LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
     }
     else if ((LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() != EMPTY) && (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() != BOX_FINAL_POS) && (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() != TELEPORTATION))
-        return false;
+        return;
     LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
     LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
     this->player->setY(final_player_pos_y);
     this->player->setX(final_player_pos_x);
-    return true;
+    this->pas += 1;
 }

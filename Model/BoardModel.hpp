@@ -13,6 +13,8 @@ class BoardModel
 private:
     bool first_teleportation_on_board = false;
 public:
+    //TODO : destructeur
+    //TODO :TOUT EN PRIVATE
     std::vector<Teleportation *> teleportation;
     std::vector<std::vector<int>> matrix;
     std::vector<std::vector<LogicCell *>> LogicCellVector;
@@ -34,7 +36,7 @@ public:
     bool isFailure();
     void teleport();
     std::vector<std::vector<int>> getMatrix();
-    bool move(int final_pos_y, int final_pos_x);
+    void move(int final_pos_y, int final_pos_x);
     bool check_move(int final_pos_y, int final_pos_x);
     std::vector<std::vector<int>> getBoard();
     std::string readFileIntoString();
