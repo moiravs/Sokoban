@@ -12,7 +12,6 @@ class Teleportation
 
 public:
     Teleportation(LogicCell * first_end): first_end{first_end}{};
-
     LogicCell *get_second_end();
     LogicCell *get_first_end();
     bool is_done();

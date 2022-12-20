@@ -41,8 +41,7 @@ public:
     bool check_move(int final_pos_y, int final_pos_x);
     std::vector<std::vector<int>> getBoard();
     std::string readFileIntoString();
-    void createBoard(std::string fileContent);
-    void printBoard();
+    void printBoard(); void createBoard(std::string fileContent);
     void setFirstTeleportation(bool value);
     bool getFirstTeleportation();
     bool isInBoard(int pos_y, int pos_x);
