@@ -25,6 +25,7 @@
 #include <memory>
 #include <string>
 #include <unistd.h>
+#include <fstream>
 
 // Cases
 const int EMPTY = 0;
@@ -34,6 +35,11 @@ const int WALL = 3;
 const int TELEPORTATION = 4;
 const int BOX_FINAL_POS = 5;
 const int LIGHT_BOX = 6;
+
+const char BLUE_BOX = 'A';
+const char BLUE_BOX_FINAL_POS = 'B';
+const char RED_BOX = 'C';
+const char RED_BOX_FINAL_POS = 'D';
 
 // Main Window
 const int windowWidth = 900;

@@ -5,10 +5,6 @@ class MainWindow : public Fl_Window
     std::shared_ptr<BoardModel> boardModel;
     ControllerBoard *control;
     DisplayBoard *display;
-    Fl_Button *reset;
-    Fl_Button *custom;
-    Fl_Button *resetminpas;
-    Fl_Choice *levels;
     const char *pas;
     Fl_Text_Buffer *buff;
     bool customlevel;
@@ -25,6 +21,9 @@ public:
     static void level_change(Fl_Widget *widget, void *board_Model);
     void level_change_non_static(Fl_Widget *widget);
     void reset_level_non_static(Fl_Widget *widget);
+    void saveminpas() ;
+    void resetminpas_cb();
+    static void resetminpas_cb_static(Fl_Widget *w, void *f);
 };
 
 class StartWindow : public Fl_Window

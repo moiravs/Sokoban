@@ -11,23 +11,17 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     board->show();
     ControllerBoard *boarda = new ControllerBoard(boardModel);
     control = boarda;
-    // TODO :auto ptr1 = reinterpret_cast<void *>(&this->boardModel);
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
-    this->reset = reset;
-
     Fl_Button *custom = new Fl_Button(customx, customy, customw, customh);
-    this->custom = custom;
     Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min pas");
-    this->resetminpas = resetminpas;
     Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey, "levels");
     levels->add("Level 1");
     levels->add("Level 2");
     levels->add("Level 3");
-    this->levels = levels;
-
     this->callback(this->window_cb);
-    this->reset->callback(reset_level_cb, (void *)this);
-    this->levels->callback(level_change, (void *)this);
+    reset->callback(reset_level_cb, (void *)this);
+    levels->callback(level_change, (void *)this);
+    resetminpas->callback(resetminpas_cb_static, (void *)this);
     Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
     menu->add("&File/&Open", "^o", MyMenuCallback);
     menu->add("&File/&Save", "^s", MyMenuCallback, 0, FL_MENU_DIVIDER);
@@ -58,9 +52,7 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *)
     }
     fprintf(stderr, "\n");
     if (strcmp(item->label(), "&Quit") == 0)
-    {
         exit(0);
-    }
 }
 
 void MainWindow::draw()
@@ -87,7 +79,6 @@ int MainWindow::handle(int event)
     {
         if (event == FL_KEYBOARD)
         {
-
             control->board_handle(event);
             display->update();
         }
@@ -96,27 +87,7 @@ int MainWindow::handle(int event)
     if (Fl::event_inside(this)) // if event inside board
     {
         if (event == FL_PUSH)
-        {
-            // display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
             display->update();
-            // control->board_handle(event);
-        }
-    }
-    if (Fl::event_inside(this->custom)) // if event inside board
-    {
-        if (event == FL_PUSH)
-        {
-            control->custom_handle();
-            display->update();
-        }
-    }
-    if (Fl::event_inside(this->resetminpas)) // if event inside board
-    {
-        if (event == FL_PUSH)
-        {
-            control->resetminpas();
-            display->update();
-        }
     }
 
     return Fl_Window::handle(event);
@@ -133,7 +104,7 @@ void MainWindow::window_cb(Fl_Widget *widget, void *)
 {
     // ControllerBoard * boardcontrol = (ControllerBoard *) controllerboard;
     widget->hide();
-    // boardcontrol->saveminpas();
+    // TODO :this->saveminpas();
 }
 
 void MainWindow::reset_level_non_static(Fl_Widget *widget)
@@ -143,7 +114,6 @@ void MainWindow::reset_level_non_static(Fl_Widget *widget)
     std::string aer = this->boardModel->readFileIntoString();
     this->boardModel->createBoard(aer);
     this->display->update();
-    puts("blu");
 }
 
 void MainWindow::reset_level_cb(Fl_Widget *w, void *f)
@@ -151,12 +121,47 @@ void MainWindow::reset_level_cb(Fl_Widget *w, void *f)
     ((MainWindow *)f)->reset_level_non_static(w);
 }
 
+void MainWindow::resetminpas_cb()
+{
+    this->boardModel->minpas = 0;
+}
+
+void MainWindow::saveminpas()
+{
+    if (((this->boardModel->pas < this->boardModel->minpas) && (this->boardModel->winorlose == true)) || ((this->boardModel->minpas == 0) && (this->boardModel->winorlose == true)))
+    {
+        std::string strReplace = "l" + std::to_string(this->boardModel->minpas);
+        std::string strNew = "l" + std::to_string(this->boardModel->pas);
+        std::ifstream filein(this->boardModel->filename); // File to read from
+        std::ofstream fileout("fileout.txt");             // Temporary file
+        if (!filein || !fileout)
+        {
+            std::cout << "Error opening files!" << std::endl;
+        }
+
+        std::string strTemp;
+        bool found = false;
+        while (filein >> strTemp)
+        {
+            if ((strTemp == strReplace) && (found == false))
+            {
+                strTemp = strNew;
+                found = true;
+            }
+            strTemp += "\n";
+            fileout << strTemp;
+        }
+        filein.close();
+        std::remove(this->boardModel->filename.c_str());
+        std::rename("fileout.txt", this->boardModel->filename.c_str());
+    }
+}
+
 void MainWindow::level_change_non_static(Fl_Widget *widget)
 {
     Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
-    // this->saveminpas();
-    // TODO : saveminpas
+    this->saveminpas();
     std::cout << choice << std::endl;
     this->boardModel->endofparty = false;
     switch (choice)
@@ -183,4 +188,10 @@ void MainWindow::level_change_non_static(Fl_Widget *widget)
 void MainWindow::level_change(Fl_Widget *w, void *f)
 {
     ((MainWindow *)f)->level_change_non_static(w);
+}
+
+
+void MainWindow::resetminpas_cb_static(Fl_Widget *w, void *f)
+{
+    ((MainWindow *)f)->resetminpas_cb();
 }

@@ -34,8 +34,9 @@ void PlayerDisplay::draw(){
 }
 
 
-Cell::Cell(Point center, int type, int w, int h) : center{center}, type{type}, w{w}, h{h}
+Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, type{type}, w{w}, h{h}, color{color}
 {
+    this->color = color;
     this->wall = new Fl_PNG_Image(imagewall.c_str());
     if (type == PLAYER){
         PlayerDisplay *player = new PlayerDisplay(center, w, h);
@@ -64,29 +65,9 @@ void Cell::draw()
     {
         this->box->draw();
     }
-    else if (type == EMPTY)
+    else 
     {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
-    }
-    else if (type == WALL)
-    {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_DARK_YELLOW);
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
-    }
-    else if (type == BOX_FINAL_POS)
-    {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_YELLOW);
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
-    }
-    else if (type == LIGHT_BOX)
-    {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_DARK_BLUE);
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
-    }
-    else if (type == TELEPORTATION)
-    {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_DARK_GREEN);
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, this->color);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
     }
 }
@@ -149,30 +130,30 @@ void DisplayBoard::update()
         {
             if (boardmodel->LogicCellVector[y][x]->hasPlayer())
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, PLAYER, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, PLAYER, 50, 50, FL_BLACK});
             }
             else if (boardmodel->LogicCellVector[y][x]->hasBox())
             {
                 if (boardmodel->LogicCellVector[y][x]->getBox()->light == false)
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX, 50, 50, FL_BLACK});
                 else if (boardmodel->LogicCellVector[y][x]->getBox()->light == true)
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, LIGHT_BOX, 50, 50});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, LIGHT_BOX, 50, 50, FL_DARK_BLUE});
             }
             else if (boardmodel->LogicCellVector[y][x]->getType() == WALL)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, WALL, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, WALL, 50, 50, FL_DARK_YELLOW});
             }
             else if (boardmodel->LogicCellVector[y][x]->getType() == BOX_FINAL_POS)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX_FINAL_POS, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX_FINAL_POS, 50, 50, FL_YELLOW});
             }
             else if (boardmodel->LogicCellVector[y][x]->getType() == EMPTY)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, EMPTY, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, EMPTY, 50, 50, FL_BLACK});
             }
             else if (boardmodel->LogicCellVector[y][x]->getType() == TELEPORTATION)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, TELEPORTATION, 50, 50});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, TELEPORTATION, 50, 50, FL_DARK_GREEN});
             }
             else {
                 std::cout << boardmodel->LogicCellVector[y][x]->getType() << std::endl;

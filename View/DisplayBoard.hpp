@@ -60,9 +60,10 @@ class Cell : public Sketchable
     PlayerDisplay *personnage;
     Fl_PNG_Image *wall;
     BoxDisplay *box;
+    int color;
 
 public:
-    Cell(Point center, int type, int w, int h);
+    Cell(Point center, int type, int w, int h, int color);
     void draw();
     bool contains(Point p) const override;
     Point getCenter() const override { return center; }
