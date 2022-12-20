@@ -6,16 +6,28 @@ class Box
     int x;
     int y;
     int color;
-public:
-    //TODO : à mettre en private
     bool light = false;
     bool blocked = false;
+
+public:
     Box(int x, int y) : x{x}, y{y}{}
     int getColor(){
         return this->color;
     }
     void setColor(int color){
         this->color = color;
+    }
+    void setLight(bool light){
+        this->light = true;
+    }
+    bool getLight(){
+        return this->light;
+    }
+    void setBlocked(bool blocked){
+        this->blocked = true;
+    }
+    bool getBlocked(){
+        return this->blocked;
     }
     void setX(int x);
     void setY(int y);

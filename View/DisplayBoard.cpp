@@ -46,9 +46,9 @@ void DisplayBoard::update()
             }
             else if (boardmodel->LogicCellVector[y][x]->hasBox())
             {
-                if (boardmodel->LogicCellVector[y][x]->getBox()->light == false)
+                if (boardmodel->LogicCellVector[y][x]->getBox()->getLight() == false)
                     cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX, 50, 50, boardmodel->LogicCellVector[y][x]->getBox()->getColor()});
-                else if (boardmodel->LogicCellVector[y][x]->getBox()->light == true)
+                else if (boardmodel->LogicCellVector[y][x]->getBox()->getLight() == true)
                     cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, LIGHT_BOX, 50, 50, FL_DARK_BLUE});
             }
             else if (boardmodel->LogicCellVector[y][x]->getType() == WALL)
