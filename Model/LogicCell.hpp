@@ -25,7 +25,6 @@ public:
         Box_final_pos = BOX_FINAL_POS,
     };
     cellType type;
-
     LogicCell(){};
     LogicCell(size_t line, size_t column, cellType type) : line{line}, column{column}, type{type}{} ;
     cellType getType()

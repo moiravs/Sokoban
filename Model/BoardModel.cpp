@@ -186,18 +186,6 @@ bool BoardModel::end_of_party()
     return true;
 }
 
-void BoardModel::printBoard()
-{
-    for (size_t i = 0; i < 7; i++)
-    {
-        for (size_t j = 0; j < 7; j++)
-        {
-            std::cout << LogicCellVector[i][j]->getType();
-        }
-        std::cout << std::endl;
-    }
-}
-
 bool BoardModel::check_move(int final_pos_y, int final_pos_x)
 {
     if ((final_pos_y < 0) || (final_pos_x < 0))
@@ -234,7 +222,6 @@ void BoardModel::teleport()
 
 bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
 {
-    //this->printBoard();
     if (this->isInBoard(final_player_pos_y, final_player_pos_x) == false)
         return false;
     int deplacement_x = final_player_pos_x - this->player->getX(), deplacement_y = final_player_pos_y - this->player->getY();

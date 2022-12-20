@@ -7,13 +7,10 @@ class Box
     int y;
     int color;
 public:
+    //TODO : à mettre en private
     bool light = false;
     bool blocked = false;
-    Box(int x, int y){
-        this->x = x;
-        this->y = y;
-    }
-    //TODO: liste d'initialisation serait mieux
+    Box(int x, int y) : x{x}, y{y}{}
     int getColor(){
         return this->color;
     }

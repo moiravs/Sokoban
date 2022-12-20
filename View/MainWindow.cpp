@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "CellDisplay.hpp"
 
 MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
 {
@@ -12,13 +13,12 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     ControllerBoard *boarda = new ControllerBoard(boardModel);
     control = boarda;
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
-    Fl_Button *custom = new Fl_Button(customx, customy, customw, customh);
     Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min pas");
     Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey, "levels");
     levels->add("Level 1");
     levels->add("Level 2");
     levels->add("Level 3");
-    this->callback(this->window_cb);
+    this->callback(this->window_cb, this);
     reset->callback(reset_level_cb, (void *)this);
     levels->callback(level_change, (void *)this);
     resetminpas->callback(resetminpas_cb_static, (void *)this);
@@ -39,17 +39,12 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *)
 {
     Fl_Menu_Bar *bar = (Fl_Menu_Bar *)w;      // Get the menubar widget
     const Fl_Menu_Item *item = bar->mvalue(); // Get the menu item that was picked
-
     char ipath[256];
     bar->item_pathname(ipath, sizeof(ipath)); // Get full pathname of picked item
-
     fprintf(stderr, "callback: You picked '%s'", item->label()); // Print item picked
     fprintf(stderr, ", item_pathname() is '%s'", ipath);         // ..and full pathname
-
     if (item->flags & (FL_MENU_RADIO | FL_MENU_TOGGLE))
-    {                                                                   // Toggle or radio item?
         fprintf(stderr, ", value is %s", item->value() ? "on" : "off"); // Print item's value
-    }
     fprintf(stderr, "\n");
     if (strcmp(item->label(), "&Quit") == 0)
         exit(0);
@@ -84,7 +79,7 @@ int MainWindow::handle(int event)
         }
     }
 
-    if (Fl::event_inside(this)) // if event inside board
+    if (Fl::event_inside(this)) // if 
     {
         if (event == FL_PUSH)
             display->update();
@@ -110,11 +105,15 @@ void MainWindow::Timer_CB(void *userdata)
     Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
 }
 
-void MainWindow::window_cb(Fl_Widget *widget, void *)
+void MainWindow::window_non_static_cb(Fl_Widget *widget)
 {
-    // ControllerBoard * boardcontrol = (ControllerBoard *) controllerboard;
     widget->hide();
-    // TODO :this->saveminpas();
+    this->saveminpas();
+}
+
+void MainWindow::window_cb(Fl_Widget *widget, void *f)
+{
+    ((MainWindow *)f)->window_non_static_cb(widget);
 }
 
 void MainWindow::reset_level_non_static(Fl_Widget *widget)

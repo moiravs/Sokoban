@@ -23,14 +23,12 @@
 int main(int argc, char const *argv[])
 {
     Fl::scheme("gtk+");
-    std::string file = "Niveaux/niveau1.txt";
+    std::string file = level1;
     auto boardModel = std::make_shared<BoardModel>(file);
     std::string buffer = boardModel->readFileIntoString();
     boardModel->createBoard(buffer);
     MainWindow window(boardModel);
     window.show();
-    
     StartWindow start;
-    // db.printBoard();
     return Fl::run();
 }

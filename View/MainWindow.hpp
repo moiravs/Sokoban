@@ -7,7 +7,6 @@ class MainWindow : public Fl_Window
     DisplayBoard *display;
     const char *pas;
     Fl_Text_Buffer *buff;
-    bool customlevel;
 
 public:
     MainWindow(std::shared_ptr<BoardModel > boardModel);
@@ -24,6 +23,7 @@ public:
     void saveminpas() ;
     void resetminpas_cb();
     static void resetminpas_cb_static(Fl_Widget *w, void *f);
+    void window_non_static_cb(Fl_Widget *widget);
 };
 
 class StartWindow : public Fl_Window
