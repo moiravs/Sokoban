@@ -123,6 +123,10 @@ void BoardModel::createBoard(std::string fileContent)
                 box->setColor(FL_RED);
                 logiccell->setBox(box);
             }
+            else if (charcontent == RED_BOX_FINAL_POS - '0'){
+                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
+                logiccell->setColor(FL_RED);
+            }
             
             else if (charcontent == WALL)
             {
@@ -156,6 +160,7 @@ void BoardModel::createBoard(std::string fileContent)
             else if (charcontent == BOX_FINAL_POS)
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
+                logiccell->setColor(FL_BLUE);
             }
             else
             {

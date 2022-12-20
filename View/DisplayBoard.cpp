@@ -45,11 +45,14 @@ void Cell::draw()
     {
         this->personnage->draw();
     }
-    else 
+    else if (type == BOX_FINAL_POS)
     {
         fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, this->color);
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, frameColor);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_WHITE);
     }
+    else{
+    fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, this->color);
+    fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);}
 }
 
 bool Cell::mouseClick(Point mouseLoc)
@@ -125,7 +128,7 @@ void DisplayBoard::update()
             }
             else if (boardmodel->LogicCellVector[y][x]->getType() == BOX_FINAL_POS)
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX_FINAL_POS, 50, 50, FL_YELLOW});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX_FINAL_POS, 50, 50, boardmodel->LogicCellVector[y][x]->getColor()});
             }
             else if (boardmodel->LogicCellVector[y][x]->getType() == EMPTY)
             {

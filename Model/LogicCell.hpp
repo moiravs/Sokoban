@@ -13,7 +13,7 @@ private:
     size_t line, column;
     Box *box = nullptr;
     Player *player = nullptr;
-    int color = 0;
+    int color = FL_YELLOW;
 
 protected:
 public:
@@ -46,6 +46,10 @@ public:
         }
         return false;
     }
+    void setColor(int color){
+        this->color = color;
+    }
+
     bool isComplete(){
         if (this->type == Box_final_pos){
             if (this->box !=nullptr){
@@ -54,6 +58,9 @@ public:
             return false;
         }
         return true;
+    }
+    int getColor(){
+        return this->color;
     }
     bool isBlocked(){
         if (this->type == WALL){
