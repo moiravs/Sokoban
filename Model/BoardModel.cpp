@@ -70,6 +70,8 @@ void BoardModel::createBoard(std::string fileContent)
     for (size_t index = 0; index < fileContent.size(); index++)
     {
         switch (fileContent[index]){
+        case ' ':
+            break;
         case 'l':
         {
             std::string minpas = "";
@@ -101,19 +103,17 @@ void BoardModel::createBoard(std::string fileContent)
             line.clear();
             break;
         }
-        case ' ':
-        break;
         default:
         {
             LogicCell *logiccell;
-            int charcontent = fileContent[index] - '0';
-            switch (charcontent){
-            case EMPTY:
+            switch (fileContent[index] )
+            {
+            case EMPTY + '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 break;
             }
-            case PLAYER:
+            case PLAYER + '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 this->player->setY(this->matrix.size());
@@ -121,7 +121,7 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell->setPlayer(player);
                 break;
             }
-            case BOX:
+            case BOX + '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
@@ -129,7 +129,7 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell->setBox(box);
                 break;
             }
-            case RED_BOX - '0':
+            case RED_BOX :
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
@@ -137,19 +137,19 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell->setBox(box);
                 break;
             }
-            case RED_BOX_FINAL_POS - '0':
+            case RED_BOX_FINAL_POS:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_RED);
                 break;
             }
-            case WALL:
+            case WALL + '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
                 break;
             }
 
-            case TELEPORTATION:
+            case TELEPORTATION + '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
                 Teleportation *firstTeleportationCell;
@@ -166,7 +166,7 @@ void BoardModel::createBoard(std::string fileContent)
                 }
                 break;
             }
-            case LIGHT_BOX:
+            case LIGHT_BOX + '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
@@ -174,13 +174,14 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell->setBox(box);
                 break;
             }
-            case BOX_FINAL_POS:
+            case BOX_FINAL_POS + '0':
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_BLUE);
                 break;
-            }}
-
+            }
+            }
+            int charcontent = fileContent[index] - '0';
             testouille.push_back(logiccell);
             line.push_back(charcontent);
             break;
