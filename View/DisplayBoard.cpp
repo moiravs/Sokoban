@@ -5,19 +5,7 @@
 
 
 
-BoxDisplay::BoxDisplay(Point center, int w, int h)
-{
-    this->wall = new Fl_PNG_Image(imagewall.c_str());
-    this->center = center;
-    this->w = w;
-    this->h = h;
-}
 
-void BoxDisplay::draw(){
-    Fl_Image *hihi = this->wall;
-    hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
-    fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
-}
 
 PlayerDisplay::PlayerDisplay(Point center, int w, int h)
 {
@@ -42,10 +30,6 @@ Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, ty
         PlayerDisplay *player = new PlayerDisplay(center, w, h);
         this->personnage = player;
     }
-    else if (type == BOX){
-        BoxDisplay *box = new BoxDisplay(center, w, h);
-        this->box = box;
-    }
 }
 
 bool Cell::contains(Point p) const
@@ -60,10 +44,6 @@ void Cell::draw()
     if (type == PLAYER)
     {
         this->personnage->draw();
-    }
-    else if (type == BOX)
-    {
-        this->box->draw();
     }
     else 
     {
@@ -135,7 +115,7 @@ void DisplayBoard::update()
             else if (boardmodel->LogicCellVector[y][x]->hasBox())
             {
                 if (boardmodel->LogicCellVector[y][x]->getBox()->light == false)
-                    cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX, 50, 50, FL_BLACK});
+                    cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX, 50, 50, boardmodel->LogicCellVector[y][x]->getBox()->getColor()});
                 else if (boardmodel->LogicCellVector[y][x]->getBox()->light == true)
                     cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, LIGHT_BOX, 50, 50, FL_DARK_BLUE});
             }

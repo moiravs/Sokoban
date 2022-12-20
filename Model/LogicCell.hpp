@@ -49,7 +49,7 @@ public:
     bool isComplete(){
         if (this->type == Box_final_pos){
             if (this->box !=nullptr){
-                return (this->box->color == this->color);
+                return (this->box->getColor() == this->color);
             }
             return false;
         }

@@ -114,6 +114,7 @@ void BoardModel::createBoard(std::string fileContent)
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
+                box->setColor(FL_BLUE);
                 logiccell->setBox(box);
             }
             else if (charcontent == WALL)

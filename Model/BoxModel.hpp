@@ -5,10 +5,8 @@ class Box
 {
     int x;
     int y;
-    
-    
+    int color;
 public:
-    int color = 0;
     bool light = false;
     bool blocked = false;
     Box(int x, int y){
@@ -16,6 +14,12 @@ public:
         this->y = y;
     }
     //TODO: liste d'initialisation serait mieux
+    int getColor(){
+        return this->color;
+    }
+    void setColor(int color){
+        this->color = color;
+    }
     void setX(int x);
     void setY(int y);
     int getX();
