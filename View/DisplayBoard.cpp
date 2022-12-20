@@ -3,10 +3,6 @@
 
 #include "DisplayBoard.hpp"
 
-
-
-
-
 PlayerDisplay::PlayerDisplay(Point center, int w, int h)
 {
     this->personnage = new Fl_JPEG_Image(imageplayer.c_str());
@@ -15,18 +11,19 @@ PlayerDisplay::PlayerDisplay(Point center, int w, int h)
     this->h = h;
 }
 
-void PlayerDisplay::draw(){
+void PlayerDisplay::draw()
+{
     Fl_Image *hihi = this->personnage;
     hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
     fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
 }
 
-
 Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, type{type}, w{w}, h{h}, color{color}
 {
     this->color = color;
     this->wall = new Fl_PNG_Image(imagewall.c_str());
-    if (type == PLAYER){
+    if (type == PLAYER)
+    {
         PlayerDisplay *player = new PlayerDisplay(center, w, h);
         this->personnage = player;
     }
@@ -40,7 +37,7 @@ bool Cell::contains(Point p) const
 
 void Cell::draw()
 {
-    
+
     if (type == PLAYER)
     {
         this->personnage->draw();
@@ -50,9 +47,11 @@ void Cell::draw()
         fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, this->color);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_WHITE);
     }
-    else{
-    fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, this->color);
-    fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);}
+    else
+    {
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, this->color);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);
+    }
 }
 
 bool Cell::mouseClick(Point mouseLoc)
@@ -95,13 +94,13 @@ void DisplayBoard::printBoard()
         std::cout << "\n";
     }
 }
-void DisplayBoard::mouseClick(Point mouseLoc)
+std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc)
 {
-    for (size_t i = 0; i < 63; i++)
-    {
-        cells[i].mouseClick(mouseLoc);
-    }
-        
+    for (size_t i = 0; i < 63; i++){
+        if (cells[i].mouseClick(mouseLoc))
+        {
+            return std::tuple<int, int>(i/8, i%8);
+        }}
 }
 
 void DisplayBoard::update()
@@ -138,7 +137,8 @@ void DisplayBoard::update()
             {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, TELEPORTATION, 50, 50, FL_DARK_GREEN});
             }
-            else {
+            else
+            {
                 std::cout << boardmodel->LogicCellVector[y][x]->getType() << std::endl;
             }
         }

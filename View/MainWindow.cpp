@@ -89,6 +89,16 @@ int MainWindow::handle(int event)
         if (event == FL_PUSH)
             display->update();
     }
+    if (Fl::event_inside(this->display))
+    {
+        if (event == FL_PUSH)
+        {
+            std::tuple<int, int> position = display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
+            std::cout << std::get<0>(position)<< std::get<1>(position) << std::endl;
+            control->move_to(std::get<1>(position), std::get<0>(position));
+            display->update();
+        }
+    }
 
     return Fl_Window::handle(event);
 }
@@ -189,7 +199,6 @@ void MainWindow::level_change(Fl_Widget *w, void *f)
 {
     ((MainWindow *)f)->level_change_non_static(w);
 }
-
 
 void MainWindow::resetminpas_cb_static(Fl_Widget *w, void *f)
 {
