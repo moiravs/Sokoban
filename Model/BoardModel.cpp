@@ -242,32 +242,20 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
                         ->setBox(LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox());
                 }
             }
-            else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == BOX_FINAL_POS))
-            {
-            }
-            else
-            {
+            else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != EMPTY) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != BOX_FINAL_POS))
                 return false;
-            }
         }
-        else if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox())
+        else if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox() || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == WALL))
         {
-            if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->getLight() == false)
+            if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == WALL) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->getLight() == false))
                 return false;
         }
-
         LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
             ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
         LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
     }
-    else if ((LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == BOX_FINAL_POS) || (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == TELEPORTATION))
-    {
-
-    }
-    else
-    {
+    else if ((LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() != EMPTY) && (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() != BOX_FINAL_POS) && (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() != TELEPORTATION))
         return false;
-    }
     LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
     LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
     this->player->setY(final_player_pos_y);
