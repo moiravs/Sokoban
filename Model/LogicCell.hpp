@@ -93,21 +93,12 @@ public:
     bool hasBox()
     {
         if (this->box != nullptr)
-        {
             return true;
-        }
         return false;
     }
     Box *getBox()
     {
-        if (this->box != nullptr)
-        {
-            return this->box;
-        }
-        else
-        {
-            std::cout << "error";
-        }
+        return (this->box);
     }
     bool hasPlayer()
     {

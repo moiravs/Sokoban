@@ -30,7 +30,7 @@ std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc)
         {
             return std::tuple<int, int>(i / 8, i % 8);
         }
-    }
+    }    
 }
 
 void DisplayBoard::update()

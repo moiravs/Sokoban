@@ -50,8 +50,10 @@ bool BoardModel::isFailure()
                 {
                     LogicCellVector[i][j]->setBoxblocked();
                 }
-                else{
-                    return false;}
+                else
+                {
+                    return false;
+                }
             }
         }
     }
@@ -118,13 +120,15 @@ void BoardModel::createBoard(std::string fileContent)
                 box->setColor(FL_BLUE);
                 logiccell->setBox(box);
             }
-            else if (charcontent == RED_BOX - '0'){
+            else if (charcontent == RED_BOX - '0')
+            {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
                 Box *box = new Box(this->matrix.size(), line.size());
                 box->setColor(FL_RED);
                 logiccell->setBox(box);
             }
-            else if (charcontent == RED_BOX_FINAL_POS - '0'){
+            else if (charcontent == RED_BOX_FINAL_POS - '0')
+            {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_RED);
             }
@@ -132,7 +136,7 @@ void BoardModel::createBoard(std::string fileContent)
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
             }
-            
+
             else if (charcontent == TELEPORTATION)
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
@@ -236,51 +240,37 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
                 {
                     LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]
                         ->setBox(LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox());
-                    LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
-                        ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
-                    LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
-                    LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
-                    LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
-                    this->player->setY(final_player_pos_y);
-                    this->player->setX(final_player_pos_x);
                 }
             }
             else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == BOX_FINAL_POS))
             {
-
-                LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
-                    ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
-                LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
-                LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
-                LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
-                this->player->setY(final_player_pos_y);
-                this->player->setX(final_player_pos_x);
-
             }
             else
             {
                 return false;
             }
         }
-        else if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox()){
-            return false;
-        }
-        else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == BOX_FINAL_POS))
+        else if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox())
         {
-            LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
-                ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
-            LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
-            LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
-            LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
-            this->player->setY(final_player_pos_y);
-            this->player->setX(final_player_pos_x);
+            if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->getLight() == false)
+                return false;
         }
+
+        LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
+            ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
+        LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
     }
     else if ((LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == EMPTY) || (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == BOX_FINAL_POS) || (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == TELEPORTATION))
     {
-        LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
-        LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
-        this->player->setY(final_player_pos_y);
-        this->player->setX(final_player_pos_x);
+
     }
+    else
+    {
+        return false;
+    }
+    LogicCellVector[this->player->getY()][this->player->getX()]->setPlayer(nullptr);
+    LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
+    this->player->setY(final_player_pos_y);
+    this->player->setX(final_player_pos_x);
+    return true;
 }
