@@ -53,9 +53,6 @@ void Cell::draw()
 bool Cell::mouseClick(Point mouseLoc)
 {
     if ((center.x - w / 2 < mouseLoc.x) && (mouseLoc.x < w + center.x - w / 2) && (center.y - h / 2 < mouseLoc.y) && (mouseLoc.y < h + center.y - h / 2))
-    {
-        puts("got it");
         return true;
-    }
     return false;
 }

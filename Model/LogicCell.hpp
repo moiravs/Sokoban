@@ -77,8 +77,6 @@ public:
     {
         if (this->box != nullptr)
             this->box->blocked = true;
-        else
-            puts("no box");
     }
     void setBox(Box *box)
     {

@@ -36,14 +36,13 @@ bool BoardModel::getFirstTeleportation()
 
 bool BoardModel::isFailure()
 {
-
-    for (size_t i = 0; i < 7; i++)
+    for (size_t i = 0; i < LogicCellVector.size(); i++)
     {
-        for (size_t j = 0; j < 7; j++)
+        for (size_t j = 0; j < LogicCellVector[0].size(); j++)
         {
             if (LogicCellVector[i][j]->hasBox())
             {
-                if ((i == 0 && j == 0) || (i == 0 && j == matrix.size() - 1) || (i == matrix[0].size() && j == 0) || (i == matrix[0].size() - 1 && j == matrix.size() - 1))
+                if ((i == 0 && j == 0) || (i == 0 && j == LogicCellVector.size() - 1) || (i == LogicCellVector[0].size() && j == 0) || (i == LogicCellVector[0].size() - 1 && j == LogicCellVector.size() - 1))
                     LogicCellVector[i][j]->setBoxblocked();
                 // TODO: check if outside the board
                 // si la boite est bloquée par des murs ou par une boite bloquée
@@ -51,8 +50,8 @@ bool BoardModel::isFailure()
                 {
                     LogicCellVector[i][j]->setBoxblocked();
                 }
-                else
-                    return false;
+                else{
+                    return false;}
             }
         }
     }
@@ -64,8 +63,8 @@ void BoardModel::createBoard(std::string fileContent)
 
     std::vector<int> line;
     this->matrix.clear();
-    // TODO : capter comment faire un vector dynamique ig
-    std::vector<std::vector<LogicCell *>> LogicCellVectortest(8, std::vector<LogicCell *>(8));
+    this->LogicCellVector.clear();
+    std::vector<LogicCell *> testouille;
     std::cout << fileContent;
     for (size_t index = 0; index < fileContent.size(); index++)
     {
@@ -91,6 +90,8 @@ void BoardModel::createBoard(std::string fileContent)
         }
         else if ((fileContent[index] == '\n') || (fileContent[index] == '\0'))
         {
+            this->LogicCellVector.push_back(testouille);
+            testouille.clear();
             this->matrix.push_back(line);
             line.clear();
         }
@@ -127,7 +128,6 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_RED);
             }
-            
             else if (charcontent == WALL)
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
@@ -166,18 +166,18 @@ void BoardModel::createBoard(std::string fileContent)
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
             }
-            LogicCellVectortest[this->matrix.size()][line.size()] = logiccell;
+
+            testouille.push_back(logiccell);
             line.push_back(charcontent);
         }
     }
-    this->LogicCellVector = LogicCellVectortest;
 }
 
 bool BoardModel::end_of_party()
 {
-    for (size_t i = 0; i < 7; i++)
+    for (size_t i = 0; i < LogicCellVector.size(); i++)
     {
-        for (size_t j = 0; j < 7; j++)
+        for (size_t j = 0; j < LogicCellVector[0].size(); j++)
         {
             if (!LogicCellVector[i][j]->isComplete())
                 return false;
@@ -227,10 +227,8 @@ bool BoardModel::move(int final_player_pos_y, int final_player_pos_x)
     int deplacement_x = final_player_pos_x - this->player->getX(), deplacement_y = final_player_pos_y - this->player->getY();
     if (LogicCellVector[final_player_pos_y][final_player_pos_x]->hasBox())
     {
-
         if (LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox()->light == true)
         {
-
             if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->light == true)
             {
                 // TODO : or teleportation
