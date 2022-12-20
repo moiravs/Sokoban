@@ -62,7 +62,6 @@ bool BoardModel::isFailure()
 
 void BoardModel::createBoard(std::string fileContent)
 {
-
     std::vector<int> line;
     this->matrix.clear();
     this->LogicCellVector.clear();
@@ -70,7 +69,8 @@ void BoardModel::createBoard(std::string fileContent)
     std::cout << fileContent;
     for (size_t index = 0; index < fileContent.size(); index++)
     {
-        if ((fileContent[index] == 'l'))
+        switch (fileContent[index]){
+        case 'l':
         {
             std::string minpas = "";
             while (fileContent[index] != '\n')
@@ -79,8 +79,9 @@ void BoardModel::createBoard(std::string fileContent)
                 minpas += fileContent[index];
             }
             this->minpas = atoi(minpas.c_str());
+            break;
         }
-        else if ((fileContent[index] == 'm'))
+        case 'm':
         {
             std::string limitpas = "";
             while (fileContent[index] != '\n')
@@ -89,15 +90,20 @@ void BoardModel::createBoard(std::string fileContent)
                 limitpas += fileContent[index];
             }
             this->limitpas = atoi(limitpas.c_str());
+            break;
         }
-        else if ((fileContent[index] == '\n') || (fileContent[index] == '\0'))
+        case '\n':
+        case '\0':
         {
             this->LogicCellVector.push_back(testouille);
             testouille.clear();
             this->matrix.push_back(line);
             line.clear();
+            break;
         }
-        else if (fileContent[index] != ' ')
+        case ' ':
+        break;
+        default:
         {
             LogicCell *logiccell;
             int charcontent = fileContent[index] - '0';
@@ -115,7 +121,6 @@ void BoardModel::createBoard(std::string fileContent)
                 logiccell->setPlayer(player);
                 break;
             }
-
             case BOX:
             {
                 logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
@@ -176,9 +181,11 @@ void BoardModel::createBoard(std::string fileContent)
                 break;
             }}
 
-
             testouille.push_back(logiccell);
             line.push_back(charcontent);
+            break;
+        }
+        
         }
     }
 }
