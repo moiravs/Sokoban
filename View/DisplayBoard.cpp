@@ -62,7 +62,7 @@ void DisplayBoard::update()
             else if (boardmodel->LogicCellVector[y][x]->getType() == TELEPORTATION)
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, TELEPORTATION, 50, 50, FL_DARK_GREEN});
             else
-                std::cout << boardmodel->LogicCellVector[y][x]->getType() << std::endl;
+                std::cout << "type doesn't exists" << std::endl;
         }
     }
 }

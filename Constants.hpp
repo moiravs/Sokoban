@@ -47,7 +47,7 @@ const int windowHeight = 900;
 const double refreshPerSecond = 60;
 
 //Board display
-const int boardx = 100;
+const int boardx = 200;
 const int boardy = 100;
 const int boardw = 600;
 const int boardh = 600;
@@ -59,25 +59,25 @@ const int resetw = 75;
 const int reseth = 25;
 
 //PAS
-const int pasx = 600;
-const int pasy = 80;
+const int pasx = 10;
+const int pasy = 150;
 const int pasw = 80;
 const int pash = 25;
 
 //Level button display
-const int choicex = 60;
+const int choicex = 10;
 const int choicey = 50;
 const int choicew = 100;
 const int choiceh = 25;
 
 // Level button display
-const int resetminpasx = 400;
-const int resetminpasy = 50;
+const int resetminpasx = 10;
+const int resetminpasy = 200;
 const int resetminpasw = 100;
 const int resetminpash = 25;
 
-const int limitpasx = 700;
-const int limitpasy = 80;
+const int limitpasx = 10;
+const int limitpasy = 250;
 
 //levels
 const std::string level1 = "Niveaux/niveau1.txt";
