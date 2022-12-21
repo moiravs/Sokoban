@@ -4,8 +4,8 @@
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
-#include "DisplayBoard.hpp"
-#include "CellDisplay.hpp"
+#include "../View/DisplayBoard.hpp"
+#include "../View/CellDisplay.hpp"
 class MainWindow : public Fl_Window
 {
     std::shared_ptr<BoardModel> boardModel;

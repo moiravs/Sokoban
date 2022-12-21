@@ -2,7 +2,7 @@
 FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE  -lfltk -lfltk_images
 COMPILER=g++
 
-main:  LogicCell.o BoardModel.o BoxModel.o main.cpp DisplayBoard.o  MainWindow.o   Teleportation.o CellDisplay.o
+main:  LogicCell.o BoardModel.o BoxModel.o main.cpp DisplayBoard.o  MainWindow.o Teleportation.o CellDisplay.o
 	${COMPILER} -o jeu.exe main.cpp DisplayBoard.o MainWindow.o BoardModel.o BoxModel.o Teleportation.o CellDisplay.o LogicCell.o ${FLAGS}
 
 run:
@@ -23,8 +23,8 @@ LogicCell.o: Model/LogicCell.cpp Model/LogicCell.hpp Constants.hpp
 DisplayBoard.o:  View/DisplayBoard.cpp View/DisplayBoard.hpp Constants.hpp
 	${COMPILER} -c View/DisplayBoard.cpp ${FLAGS}
 
-MainWindow.o:  View/MainWindow.cpp View/MainWindow.hpp Constants.hpp
-	${COMPILER} -c View/MainWindow.cpp ${FLAGS}
+MainWindow.o:  Controller/MainWindow.cpp Controller/MainWindow.hpp Constants.hpp
+	${COMPILER} -c Controller/MainWindow.cpp ${FLAGS}
 
 Teleportation.o:  Model/Teleportation.cpp Model/Teleportation.hpp Constants.hpp
 	${COMPILER} -c Model/Teleportation.cpp ${FLAGS}

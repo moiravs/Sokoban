@@ -7,7 +7,6 @@
 #ifndef INTERFACEGRAPHIQUE_HPP
 #define INTERFACEGRAPHIQUE_HPP
 #include "../Constants.hpp"
-#include "../Controller/ControllerBoard.hpp"
 #include "../Model/BoardModel.hpp"
 #include "CellDisplay.hpp"
 

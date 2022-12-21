@@ -2,7 +2,7 @@
 
 #include "Model/BoardModel.hpp"
 #include "View/DisplayBoard.hpp"
-#include "View/MainWindow.hpp"
+#include "Controller/MainWindow.hpp"
 
 
 #include <iostream>
