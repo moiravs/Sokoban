@@ -14,8 +14,6 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     DisplayBoard *board = new DisplayBoard(boardModel);
     display = board;
     board->show();
-    ControllerBoard *boarda = new ControllerBoard(boardModel);
-    control = boarda;
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
     Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min pas");
     Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey, "levels");

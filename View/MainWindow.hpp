@@ -9,7 +9,6 @@
 class MainWindow : public Fl_Window
 {
     std::shared_ptr<BoardModel> boardModel;
-    ControllerBoard *control;
     DisplayBoard *display;
     const char *pas;
     Fl_Text_Buffer *buff;
