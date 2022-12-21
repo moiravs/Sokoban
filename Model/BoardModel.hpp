@@ -45,7 +45,6 @@ public:
     void teleport();
     bool check_if_blocked(int i, int j);
     void move(int final_pos_y, int final_pos_x);
-    bool check_move(int final_pos_y, int final_pos_x);
     std::string readFileIntoString();
     void createBoard(std::string fileContent);
     void setFirstTeleportation(bool value);

@@ -6,8 +6,6 @@
  * */
 #include "BoardModel.hpp"
 
-
-
 std::string BoardModel::readFileIntoString()
 {
     std::cout << this->filename << std::endl;
@@ -16,7 +14,6 @@ std::string BoardModel::readFileIntoString()
                         (std::istreambuf_iterator<char>()));
     return content;
 }
-
 
 void BoardModel::setFirstTeleportation(bool value)
 {
@@ -213,11 +210,6 @@ bool BoardModel::end_of_party()
     return true;
 }
 
-bool BoardModel::check_move(int final_pos_y, int final_pos_x)
-{
-    return ((final_pos_y < 0) || (final_pos_x < 0) || (final_pos_y > (int)matrix.size()) || (final_pos_x > (int)matrix[0].size()));
-}
-
 bool BoardModel::isInBoard(int pos_y, int pos_x)
 {
     return (0 <= pos_y && pos_y < (int)matrix.size()) && (0 <= pos_x && pos_x < (int)matrix[pos_y].size());
@@ -254,8 +246,8 @@ void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
         {
             if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->getLight() == true) && (LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]->getType() != WALL))
             {
-                    LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]
-                        ->setBox(LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox());
+                LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]
+                    ->setBox(LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox());
             }
             else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != EMPTY) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != BOX_FINAL_POS))
                 return;
@@ -279,43 +271,27 @@ void BoardModel::move_to(int x, int y)
 {
     int player_x = this->player->x;
     int player_y = this->player->y;
-    if (x == player_x)
+    if ((x == player_x) || (y == player_y))
     {
-        int deplacement;
+        int deplacement_x = 0;
+        int deplacement_y = 0;
         if (y > player_y)
-            deplacement = 1;
+            deplacement_y = 1;
         else if (y < player_y)
-            deplacement = -1;
-        if (y != player_y)
-        {
-            while (!this->LogicCellVector[player_y + deplacement][player_x]->hasBox() && player_y != y)
-            {
-                this->pas += 1;
-                this->LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
-                this->LogicCellVector[player_y + deplacement][player_x]->setPlayer(this->player);
-                this->player->y = player_y + deplacement;
-                this->player->x = player_x;
-                player_x = this->player->x;
-                player_y = this->player->y;
-            }
-        }
-    }
-    else if (y == player_y)
-    {
-        int deplacement;
-        if (x > player_x)
-            deplacement = 1;
+            deplacement_y = -1;
+        else if (x > player_x)
+            deplacement_x = 1;
         else if (x < player_x)
-            deplacement = -1;
-        if (x != player_x)
+            deplacement_x = -1;
+        if ((y != player_y) || (x != player_x))
         {
-            while (!this->LogicCellVector[player_y][player_x + deplacement]->hasBox() && player_x != x)
+            while (!this->LogicCellVector[player_y + deplacement_y][player_x + deplacement_x]->hasBox() && (player_y != y || player_x != x))
             {
                 this->pas += 1;
                 this->LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
-                this->LogicCellVector[player_y][player_x + deplacement]->setPlayer(this->player);
-                this->player->y = player_y;
-                this->player->x = player_x + deplacement;
+                this->LogicCellVector[player_y + deplacement_y][player_x + deplacement_x]->setPlayer(this->player);
+                this->player->y = player_y + deplacement_y;
+                this->player->x = player_x + deplacement_x;
                 player_x = this->player->x;
                 player_y = this->player->y;
             }

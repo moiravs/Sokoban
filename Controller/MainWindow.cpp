@@ -124,7 +124,6 @@ int MainWindow::handle(int event)
         if (event == FL_PUSH)
         {
             std::tuple<int, int> position = display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
-            std::cout << std::get<0>(position)<< std::get<1>(position) << std::endl;
             this->boardModel->move_to(std::get<1>(position), std::get<0>(position));
             display->update();
             this->redraw();
