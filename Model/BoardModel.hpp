@@ -1,3 +1,9 @@
+/*
+ * Projet : Sokoban project
+ * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Matricule : 000542698 & 000547486
+ * Date : 21 december 2022
+ * */
 #ifndef BOARD_HPP
 #define BOARD_HPP
 #include "BoxModel.hpp"
@@ -5,8 +11,8 @@
 #include "../Constants.hpp"
 #include "Player.hpp"
 #include "Teleportation.hpp"
-#include <tuple>
 #include "LogicCell.hpp"
+
 
 class BoardModel
 {

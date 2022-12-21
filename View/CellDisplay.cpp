@@ -1,3 +1,9 @@
+/*
+ * Projet : Sokoban project
+ * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Matricule : 000542698 & 000547486
+ * Date : 21 december 2022
+ * */
 #include "CellDisplay.hpp"
 
 PlayerDisplay::PlayerDisplay(Point center, int w, int h) : center{center}, w{w}, h{h}

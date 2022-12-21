@@ -1,13 +1,12 @@
+/*
+ * Projet : Sokoban project
+ * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Matricule : 000542698 & 000547486
+ * Date : 21 december 2022
+ * */
 #include "BoardModel.hpp"
-#include "Player.cpp"
-#include <string>
-#include <vector>
-#include <iostream>
-#include <stdio.h>  // fprintf()
-#include <stdlib.h> // exit()
-#include <fstream>
-#include <algorithm>
-#include <tuple>
+
+
 
 std::string BoardModel::readFileIntoString()
 {

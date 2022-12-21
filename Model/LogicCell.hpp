@@ -1,10 +1,15 @@
+/*
+ * Projet : Sokoban project
+ * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Matricule : 000542698 & 000547486
+ * Date : 21 december 2022
+ * */
 #ifndef LOGICCELL_HPP
 #define LOGICCELL_HPP
 
 #include "BoxModel.hpp"
 #include "Player.hpp"
 #include "../Constants.hpp"
-#include <iostream>
 
 
 class LogicCell

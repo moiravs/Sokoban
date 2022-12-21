@@ -1,27 +1,27 @@
+/*
+ * Projet : Sokoban project
+ * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Matricule : 000542698 & 000547486
+ * Date : 21 december 2022
+ * */
+
 #ifndef __CONSTANTS_HPP
 #define __CONSTANTS_HPP
+
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Box.H>
-#include <string>
-#include <math.h>
 #include <FL/Fl_Text_Buffer.H>
 #include <FL/Fl_Text_Display.H>
-
-#include <time.h>
-#include <chrono>
-#include <stdlib.h>
-#include <vector>
-
-#include <iostream>
-#include <random>
-#include <array>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_JPEG_Image.H>
 #include <FL/Fl_Menu_Bar.H>
+
+#include <vector>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <unistd.h>
@@ -58,8 +58,7 @@ const int resety = 115;
 const int resetw = 75;
 const int reseth = 25;
 
-
-
+//PAS
 const int pasx = 600;
 const int pasy = 80;
 const int pasw = 80;
