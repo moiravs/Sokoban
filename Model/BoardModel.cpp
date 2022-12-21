@@ -15,6 +15,11 @@ std::string BoardModel::readFileIntoString()
     return content;
 }
 
+std::vector<std::vector<LogicCell *>> BoardModel::getLogicCellVector()
+{
+    return this->LogicCellVector;
+}
+
 void BoardModel::setFirstTeleportation(bool value)
 {
     if (!(this->first_teleportation_on_board == value))
@@ -66,11 +71,8 @@ bool BoardModel::isFailure()
 
 void BoardModel::createBoard(std::string fileContent)
 {
-    std::vector<int> line;
-    this->matrix.clear();
     this->LogicCellVector.clear();
-    std::vector<LogicCell *> testouille;
-    std::cout << fileContent;
+    std::vector<LogicCell *> line;
     for (size_t index = 0; index < fileContent.size(); index++)
     {
         switch (fileContent[index])
@@ -100,9 +102,7 @@ void BoardModel::createBoard(std::string fileContent)
         case '\n':
         case '\0':
         {
-            this->LogicCellVector.push_back(testouille);
-            testouille.clear();
-            this->matrix.push_back(line);
+            this->LogicCellVector.push_back(line);
             line.clear();
             break;
 
@@ -116,48 +116,48 @@ void BoardModel::createBoard(std::string fileContent)
             {
             case EMPTY:
             {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
                 break;
             }
             case PLAYER:
             {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                this->player->y = this->matrix.size();
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
+                this->player->y = this->LogicCellVector.size();
                 this->player->x = line.size();
                 logiccell->setPlayer(player);
                 break;
             }
             case BOX:
             {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                Box *box = new Box(this->matrix.size(), line.size());
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
+                Box *box = new Box(this->LogicCellVector.size(), line.size());
                 box->setColor(FL_BLUE);
                 logiccell->setBox(box);
                 break;
             }
             case RED_BOX - '0':
             {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                Box *box = new Box(this->matrix.size(), line.size());
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
+                Box *box = new Box(this->LogicCellVector.size(), line.size());
                 box->setColor(FL_RED);
                 logiccell->setBox(box);
                 break;
             }
             case RED_BOX_FINAL_POS - '0':
             {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_RED);
                 break;
             }
             case WALL:
             {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Wall);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Wall);
                 break;
             }
 
             case TELEPORTATION:
             {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Teleportation);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Teleportation);
                 Teleportation *firstTeleportationCell;
 
                 if (this->getFirstTeleportation() == false)
@@ -169,27 +169,26 @@ void BoardModel::createBoard(std::string fileContent)
                 {
                     firstTeleportationCell->set_second_end(logiccell);
                     this->teleportation.push_back(firstTeleportationCell);
+                    this->setFirstTeleportation(false);
                 }
                 break;
             }
             case LIGHT_BOX:
             {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Normal);
-                Box *box = new Box(this->matrix.size(), line.size());
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
+                Box *box = new Box(this->LogicCellVector.size(), line.size());
                 box->setLight(true);
                 logiccell->setBox(box);
                 break;
             }
             case BOX_FINAL_POS:
             {
-                logiccell = new LogicCell(this->matrix.size(), line.size(), LogicCell::cellType::Box_final_pos);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Box_final_pos);
                 logiccell->setColor(FL_BLUE);
                 break;
             }
             }
-
-            testouille.push_back(logiccell);
-            line.push_back(charcontent);
+            line.push_back(logiccell);
             break;
         }
         }
@@ -212,7 +211,7 @@ bool BoardModel::end_of_party()
 
 bool BoardModel::isInBoard(int pos_y, int pos_x)
 {
-    return (0 <= pos_y && pos_y < (int)matrix.size()) && (0 <= pos_x && pos_x < (int)matrix[pos_y].size());
+    return (0 <= pos_y && pos_y < (int)LogicCellVector.size()) && (0 <= pos_x && pos_x < (int)LogicCellVector[pos_y].size());
 }
 
 void BoardModel::teleport()
