@@ -36,9 +36,9 @@ std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc)
 void DisplayBoard::update()
 {
     cells.clear();
-    for (size_t y = 0; y < boardmodel->getBoard().size(); y++)
+    for (size_t y = 0; y < boardmodel->LogicCellVector.size(); y++)
     {
-        for (size_t x = 0; x < boardmodel->getBoard()[y].size(); x++)
+        for (size_t x = 0; x < boardmodel->LogicCellVector[y].size(); x++)
         {
             if (boardmodel->LogicCellVector[y][x]->hasPlayer())
             {

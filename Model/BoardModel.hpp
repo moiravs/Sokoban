@@ -12,9 +12,10 @@ class BoardModel
 {
 private:
     bool first_teleportation_on_board = false;
+
 public:
-    //TODO : destructeur
-    //TODO :TOUT EN PRIVATE
+    // TODO : destructeur
+    // TODO :TOUT EN PRIVATE
     std::vector<Teleportation *> teleportation;
     std::vector<std::vector<int>> matrix;
     std::vector<std::vector<LogicCell *>> LogicCellVector;
@@ -35,10 +36,10 @@ public:
     bool end_of_party();
     bool isFailure();
     void teleport();
+    bool check_if_blocked(int i, int j);
     std::vector<std::vector<int>> getMatrix();
     void move(int final_pos_y, int final_pos_x);
     bool check_move(int final_pos_y, int final_pos_x);
-    std::vector<std::vector<int>> getBoard();
     std::string readFileIntoString();
     void createBoard(std::string fileContent);
     void setFirstTeleportation(bool value);
