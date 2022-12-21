@@ -162,7 +162,6 @@ void MainWindow::level_change_non_static(Fl_Widget *widget)
     Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
     this->saveminpas();
-    std::cout << choice << std::endl;
     this->boardModel->endofparty = false;
     switch (choice)
     {
@@ -178,10 +177,7 @@ void MainWindow::level_change_non_static(Fl_Widget *widget)
         this->boardModel->filename = level3;
         break;
     }
-    std::string buffer = this->boardModel->readFileIntoString();
-    std::cout << buffer << std::endl;
-    std::cout << this->boardModel->filename << std::endl;
-    this->boardModel->createBoard(buffer);
+    this->boardModel->createBoard(this->boardModel->readFileIntoString());
     this->display->update();
 }
 

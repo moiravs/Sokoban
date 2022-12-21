@@ -27,9 +27,7 @@ std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc)
     for (size_t i = 0; i < 63; i++)
     {
         if (cells[i].mouseClick(mouseLoc))
-        {
             return std::tuple<int, int>(i / 8, i % 8);
-        }
     }    
 }
 
@@ -41,9 +39,7 @@ void DisplayBoard::update()
         for (size_t x = 0; x < boardmodel->LogicCellVector[y].size(); x++)
         {
             if (boardmodel->LogicCellVector[y][x]->hasPlayer())
-            {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, PLAYER, 50, 50, FL_BLACK});
-            }
             else if (boardmodel->LogicCellVector[y][x]->hasBox())
             {
                 if (boardmodel->LogicCellVector[y][x]->getBox()->getLight() == false)
@@ -52,25 +48,15 @@ void DisplayBoard::update()
                     cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, LIGHT_BOX, 50, 50, FL_DARK_BLUE});
             }
             else if (boardmodel->LogicCellVector[y][x]->getType() == WALL)
-            {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, WALL, 50, 50, FL_DARK_YELLOW});
-            }
             else if (boardmodel->LogicCellVector[y][x]->getType() == BOX_FINAL_POS)
-            {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, BOX_FINAL_POS, 50, 50, boardmodel->LogicCellVector[y][x]->getColor()});
-            }
             else if (boardmodel->LogicCellVector[y][x]->getType() == EMPTY)
-            {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, EMPTY, 50, 50, FL_BLACK});
-            }
             else if (boardmodel->LogicCellVector[y][x]->getType() == TELEPORTATION)
-            {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 10) + 25, boardy + 50 * ((int)y) + 25}, TELEPORTATION, 50, 50, FL_DARK_GREEN});
-            }
             else
-            {
                 std::cout << boardmodel->LogicCellVector[y][x]->getType() << std::endl;
-            }
         }
     }
 }

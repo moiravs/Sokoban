@@ -18,6 +18,7 @@ std::string BoardModel::readFileIntoString()
     return content;
 }
 
+
 void BoardModel::setFirstTeleportation(bool value)
 {
     if (!(this->first_teleportation_on_board == value))
