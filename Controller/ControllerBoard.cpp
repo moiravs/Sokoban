@@ -6,42 +6,7 @@
  * */
 #include "ControllerBoard.hpp"
 
-int ControllerBoard::board_handle(int event)
-{
-    if (Fl::event_key() == FL_Up)
-    {
-        boardModel->move(boardModel->player->y - 1, boardModel->player->x);
-    }
-    else if (Fl::event_key() == FL_Down)
-    {
-        boardModel->move(boardModel->player->y + 1, boardModel->player->x);
-    }
-    else if (Fl::event_key() == FL_Right)
-    {
-        boardModel->move(boardModel->player->y, boardModel->player->x + 1);
-    }
-    else if (Fl::event_key() == FL_Left)
-    {
-        boardModel->move(boardModel->player->y, boardModel->player->x - 1);
-    }
-    else if (Fl::event_key(97))
-    {
-        boardModel->teleport();
-    }
 
-    if ((this->boardModel->pas == this->boardModel->limitpas) || (this->boardModel->isFailure()))
-    {
-        this->boardModel->endofparty = true;
-        this->boardModel->winorlose = false;
-    }
-
-    if (boardModel->end_of_party())
-    {
-        this->boardModel->endofparty = true;
-        this->boardModel->winorlose = true;
-    }
-    return 1;
-}
 
 void ControllerBoard::move_to(int x, int y)
 {

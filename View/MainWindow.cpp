@@ -9,7 +9,6 @@
 
 MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
 {
-    Fl::add_timeout(1.0 / refreshPerSecond, Timer_CB, this);
     resizable(this);
     this->boardModel = boardModel;
     DisplayBoard *board = new DisplayBoard(boardModel);
@@ -63,6 +62,12 @@ void MainWindow::draw()
             fl_draw("YOU LOSE, reset or change level", limitpasx + 50, limitpasy + 50);
         }
     }
+    std::string pas = "pas " + std::to_string(this->boardModel->pas);
+    fl_draw(pas.c_str(), pasx, pasy);
+    std::string limitpas = "limite de pas " + std::to_string(this->boardModel->limitpas);
+    fl_draw(limitpas.c_str(), limitpasx, limitpasy);
+    std::string minpas = "min pas for this level" + std::to_string(this->boardModel->minpas);
+    fl_draw(minpas.c_str(), limitpasx + 20, limitpasy + 80);
 }
 
 int MainWindow::handle(int event)
@@ -70,17 +75,51 @@ int MainWindow::handle(int event)
 
     if (boardModel->endofparty == false)
     {
+
         if (event == FL_KEYBOARD)
         {
-            control->board_handle(event);
+            if (Fl::event_key() == FL_Up)
+            {
+                boardModel->move(boardModel->player->y - 1, boardModel->player->x);
+            }
+            else if (Fl::event_key() == FL_Down)
+            {
+                boardModel->move(boardModel->player->y + 1, boardModel->player->x);
+            }
+            else if (Fl::event_key() == FL_Right)
+            {
+                boardModel->move(boardModel->player->y, boardModel->player->x + 1);
+            }
+            else if (Fl::event_key() == FL_Left)
+            {
+                boardModel->move(boardModel->player->y, boardModel->player->x - 1);
+            }
+            else if (Fl::event_key(97))
+            {
+                boardModel->teleport();
+            }
+
+            if ((this->boardModel->pas == this->boardModel->limitpas) || (this->boardModel->isFailure()))
+            {
+                this->boardModel->endofparty = true;
+                this->boardModel->winorlose = false;
+            }
+
+            if (boardModel->end_of_party())
+            {
+                this->boardModel->endofparty = true;
+                this->boardModel->winorlose = true;
+            }
             display->update();
+            this->redraw();
         }
     }
 
     if (Fl::event_inside(this)) // if 
     {
-        if (event == FL_PUSH)
+        if (event == FL_PUSH){
             display->update();
+        this->redraw();}
     }
     if (Fl::event_inside(this->display))
     {
@@ -90,6 +129,7 @@ int MainWindow::handle(int event)
             std::cout << std::get<0>(position)<< std::get<1>(position) << std::endl;
             control->move_to(std::get<1>(position), std::get<0>(position));
             display->update();
+            this->redraw();
         }
     }
 

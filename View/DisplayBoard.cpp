@@ -14,12 +14,6 @@ void DisplayBoard::draw()
     for (auto &c : cells)
         c.draw();
 
-    std::string pas = "pas " + std::to_string(this->boardmodel->pas);
-    fl_draw(pas.c_str(), pasx, pasy);
-    std::string limitpas = "limite de pas " + std::to_string(this->boardmodel->limitpas);
-    fl_draw(limitpas.c_str(), limitpasx, limitpasy);
-    std::string minpas = "min pas for this level" + std::to_string(this->boardmodel->minpas);
-    fl_draw(minpas.c_str(), limitpasx + 20, limitpasy + 80);
 }
 
 DisplayBoard::DisplayBoard(std::shared_ptr<BoardModel> board) : Fl_Box(boardx, boardy, boardw, boardh) 
