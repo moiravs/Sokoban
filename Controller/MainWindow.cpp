@@ -157,6 +157,7 @@ void MainWindow::reset_level_non_static(Fl_Widget *widget)
     this->boardModel->endofparty = false;
     this->boardModel->createBoard(this->boardModel->readFileIntoString());
     this->display->update();
+    this->redraw();
 }
 
 void MainWindow::reset_level_cb(Fl_Widget *w, void *f)
@@ -167,6 +168,7 @@ void MainWindow::reset_level_cb(Fl_Widget *w, void *f)
 void MainWindow::resetminpas_cb()
 {
     this->boardModel->minpas = 0;
+    this->redraw();
 }
 
 void MainWindow::saveminpas()
@@ -198,6 +200,7 @@ void MainWindow::saveminpas()
         std::remove(this->boardModel->filename.c_str());
         std::rename("fileout.txt", this->boardModel->filename.c_str());
     }
+    this->redraw();
 }
 
 void MainWindow::level_change_non_static(Fl_Widget *widget)
@@ -222,6 +225,7 @@ void MainWindow::level_change_non_static(Fl_Widget *widget)
     }
     this->boardModel->createBoard(this->boardModel->readFileIntoString());
     this->display->update();
+    this->redraw();
 }
 
 void MainWindow::level_change(Fl_Widget *w, void *f)
