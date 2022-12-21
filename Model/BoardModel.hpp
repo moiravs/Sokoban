@@ -19,7 +19,6 @@ class BoardModel
 private:
     bool first_teleportation_on_board = false;
     std::vector<Teleportation *> teleportation;
-    std::vector<std::vector<int>> matrix;
 
 public:
     // TODO : destructeur
