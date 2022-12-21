@@ -113,5 +113,11 @@ public:
         }
         return false;
     }
+    /*~LogicCell()
+    {
+        delete this->player;
+        delete this->box;
+        delete this;
+    }*/
 };
 #endif
