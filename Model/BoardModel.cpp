@@ -281,16 +281,13 @@ void BoardModel::move_to(int x, int y)
             deplacement_x = 1;
         else if (x < this->player->x)
             deplacement_x = -1;
-        if ((y != this->player->y) || (x != this->player->x))
+        while (!this->LogicCellVector[this->player->y + deplacement_y][this->player->x + deplacement_x]->hasBox() && (this->player->y != y || this->player->x != x))
         {
-            while (!this->LogicCellVector[this->player->y + deplacement_y][this->player->x + deplacement_x]->hasBox() && (this->player->y != y || this->player->x != x))
-            {
-                this->pas += 1;
-                this->LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
-                this->LogicCellVector[this->player->y + deplacement_y][this->player->x + deplacement_x]->setPlayer(this->player);
-                this->player->y = this->player->y + deplacement_y;
-                this->player->x = this->player->x + deplacement_x;
-            }
+            this->pas += 1;
+            this->LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
+            this->LogicCellVector[this->player->y + deplacement_y][this->player->x + deplacement_x]->setPlayer(this->player);
+            this->player->y = this->player->y + deplacement_y;
+            this->player->x = this->player->x + deplacement_x;
         }
     }
 }
