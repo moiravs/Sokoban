@@ -14,14 +14,14 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     display = board;
     board->show();
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
-    Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min pas");
+    Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min steps");
     Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey, "levels");
     levels->add("Level 1");
     levels->add("Level 2");
     levels->add("Level 3");
-    this->callback(this->window_cb, this);
-    reset->callback(reset_level_cb, (void *)this);
-    levels->callback(level_change, (void *)this);
+    this->callback(this->windowCallback, this);
+    reset->callback(resetLevelCallback, (void *)this);
+    levels->callback(changeLevelCallback, (void *)this);
     resetminpas->callback(resetminpas_cb_static, (void *)this);
     Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
     menu->add("&File/&Open", "^o", MyMenuCallback);
@@ -47,11 +47,11 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *)
 void MainWindow::draw()
 {
     Fl_Window::draw();
-    if (this->boardModel->endofparty == true)
+    if (this->boardModel->endOfParty == true)
     {
         if (this->boardModel->winorlose == true)
         {
-            std::string wonstring = "YOU WON with " + std::to_string(boardModel->limitpas - boardModel->pas) + " pas restants, reset or change level";
+            std::string wonstring = "YOU WON with " + std::to_string(boardModel->stepsLimit - boardModel->steps) + " steps restants, reset or change level";
             fl_draw(wonstring.c_str(), limitpasx + 50, limitpasy + 50);
         }
         else
@@ -59,18 +59,18 @@ void MainWindow::draw()
             fl_draw("YOU LOSE, reset or change level", limitpasx + 50, limitpasy + 50);
         }
     }
-    std::string pas = "pas " + std::to_string(this->boardModel->pas);
-    fl_draw(pas.c_str(), pasx, pasy);
-    std::string limitpas = "limite de pas " + std::to_string(this->boardModel->limitpas);
-    fl_draw(limitpas.c_str(), limitpasx, limitpasy);
-    std::string minpas = "min pas for this level" + std::to_string(this->boardModel->minpas);
-    fl_draw(minpas.c_str(), limitpasx + 20, limitpasy + 80);
+    std::string steps = "steps " + std::to_string(this->boardModel->steps);
+    fl_draw(steps.c_str(), pasx, pasy);
+    std::string stepsLimit = "limite de steps " + std::to_string(this->boardModel->stepsLimit);
+    fl_draw(stepsLimit.c_str(), limitpasx, limitpasy);
+    std::string minimumSteps = "min steps for this level" + std::to_string(this->boardModel->minimumSteps);
+    fl_draw(minimumSteps.c_str(), limitpasx + 20, limitpasy + 80);
 }
 
 int MainWindow::handle(int event)
 {
 
-    if (boardModel->endofparty == false)
+    if (boardModel->endOfParty == false)
     {
 
         if (event == FL_KEYBOARD)
@@ -96,31 +96,31 @@ int MainWindow::handle(int event)
                 boardModel->teleport();
             }
 
-            if ((this->boardModel->pas == this->boardModel->limitpas) || (this->boardModel->isFailure()))
+            if ((this->boardModel->steps == this->boardModel->stepsLimit) || (this->boardModel->isFailure()))
             {
-                this->boardModel->endofparty = true;
+                this->boardModel->endOfParty = true;
                 this->boardModel->winorlose = false;
             }
 
-            if (boardModel->end_of_party())
+            if (this->boardModel->isEndOfParty())
             {
-                this->boardModel->endofparty = true;
+                this->boardModel->endOfParty = true;
                 this->boardModel->winorlose = true;
             }
             display->update();
-            this->redraw();}
+            this->redraw();
+        }
 
-            if (Fl::event_inside(this->display))
+        if (Fl::event_inside(this->display))
+        {
+            if (event == FL_PUSH)
             {
-                if (event == FL_PUSH)
-                {
-                    std::tuple<int, int> position = display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
-                    this->boardModel->move_to(std::get<1>(position), std::get<0>(position));
-                    display->update();
-                    this->redraw();
-                }
+                std::tuple<int, int> position = display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
+                this->boardModel->moveTo(std::get<1>(position), std::get<0>(position));
+                display->update();
+                this->redraw();
             }
-        
+        }
     }
 
     if (Fl::event_inside(this)) // if
@@ -145,40 +145,40 @@ void MainWindow::Timer_CB(void *userdata)
 void MainWindow::window_non_static_cb(Fl_Widget *widget)
 {
     widget->hide();
-    this->saveminpas();
+    this->saveMinimumSteps();
 }
 
-void MainWindow::window_cb(Fl_Widget *widget, void *f)
+void MainWindow::windowCallback(Fl_Widget *widget, void *f)
 {
     ((MainWindow *)f)->window_non_static_cb(widget);
 }
 
 void MainWindow::reset_level_non_static(Fl_Widget *widget)
 {
-    this->boardModel->pas = 0;
-    this->boardModel->endofparty = false;
+    this->boardModel->steps = 0;
+    this->boardModel->endOfParty = false;
     this->boardModel->createBoard(this->boardModel->readFileIntoString());
     this->display->update();
     this->redraw();
 }
 
-void MainWindow::reset_level_cb(Fl_Widget *w, void *f)
+void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 {
     ((MainWindow *)f)->reset_level_non_static(w);
 }
 
 void MainWindow::resetminpas_cb()
 {
-    this->boardModel->minpas = 0;
+    this->boardModel->minimumSteps = 0;
     this->redraw();
 }
 
-void MainWindow::saveminpas()
+void MainWindow::saveMinimumSteps()
 {
-    if (((this->boardModel->pas < this->boardModel->minpas) && (this->boardModel->winorlose == true)) || ((this->boardModel->minpas == 0) && (this->boardModel->winorlose == true)))
+    if (((this->boardModel->steps < this->boardModel->minimumSteps) && (this->boardModel->winorlose == true)) || ((this->boardModel->minimumSteps == 0) && (this->boardModel->winorlose == true)))
     {
-        std::string strReplace = "l" + std::to_string(this->boardModel->minpas);
-        std::string strNew = "l" + std::to_string(this->boardModel->pas);
+        std::string strReplace = "l" + std::to_string(this->boardModel->minimumSteps);
+        std::string strNew = "l" + std::to_string(this->boardModel->steps);
         std::ifstream filein(this->boardModel->filename); // File to read from
         std::ofstream fileout("fileout.txt");             // Temporary file
         if (!filein || !fileout)
@@ -209,8 +209,8 @@ void MainWindow::level_change_non_static(Fl_Widget *widget)
 {
     Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
-    this->saveminpas();
-    this->boardModel->endofparty = false;
+    this->saveMinimumSteps();
+    this->boardModel->endOfParty = false;
     switch (choice)
     {
     case -1:
@@ -230,7 +230,7 @@ void MainWindow::level_change_non_static(Fl_Widget *widget)
     this->redraw();
 }
 
-void MainWindow::level_change(Fl_Widget *w, void *f)
+void MainWindow::changeLevelCallback(Fl_Widget *w, void *f)
 {
     ((MainWindow *)f)->level_change_non_static(w);
 }

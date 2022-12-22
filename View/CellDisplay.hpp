@@ -12,29 +12,6 @@ struct Point
     int x, y;
 };
 
-
-class BoxDisplay
-{
-    Point center;
-    int w, h;
-    Fl_PNG_Image *wall;
-
-public:
-    BoxDisplay(Point center, int w, int h);
-    void draw();
-};
-
-class PlayerDisplay
-{
-    Point center;
-    int w, h;
-    Fl_PNG_Image *personnage;
-
-public:
-    PlayerDisplay(Point center, int w, int h);
-    void draw();
-};
-
 class Cell 
 {
     bool on = false;
@@ -44,7 +21,6 @@ class Cell
     Fl_PNG_Image *personnage;
     Fl_PNG_Image *wall;
     Fl_Color fillColor, frameColor;
-    BoxDisplay *box;
     int color;
 
 public:

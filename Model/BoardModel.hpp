@@ -13,7 +13,6 @@
 #include "Teleportation.hpp"
 #include "LogicCell.hpp"
 
-
 class BoardModel
 {
 private:
@@ -26,10 +25,10 @@ public:
 
     std::vector<std::vector<LogicCell *>> LogicCellVector;
     std::string filename;
-    int pas = 0;
-    int minpas = 0;
-    int limitpas = 0;
-    bool endofparty = false;
+    int steps = 0;
+    int minimumSteps = 0;
+    int stepsLimit = 0;
+    bool endOfParty = false;
     bool winorlose;
     Player *player;
     BoardModel(std::string filename)
@@ -39,17 +38,17 @@ public:
         this->player = player;
     }
     void maxpasandlimit();
-    bool end_of_party();
+    bool isEndOfParty();
     bool isFailure();
     void teleport();
-    bool check_if_blocked(int i, int j);
+    bool checkIfBlocked(int i, int j);
     void move(int final_pos_y, int final_pos_x);
     std::string readFileIntoString();
     void createBoard(std::string fileContent);
     void setFirstTeleportation(bool value);
     bool getFirstTeleportation();
     bool isInBoard(int pos_y, int pos_x);
-    void move_to(int x, int y);
+    void moveTo(int x, int y);
     std::vector<std::vector<LogicCell *>> getLogicCellVector();
 };
 

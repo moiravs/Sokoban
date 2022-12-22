@@ -31,7 +31,7 @@ bool BoardModel::getFirstTeleportation()
     return this->first_teleportation_on_board;
 }
 /*
-bool BoardModel::check_if_blocked(int i, int j)
+bool BoardModel::checkIfBlocked(int i, int j)
 {
     std::vector<std::vector<int, int>> moinsplus = {{0, -1}, {-1, 0}};
     for (auto move : moinsplus)
@@ -90,24 +90,24 @@ void BoardModel::createBoard(std::string fileContent)
         {
         case 'l':
         {
-            std::string minpas = "";
+            std::string minimumSteps = "";
             while (fileContent[index] != '\n')
             {
                 index++;
-                minpas += fileContent[index];
+                minimumSteps += fileContent[index];
             }
-            this->minpas = atoi(minpas.c_str());
+            this->minimumSteps = atoi(minimumSteps.c_str());
             break;
         }
         case 'm':
         {
-            std::string limitpas = "";
+            std::string stepsLimit = "";
             while (fileContent[index] != '\n')
             {
                 index++;
-                limitpas += fileContent[index];
+                stepsLimit += fileContent[index];
             }
-            this->limitpas = atoi(limitpas.c_str());
+            this->stepsLimit = atoi(stepsLimit.c_str());
             break;
         }
         case '\n':
@@ -142,7 +142,7 @@ void BoardModel::createBoard(std::string fileContent)
             {
                 logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
                 Box *box = new Box(this->LogicCellVector.size(), line.size());
-                box->color =FL_GRAY;
+                box->color = FL_GRAY;
                 logiccell->setBox(box);
                 break;
             }
@@ -150,7 +150,7 @@ void BoardModel::createBoard(std::string fileContent)
             {
                 logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
                 Box *box = new Box(this->LogicCellVector.size(), line.size());
-                box->color =FL_RED;
+                box->color = FL_RED;
                 logiccell->setBox(box);
                 break;
             }
@@ -207,7 +207,7 @@ void BoardModel::createBoard(std::string fileContent)
     }
 }
 
-bool BoardModel::end_of_party()
+bool BoardModel::isEndOfParty()
 {
     for (size_t i = 0; i < LogicCellVector.size(); i++)
     {
@@ -252,23 +252,31 @@ void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
         int deplacement_x = final_player_pos_x - this->player->x, deplacement_y = final_player_pos_y - this->player->y;
         if (LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox()->light)
         {
-            if (!this->isInBoard(final_player_pos_y + deplacement_y, final_player_pos_x + deplacement_x)) {return;}
+            if (!this->isInBoard(final_player_pos_y + deplacement_y, final_player_pos_x + deplacement_x))
+            {
+                return;
+            }
             if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox()) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->light))
             {
                 if ((this->isInBoard(final_player_pos_y + 2 * deplacement_y, final_player_pos_x + 2 * deplacement_x)) && (LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]->getType() != WALL))
                 {
                     puts("here?");
-                    std::cout << "y" << final_player_pos_y + 2*deplacement_y << "x" << final_player_pos_x + 2 * deplacement_x << std::endl;
+                    std::cout << "y" << final_player_pos_y + 2 * deplacement_y << "x" << final_player_pos_x + 2 * deplacement_x << std::endl;
                     LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]
                         ->setBox(LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox());
                 }
-                else {return;}
+                else
+                {
+                    return;
+                }
             }
-            else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != EMPTY) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != BOX_FINAL_POS)){
+            else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != EMPTY) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != BOX_FINAL_POS))
+            {
                 return;
             }
         }
-        if (!this->isInBoard(final_player_pos_y + deplacement_y, final_player_pos_x + deplacement_x)){
+        if (!this->isInBoard(final_player_pos_y + deplacement_y, final_player_pos_x + deplacement_x))
+        {
             return;
         }
         if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox()) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->light == false))
@@ -283,10 +291,10 @@ void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
     LogicCellVector[final_player_pos_y][final_player_pos_x]->setPlayer(this->player);
     this->player->y = final_player_pos_y;
     this->player->x = final_player_pos_x;
-    this->pas += 1;
+    this->steps += 1;
 }
 
-void BoardModel::move_to(int x, int y)
+void BoardModel::moveTo(int x, int y)
 {
     if ((x == this->player->x) || (y == this->player->y))
     {
@@ -300,9 +308,9 @@ void BoardModel::move_to(int x, int y)
             deplacement_x = 1;
         else if (x < this->player->x)
             deplacement_x = -1;
-        while ((this->player->y != y || this->player->x != x)  && !this->LogicCellVector[this->player->y + deplacement_y][this->player->x + deplacement_x]->hasBox())
+        while ((this->player->y != y || this->player->x != x) && !this->LogicCellVector[this->player->y + deplacement_y][this->player->x + deplacement_x]->hasBox())
         {
-            this->pas += 1;
+            this->steps += 1;
             this->LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
             this->LogicCellVector[this->player->y + deplacement_y][this->player->x + deplacement_x]->setPlayer(this->player);
             this->player->y = this->player->y + deplacement_y;

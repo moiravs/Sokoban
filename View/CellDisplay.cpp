@@ -6,14 +6,6 @@
  * */
 #include "CellDisplay.hpp"
 
-PlayerDisplay::PlayerDisplay(Point center, int w, int h) : center{center}, w{w}, h{h}
-{
-}
-
-void PlayerDisplay::draw()
-{
-}
-
 Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, type{type}, w{w}, h{h}, color{color}
 {
     if (type == PLAYER)
