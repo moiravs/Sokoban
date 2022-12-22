@@ -36,17 +36,5 @@ public:
     bool getBlocked(){
         return this->blocked;
     }
-    void setX(int x);
-    void setY(int y);
-    int getX();
-    int getY();
-    bool operator==(const Box &) const;
-    int operator<(Box box){
-        if (x == box.x){
-            return y < box.y;
-        }
-        else 
-            return x < box.x;
-    }
 };
 #endif
