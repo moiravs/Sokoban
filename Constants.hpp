@@ -48,14 +48,14 @@ const double refreshPerSecond = 60;
 
 //Board display
 const int boardx = 200;
-const int boardy = 100;
+const int boardy = 200;
 const int boardw = 600;
 const int boardh = 600;
 
 //Button reset display
 const int resetx = 10;
 const int resety = 115;
-const int resetw = 75;
+const int resetw = 100;
 const int reseth = 25;
 
 //PAS

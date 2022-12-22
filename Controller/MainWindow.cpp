@@ -6,16 +6,18 @@
  * */
 #include "MainWindow.hpp"
 
-MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
+MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp * popUp) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
 {
     resizable(this);
     this->boardModel = boardModel;
     DisplayBoard *board = new DisplayBoard(boardModel);
     display = board;
     board->show();
+    this->popUp = popUp;
+
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
     Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min steps");
-    Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choicey, "levels");
+    Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choiceh, "levels");
     levels->add("Level 1");
     levels->add("Level 2");
     levels->add("Level 3");
@@ -24,19 +26,27 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 
     levels->callback(changeLevelCallback, (void *)this);
     resetminpas->callback(resetminpas_cb_static, (void *)this);
     Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
-    menu->add("&File/&Open", "^o", MyMenuCallback);
-    menu->add("&File/&Save", "^s", MyMenuCallback, 0, FL_MENU_DIVIDER);
-    menu->add("&File/&Quit", "^q", MyMenuCallback);
+    menu->add("&Game/&ChooseLevel", "^l", MyMenuCallback, this);
+    menu->add("&Game/&Help", "^o", MyMenuCallback, this);
+    menu->add("&File/&Save", "^s", MyMenuCallback,  this, FL_MENU_DIVIDER);
+    menu->add("&File/&Quit", "^q", MyMenuCallback, this);
+    
 }
 
-void MainWindow::MyMenuCallback(Fl_Widget *w, void *)
+void MainWindow::MyMenuCallback(Fl_Widget *w, void *userdata)
 {
+    MainWindow *o = static_cast<MainWindow *>(userdata);
+
     Fl_Menu_Bar *bar = (Fl_Menu_Bar *)w;      // Get the menubar widget
     const Fl_Menu_Item *item = bar->mvalue(); // Get the menu item that was picked
-    char ipath[256];
-    bar->item_pathname(ipath, sizeof(ipath));                    // Get full pathname of picked item
-    fprintf(stderr, "callback: You picked '%s'", item->label()); // Print item picked
-    fprintf(stderr, ", item_pathname() is '%s'", ipath);         // ..and full pathname
+    if (strcmp(item->label(),"&ChooseLevel")==0){
+        puts("bruh");
+        o->popUp->set_modal();
+        o->popUp->show();
+        while (o->popUp->shown())
+            Fl::wait();
+        o->level_change_non_static(o->popUp->levels);
+    }
     if (item->flags & (FL_MENU_RADIO | FL_MENU_TOGGLE))
         fprintf(stderr, ", value is %s", item->value() ? "on" : "off"); // Print item's value
     fprintf(stderr, "\n");
@@ -207,6 +217,7 @@ void MainWindow::saveMinimumSteps()
 
 void MainWindow::level_change_non_static(Fl_Widget *widget)
 {
+    puts("brurirjoekh");
     Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
     this->saveMinimumSteps();
