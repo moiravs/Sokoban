@@ -15,12 +15,10 @@ void PlayerDisplay::draw()
 {
     Fl_Image *hihi = this->personnage;
     hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
-    fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLUE);
 }
 
 Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, type{type}, w{w}, h{h}, color{color}
 {
-    this->wall = new Fl_PNG_Image(imagewall.c_str());
     if (type == PLAYER)
     {
         PlayerDisplay *player = new PlayerDisplay(center, w, h);
@@ -36,10 +34,8 @@ bool Cell::contains(Point p)
 
 void Cell::draw()
 {
-
-    if (type == PLAYER)
-    {
-        this->personnage->draw();
+    if (type == PLAYER){
+        personnage->draw();
     }
     else if (type == BOX_FINAL_POS)
     {

@@ -47,7 +47,6 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *)
 
 void MainWindow::draw()
 {
-    Fl_Window::draw();
     if (this->boardModel->endofparty == true)
     {
         if (this->boardModel->winorlose == true)
@@ -66,6 +65,7 @@ void MainWindow::draw()
     fl_draw(limitpas.c_str(), limitpasx, limitpasy);
     std::string minpas = "min pas for this level" + std::to_string(this->boardModel->minpas);
     fl_draw(minpas.c_str(), limitpasx + 20, limitpasy + 80);
+    return Fl_Window::draw();
 }
 
 int MainWindow::handle(int event)

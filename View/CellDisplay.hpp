@@ -43,7 +43,6 @@ class Cell
     int w, h;
     Fl_Color fillColor, frameColor;
     PlayerDisplay *personnage;
-    Fl_PNG_Image *wall;
     BoxDisplay *box;
     int color;
 
