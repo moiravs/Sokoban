@@ -43,7 +43,7 @@ void DisplayBoard::update()
             }
             else if (boardmodel->getLogicCellVector()[y][x]->hasBox())
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, BOX, 50, 50, boardmodel->getLogicCellVector()[y][x]->getBox()->getColor()});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, BOX, 50, 50, boardmodel->getLogicCellVector()[y][x]->getBox()->color});
             }
             else if (boardmodel->getLogicCellVector()[y][x]->getType() == BOX_FINAL_POS)
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, BOX_FINAL_POS, 50, 50, boardmodel->getLogicCellVector()[y][x]->getColor()});
