@@ -6,7 +6,6 @@
  * */
 #include "MainWindow.hpp"
 
-
 MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
 {
     resizable(this);
@@ -35,7 +34,7 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *)
     Fl_Menu_Bar *bar = (Fl_Menu_Bar *)w;      // Get the menubar widget
     const Fl_Menu_Item *item = bar->mvalue(); // Get the menu item that was picked
     char ipath[256];
-    bar->item_pathname(ipath, sizeof(ipath)); // Get full pathname of picked item
+    bar->item_pathname(ipath, sizeof(ipath));                    // Get full pathname of picked item
     fprintf(stderr, "callback: You picked '%s'", item->label()); // Print item picked
     fprintf(stderr, ", item_pathname() is '%s'", ipath);         // ..and full pathname
     if (item->flags & (FL_MENU_RADIO | FL_MENU_TOGGLE))
@@ -47,6 +46,7 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *)
 
 void MainWindow::draw()
 {
+    Fl_Window::draw();
     if (this->boardModel->endofparty == true)
     {
         if (this->boardModel->winorlose == true)
@@ -65,7 +65,6 @@ void MainWindow::draw()
     fl_draw(limitpas.c_str(), limitpasx, limitpasy);
     std::string minpas = "min pas for this level" + std::to_string(this->boardModel->minpas);
     fl_draw(minpas.c_str(), limitpasx + 20, limitpasy + 80);
-    return Fl_Window::draw();
 }
 
 int MainWindow::handle(int event)
@@ -109,22 +108,25 @@ int MainWindow::handle(int event)
                 this->boardModel->winorlose = true;
             }
             display->update();
-            this->redraw();
-        }
+            this->redraw();}
+
+            if (Fl::event_inside(this->display))
+            {
+                if (event == FL_PUSH)
+                {
+                    std::tuple<int, int> position = display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
+                    this->boardModel->move_to(std::get<1>(position), std::get<0>(position));
+                    display->update();
+                    this->redraw();
+                }
+            }
+        
     }
 
-    if (Fl::event_inside(this)) // if 
-    {
-        if (event == FL_PUSH){
-            display->update();
-        this->redraw();}
-    }
-    if (Fl::event_inside(this->display))
+    if (Fl::event_inside(this)) // if
     {
         if (event == FL_PUSH)
         {
-            std::tuple<int, int> position = display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
-            this->boardModel->move_to(std::get<1>(position), std::get<0>(position));
             display->update();
             this->redraw();
         }

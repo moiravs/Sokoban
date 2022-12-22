@@ -13,6 +13,7 @@ void DisplayBoard::draw()
 {
     for (auto &c : cells)
         c.draw();
+
 }
 
 std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc)
