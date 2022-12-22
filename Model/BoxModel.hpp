@@ -7,34 +7,13 @@
 #ifndef BOX_HPP
 #define BOX_HPP
 #include "../Constants.hpp"
-class Box
+struct Box
 {
     int x;
     int y;
-    int color;
+    int color = FL_LIGHT1;
     bool light = false;
     bool blocked = false;
-
-public:
     Box(int x, int y) : x{x}, y{y}{}
-    int getColor(){
-        return this->color;
-    }
-    void setColor(int color){
-        this->color = color;
-    }
-    void setLight(bool light){
-        this->light = true;
-        this->color = FL_LIGHT1;
-    }
-    bool getLight(){
-        return this->light;
-    }
-    void setBlocked(bool blocked){
-        this->blocked = true;
-    }
-    bool getBlocked(){
-        return this->blocked;
-    }
 };
 #endif

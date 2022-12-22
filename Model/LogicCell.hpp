@@ -40,7 +40,7 @@ public:
     {
         if (this->box != nullptr)
         {
-            return this->box->getBlocked();
+            return this->box->blocked;
         }
         return false;
     }
@@ -55,7 +55,7 @@ public:
         {
             if (this->box != nullptr)
             {
-                return (this->box->getColor() == this->color);
+                return (this->box->color == this->color);
             }
             return false;
         }
@@ -83,7 +83,7 @@ public:
     void setBoxblocked()
     {
         if (this->box != nullptr)
-            this->box->setBlocked(true);
+            this->box->blocked = true;
     }
     void setBox(Box *box)
     {
