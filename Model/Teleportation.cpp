@@ -6,7 +6,7 @@
  * */
 #include "Teleportation.hpp"
 
-LogicCell * Teleportation::get_second_end()
+LogicCell *Teleportation::get_second_end()
 {
     return this->second_end;
 }

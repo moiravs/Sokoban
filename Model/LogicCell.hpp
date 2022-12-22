@@ -11,7 +11,6 @@
 #include "Player.hpp"
 #include "../Constants.hpp"
 
-
 class LogicCell
 {
 private:
@@ -19,27 +18,22 @@ private:
     Box *box = nullptr;
     Player *player = nullptr;
     int color = FL_YELLOW;
+    int type;
 
 protected:
 public:
-    enum cellType
-    {
-        Normal = EMPTY,
-        Wall = WALL,
-        Teleportation = TELEPORTATION,
-        Box_final_pos = BOX_FINAL_POS,
-    };
-    cellType type;
     LogicCell(){};
-    LogicCell(size_t line, size_t column, cellType type) : line{line}, column{column}, type{type}{} ;
-    cellType getType()
+    LogicCell(size_t line, size_t column, int type) : line{line}, column{column}, type{type} {};
+    int getType()
     {
         return this->type;
     };
-    int getX(){
+    int getX()
+    {
         return this->column;
     }
-    int getY(){
+    int getY()
+    {
         return this->line;
     }
     bool isBoxBlocked()
@@ -50,33 +44,41 @@ public:
         }
         return false;
     }
-    void setColor(int color){
+    void setColor(int color)
+    {
         this->color = color;
     }
 
-    bool isComplete(){
-        if (this->type == Box_final_pos){
-            if (this->box !=nullptr){
+    bool isComplete()
+    {
+        if (this->type == BOX_FINAL_POS)
+        {
+            if (this->box != nullptr)
+            {
                 return (this->box->getColor() == this->color);
             }
             return false;
         }
         return true;
     }
-    int getColor(){
+    int getColor()
+    {
         return this->color;
     }
-    bool isBlocked(){
-        if (this->type == WALL){
+    bool isBlocked()
+    {
+        if (this->type == WALL)
+        {
             return true;
         }
-        else if (this->isBoxBlocked() == true){
+        else if (this->isBoxBlocked() == true)
+        {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
-
     }
     void setBoxblocked()
     {
@@ -91,7 +93,7 @@ public:
     {
         this->player = player;
     }
-    void setType(cellType type)
+    void setType(int type)
     {
         this->type = type;
     }

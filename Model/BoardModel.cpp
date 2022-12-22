@@ -116,12 +116,12 @@ void BoardModel::createBoard(std::string fileContent)
             {
             case EMPTY:
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
                 break;
             }
             case PLAYER:
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
                 this->player->y = this->LogicCellVector.size();
                 this->player->x = line.size();
                 logiccell->setPlayer(player);
@@ -129,7 +129,7 @@ void BoardModel::createBoard(std::string fileContent)
             }
             case BOX:
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
                 Box *box = new Box(this->LogicCellVector.size(), line.size());
                 box->setColor(FL_BLUE);
                 logiccell->setBox(box);
@@ -137,7 +137,7 @@ void BoardModel::createBoard(std::string fileContent)
             }
             case RED_BOX - '0':
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
                 Box *box = new Box(this->LogicCellVector.size(), line.size());
                 box->setColor(FL_RED);
                 logiccell->setBox(box);
@@ -145,19 +145,19 @@ void BoardModel::createBoard(std::string fileContent)
             }
             case RED_BOX_FINAL_POS - '0':
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Box_final_pos);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
                 logiccell->setColor(FL_RED);
                 break;
             }
             case WALL:
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Wall);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), WALL);
                 break;
             }
 
             case TELEPORTATION:
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Teleportation);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), TELEPORTATION);
                 Teleportation *firstTeleportationCell;
 
                 if (this->getFirstTeleportation() == false)
@@ -175,7 +175,7 @@ void BoardModel::createBoard(std::string fileContent)
             }
             case LIGHT_BOX:
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Normal);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
                 Box *box = new Box(this->LogicCellVector.size(), line.size());
                 box->setLight(true);
                 logiccell->setBox(box);
@@ -183,7 +183,7 @@ void BoardModel::createBoard(std::string fileContent)
             }
             case BOX_FINAL_POS:
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), LogicCell::cellType::Box_final_pos);
+                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
                 logiccell->setColor(FL_BLUE);
                 break;
             }
