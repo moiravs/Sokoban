@@ -6,23 +6,27 @@
  * */
 #include "CellDisplay.hpp"
 
+
 PlayerDisplay::PlayerDisplay(Point center, int w, int h) : center{center}, w{w}, h{h}
 {
-    this->personnage = new Fl_JPEG_Image(imageplayer.c_str());
 }
 
 void PlayerDisplay::draw()
 {
-    Fl_Image *hihi = this->personnage;
-    hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
+
 }
 
 Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, type{type}, w{w}, h{h}, color{color}
 {
     if (type == PLAYER)
     {
-        PlayerDisplay *player = new PlayerDisplay(center, w, h);
-        this->personnage = player;
+        this->personnage = new Fl_PNG_Image(imageplayer.c_str());
+    }
+    else if (type == TELEPORTATION){
+        this->color = FL_GREEN;
+    }
+    else if (type == WALL){
+        this->wall = new Fl_PNG_Image(imagewall.c_str());
     }
 }
 
@@ -35,12 +39,22 @@ bool Cell::contains(Point p)
 void Cell::draw()
 {
     if (type == PLAYER){
-        personnage->draw();
+        Fl_Image *hihi = this->personnage;
+        hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
+    }
+    else if (type == WALL){
+        Fl_Image *hihi = this->wall;
+        hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
     }
     else if (type == BOX_FINAL_POS)
     {
+        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h,FL_BLACK);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, this->color);
+    }
+    else if (type == EMPTY)
+    {
         fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, this->color);
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_WHITE);
+        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);
     }
     else
     {

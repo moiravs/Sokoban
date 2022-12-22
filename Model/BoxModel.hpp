@@ -6,6 +6,7 @@
  * */
 #ifndef BOX_HPP
 #define BOX_HPP
+#include "../Constants.hpp"
 class Box
 {
     int x;
@@ -24,6 +25,7 @@ public:
     }
     void setLight(bool light){
         this->light = true;
+        this->color = FL_LIGHT1;
     }
     bool getLight(){
         return this->light;

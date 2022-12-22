@@ -28,7 +28,7 @@ class PlayerDisplay
 {
     Point center;
     int w, h;
-    Fl_JPEG_Image *personnage;
+    Fl_PNG_Image *personnage;
 
 public:
     PlayerDisplay(Point center, int w, int h);
@@ -41,8 +41,9 @@ class Cell
     Point center;
     int type;
     int w, h;
+    Fl_PNG_Image *personnage;
+    Fl_PNG_Image *wall;
     Fl_Color fillColor, frameColor;
-    PlayerDisplay *personnage;
     BoxDisplay *box;
     int color;
 

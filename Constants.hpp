@@ -85,7 +85,7 @@ const std::string level2 = "Niveaux/niveau2.txt";
 const std::string level3 = "Niveaux/niveau3.txt";
 
 //Images
-const std::string imageplayer = "Textures/Test.jpeg";
-const std::string imagewall = "Textures/wall.png";
+const std::string imageplayer = "Textures/marioooo.png";
+const std::string imagewall = "Textures/Stone_Wall.png";
 
 #endif
