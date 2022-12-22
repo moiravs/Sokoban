@@ -13,14 +13,14 @@ class Teleportation
     LogicCell *first_end;
     LogicCell *second_end;
     bool other_end_blocked;
-    bool teleportation_done = false;
+    bool teleportationDone = false;
     size_t line, column;
 
 public:
     Teleportation(LogicCell *first_end) : first_end{first_end} {};
-    LogicCell *get_second_end();
-    LogicCell *get_first_end();
-    bool is_done();
+    LogicCell *getSecondEnd();
+    LogicCell *getFirstEnd();
+    bool isDone();
     void set_second_end(LogicCell *second_end)
     {
         this->second_end = second_end;

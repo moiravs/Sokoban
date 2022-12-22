@@ -32,13 +32,13 @@ void Cell::draw()
 {
     if (type == PLAYER)
     {
-        Fl_Image *hihi = this->personnage;
-        hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
+        Fl_Image *picture = this->personnage;
+        picture->draw(center.x - w / 2, center.y - h / 2, w, h);
     }
     else if (type == WALL)
     {
-        Fl_Image *hihi = this->wall;
-        hihi->draw(center.x - w / 2, center.y - h / 2, w, h);
+        Fl_Image *picture = this->wall;
+        picture->draw(center.x - w / 2, center.y - h / 2, w, h);
     }
     else if (type == BOX_FINAL_POS)
     {

@@ -16,7 +16,7 @@
 class BoardModel
 {
 private:
-    bool first_teleportation_on_board = false;
+    bool firstTeleportation = false;
     std::vector<Teleportation *> teleportation;
 
 public:
@@ -42,12 +42,12 @@ public:
     bool isFailure();
     void teleport();
     bool checkIfBlocked(int i, int j);
-    void move(int final_pos_y, int final_pos_x);
+    void move(int finalPosY, int finalPosX);
     std::string readFileIntoString();
     void createBoard(std::string fileContent);
     void setFirstTeleportation(bool value);
     bool getFirstTeleportation();
-    bool isInBoard(int pos_y, int pos_x);
+    bool isInBoard(int posY, int posX);
     void moveTo(int x, int y);
     std::vector<std::vector<LogicCell *>> getLogicCellVector();
 };

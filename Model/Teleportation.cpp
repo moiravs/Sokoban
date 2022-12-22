@@ -6,15 +6,15 @@
  * */
 #include "Teleportation.hpp"
 
-LogicCell *Teleportation::get_second_end()
+LogicCell *Teleportation::getSecondEnd()
 {
     return this->second_end;
 }
-LogicCell *Teleportation::get_first_end()
+LogicCell *Teleportation::getFirstEnd()
 {
     return this->first_end;
 }
-bool Teleportation::is_done()
+bool Teleportation::isDone()
 {
-    return this->teleportation_done;
+    return this->teleportationDone;
 }
