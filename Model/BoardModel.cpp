@@ -245,19 +245,14 @@ void BoardModel::teleport()
 
 void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
 {
-    if (this->isInBoard(final_player_pos_y, final_player_pos_x) == false)
-        return;
-    if (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == WALL)
+    if ((this->isInBoard(final_player_pos_y, final_player_pos_x) == false) || (LogicCellVector[final_player_pos_y][final_player_pos_x]->getType() == WALL))
         return;
     if (LogicCellVector[final_player_pos_y][final_player_pos_x]->hasBox())
     {
         int deplacement_x = final_player_pos_x - this->player->x, deplacement_y = final_player_pos_y - this->player->y;
         if (LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox()->light)
         {
-            if (!this->isInBoard(final_player_pos_y + deplacement_y, final_player_pos_x + deplacement_x))
-            {
-                return;
-            }
+            if (!this->isInBoard(final_player_pos_y + deplacement_y, final_player_pos_x + deplacement_x)) {return;}
             if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox()) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->light))
             {
                 if ((this->isInBoard(final_player_pos_y + 2 * deplacement_y, final_player_pos_x + 2 * deplacement_x)) && (LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]->getType() != WALL))
@@ -267,21 +262,19 @@ void BoardModel::move(int final_player_pos_y, int final_player_pos_x)
                     LogicCellVector[final_player_pos_y + 2 * deplacement_y][final_player_pos_x + 2 * deplacement_x]
                         ->setBox(LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox());
                 }
-                else {
-                    return;
-                }
+                else {return;}
             }
-
             else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != EMPTY) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() != BOX_FINAL_POS)){
                 return;
             }
         }
-        else if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox()) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->light == false))
+        if (!this->isInBoard(final_player_pos_y + deplacement_y, final_player_pos_x + deplacement_x)){
+            return;
+        }
+        if ((LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->hasBox()) && (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getBox()->light == false))
             return;
         else if (LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]->getType() == WALL)
             return;
-        std::cout << "y" << final_player_pos_y + deplacement_y << "x" << final_player_pos_x +  deplacement_x << std::endl;
-
         LogicCellVector[final_player_pos_y + deplacement_y][final_player_pos_x + deplacement_x]
             ->setBox(LogicCellVector[final_player_pos_y][final_player_pos_x]->getBox());
         LogicCellVector[final_player_pos_y][final_player_pos_x]->setBox(nullptr);
