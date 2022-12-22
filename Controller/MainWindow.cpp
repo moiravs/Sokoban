@@ -14,7 +14,6 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp * popUp) : 
     display = board;
     board->show();
     this->popUp = popUp;
-
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
     Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min steps");
     Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choiceh, "levels");
@@ -69,12 +68,15 @@ void MainWindow::draw()
             fl_draw("YOU LOSE, reset or change level", limitpasx + 50, limitpasy + 50);
         }
     }
-    std::string steps = "steps " + std::to_string(this->boardModel->steps);
+
+    fl_font(Fl_Font(1), 16);
+
+    std::string steps = "Steps : " + std::to_string(this->boardModel->steps);
     fl_draw(steps.c_str(), pasx, pasy);
-    std::string stepsLimit = "limite de steps " + std::to_string(this->boardModel->stepsLimit);
+    std::string stepsLimit = "Steps limit : " + std::to_string(this->boardModel->stepsLimit);
     fl_draw(stepsLimit.c_str(), limitpasx, limitpasy);
-    std::string minimumSteps = "min steps for this level" + std::to_string(this->boardModel->minimumSteps);
-    fl_draw(minimumSteps.c_str(), limitpasx + 20, limitpasy + 80);
+    std::string minimumSteps = "Minimum Steps : " + std::to_string(this->boardModel->minimumSteps);
+    fl_draw(minimumSteps.c_str(), minpasx, minpasy);
 }
 
 int MainWindow::handle(int event)

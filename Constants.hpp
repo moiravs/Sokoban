@@ -59,10 +59,8 @@ const int resetw = 100;
 const int reseth = 25;
 
 //PAS
-const int pasx = 10;
+const int pasx = 500;
 const int pasy = 150;
-const int pasw = 80;
-const int pash = 25;
 
 //Level button display
 const int choicex = 10;
@@ -76,8 +74,11 @@ const int resetminpasy = 200;
 const int resetminpasw = 100;
 const int resetminpash = 25;
 
-const int limitpasx = 10;
-const int limitpasy = 250;
+const int limitpasx = 200;
+const int limitpasy = 150;
+
+const int minpasx = 330;
+const int minpasy = 150;
 
 //levels
 const std::string level1 = "Niveaux/niveau1.txt";

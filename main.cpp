@@ -27,10 +27,15 @@ int main(int argc, char const *argv[])
     auto boardModel = std::make_shared<BoardModel>(file);
     std::string buffer = boardModel->readFileIntoString();
     boardModel->createBoard(buffer);
+    
+
     PopUp * popUp = new PopUp();
     popUp->hide();
     MainWindow window(boardModel, popUp);
+    window.color();
     window.show();
     StartWindow start;
+    start.color();
+
     return Fl::run();
 }

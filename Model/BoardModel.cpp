@@ -275,11 +275,9 @@ void BoardModel::move(int finalPosY, int finalPosX)
                 return;
             }
         }
-        if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX))
-        {
+        else if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX))
             return;
-        }
-        if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light == false))
+        else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light))
             return;
         else if (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() == WALL)
             return;
