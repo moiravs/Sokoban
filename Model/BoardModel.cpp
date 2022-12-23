@@ -33,34 +33,61 @@ bool BoardModel::getFirstTeleportation()
 bool BoardModel::isFailure()
 {
     std::vector<std::vector<int>> move{{0, -1, -1, 0}, {-1, 0, 0, 1}, {0, 1, 1, 0}, {1, 0, 0, -1}};
-    for (size_t i = 0; i < LogicCellVector.size(); i++)
+    for (int j = 0; j < (int)LogicCellVector.size(); j++)
     {
-        for (size_t j = 0; j < LogicCellVector[0].size(); j++)
+        for (int i = 0; i < (int)LogicCellVector[0].size(); i++)
         {
             if (LogicCellVector[i][j]->hasBox())
             {
+                bool blocked = false;
                 for (auto a : move)
                 {
-                    // si la boite est bloquée par des murs ou par une boite bloquée
+                    std::cout << "i " << i << " j " << j << std::endl;
+                    std::cout << "i boite " << i + a[0] << " j boite" << j + a[1] << std::endl;
+                    std::cout << "i boite " << i + a[2] << " j boite" << j + a[3] << std::endl;
                     if (this->isInBoard(i + a[0], j + a[1]) && this->isInBoard(i + a[2], j + a[3]))
                     {
                         if (LogicCellVector[i + a[0]][j + a[1]]->isBlocked() && LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
                         {
-                            LogicCellVector[i][j]->setBoxblocked();
-                        }
-                        else
-                        {
-                            return false;
+                            puts("dhh");
+
+                            LogicCellVector[i][j]->setBoxblocked(true);
+                            blocked = true;
                         }
                     }
-                    else if (!(this->isInBoard(i + a[0], j + a[1]) && this->isInBoard(i + a[2], j + a[3])))
+                    else if ((!this->isInBoard(i + a[0], j + a[1])) && (!this->isInBoard(i + a[2], j + a[3])))
                     {
-                        LogicCellVector[i][j]->setBoxblocked();
+                        puts("chh");
+
+                        LogicCellVector[i][j]->setBoxblocked(true);
+                        blocked = true;
                     }
+                    else if (!(this->isInBoard(i + a[0], j + a[1])))
+                    {
+                        if (LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
+                        {
+                            puts("ahh");
+                            LogicCellVector[i][j]->setBoxblocked(true);
+                            blocked = true;
+                        }
+                    }
+                    else if (!(this->isInBoard(i + a[2], j + a[3])))
+                    {
+                        if (LogicCellVector[i + a[0]][j + a[1]]->isBlocked())
+                        {
+                            puts("bhh");
+
+                            LogicCellVector[i][j]->setBoxblocked(true);
+                            blocked = true;
+                        }
+                    }
+                }
+                if (blocked == false){
+                    LogicCellVector[i][j]->setBoxblocked(false);
+                    return false;
                 }
             }
         }
-
     }
     return true;
 }
@@ -237,8 +264,10 @@ void BoardModel::move(int finalPosY, int finalPosX)
         int moveX = finalPosX - this->player->x, moveY = finalPosY - this->player->y;
         if (LogicCellVector[finalPosY][finalPosX]->getBox()->light)
         {
-            if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX)){
-                return;}
+            if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX))
+            {
+                return;
+            }
             if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light))
             {
                 if ((this->isInBoard(finalPosY + 2 * moveY, finalPosX + 2 * moveX)) && (LogicCellVector[finalPosY + 2 * moveY][finalPosX + 2 * moveX]->getType() != WALL))

@@ -75,10 +75,10 @@ public:
             return false;
         }
     }
-    void setBoxblocked()
+    void setBoxblocked(bool blocked)
     {
         if (this->box != nullptr)
-            this->box->blocked = true;
+            this->box->blocked = blocked;
     }
     void setBox(Box *box)
     {
