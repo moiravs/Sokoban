@@ -294,3 +294,35 @@ void BoardModel::moveTo(int x, int y)
         }
     }
 }
+
+void BoardModel::saveMinimumSteps()
+{
+    if (((this->steps < this->minimumSteps) && (this->winorlose)) || ((this->minimumSteps == 0 && this->winorlose)))
+    {
+        std::string strReplace = "l" + std::to_string(this->minimumSteps);
+        std::string strNew = "l" + std::to_string(this->steps);
+        std::ifstream filein(this->filename); // File to read from
+        std::ofstream fileout("fileout.txt");             // Temporary file
+        if (!filein || !fileout)
+        {
+            std::cout << "Error opening files!" << std::endl;
+        }
+
+        std::string strTemp;
+        bool found = false;
+        while (filein >> strTemp)
+        {
+            if ((strTemp == strReplace) && (found == false))
+            {
+                strTemp = strNew;
+                found = true;
+            }
+            strTemp += "\n";
+            fileout << strTemp;
+        }
+        filein.close();
+        std::remove(this->filename.c_str());
+        std::rename("fileout.txt", this->filename.c_str());
+        this->minimumSteps = this->steps;
+    }
+}

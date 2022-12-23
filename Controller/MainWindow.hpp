@@ -62,7 +62,6 @@ public:
     static void resetLevelCallback(Fl_Widget *widget, void *board_model);
     static void reset_min_pas_cb(Fl_Widget *widget, void *);
     static void changeLevelCallback(Fl_Widget *widget, void *board_Model);
-    void saveMinimumSteps();
     static void resetMinStepsCallback(Fl_Widget *w, void *f);
 };
 

@@ -49,6 +49,7 @@ public:
     bool getFirstTeleportation();
     bool isInBoard(int posY, int posX);
     void moveTo(int x, int y);
+    void saveMinimumSteps();
     std::vector<std::vector<LogicCell *>> getLogicCellVector();
 };
 

@@ -64,7 +64,7 @@ void MainWindow::draw()
         {
             std::string wonstring = "YOU WON with " + std::to_string(boardModel->stepsLimit - boardModel->steps) + " steps restants, reset or change level";
             fl_draw(wonstring.c_str(), limitpasx + 50, limitpasy + 50);
-            saveMinimumSteps();
+            this->boardModel->saveMinimumSteps();
         }
         else
         {
@@ -159,7 +159,7 @@ void MainWindow::windowCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *a = ((MainWindow *)f);
     widget->hide();
-    a->saveMinimumSteps();
+    a->boardModel->saveMinimumSteps();
 }
 
 void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
@@ -173,46 +173,14 @@ void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
     a->redraw();
 }
 
-void MainWindow::saveMinimumSteps()
-{
-    std::cout << "steps " << this->boardModel->steps << " min steps " << this->boardModel->minimumSteps << std::endl;
-    if (((this->boardModel->steps < this->boardModel->minimumSteps) && (this->boardModel->winorlose)) || ((this->boardModel->minimumSteps == 0 && this->boardModel->winorlose)))
-    {
-        std::string strReplace = "l" + std::to_string(this->boardModel->minimumSteps);
-        std::string strNew = "l" + std::to_string(this->boardModel->steps);
-        std::ifstream filein(this->boardModel->filename); // File to read from
-        std::ofstream fileout("fileout.txt");             // Temporary file
-        if (!filein || !fileout)
-        {
-            std::cout << "Error opening files!" << std::endl;
-        }
 
-        std::string strTemp;
-        bool found = false;
-        while (filein >> strTemp)
-        {
-            if ((strTemp == strReplace) && (found == false))
-            {
-                strTemp = strNew;
-                found = true;
-            }
-            strTemp += "\n";
-            fileout << strTemp;
-        }
-        filein.close();
-        std::remove(this->boardModel->filename.c_str());
-        std::rename("fileout.txt", this->boardModel->filename.c_str());
-        this->boardModel->minimumSteps = this->boardModel->steps;
-    }
-    this->redraw();
-}
 
 void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *mainWindow = ((MainWindow *)f);
     Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
-    mainWindow->saveMinimumSteps();
+    mainWindow->boardModel->saveMinimumSteps();
     mainWindow->boardModel->endOfParty = false;
     switch (choice)
     {
@@ -237,6 +205,6 @@ void MainWindow::resetMinStepsCallback(Fl_Widget *w, void *f)
 {
     MainWindow *mainWindow = ((MainWindow *)f);
     mainWindow->boardModel->steps = 0;
-    mainWindow->saveMinimumSteps();
+    mainWindow->boardModel->saveMinimumSteps();
     mainWindow->redraw();
 }
