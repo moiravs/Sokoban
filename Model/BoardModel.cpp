@@ -70,37 +70,22 @@ bool BoardModel::isFailure()
         {
             if (LogicCellVector[i][j]->hasBox())
             {
-                bool blocked = false;
                 for (auto a : move)
                 {
                     if (this->isInBoard(i + a[0], j + a[1]) && this->isInBoard(i + a[2], j + a[3]))
                     {
                         if (LogicCellVector[i + a[0]][j + a[1]]->isBlocked() && LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
-                        {
                             LogicCellVector[i][j]->setBoxblocked(true);
-                            blocked = true;
-                        }
                     }
                     else if ((!this->isInBoard(i + a[0], j + a[1])) && (!this->isInBoard(i + a[2], j + a[3])))
-                    {
                         LogicCellVector[i][j]->setBoxblocked(true);
-                        blocked = true;
-                    }
                     else if ((!(this->isInBoard(i + a[0], j + a[1]))) && (LogicCellVector[i + a[2]][j + a[3]]->isBlocked()))
-                    {
                         LogicCellVector[i][j]->setBoxblocked(true);
-                        blocked = true;
-                    }
-
                     else if ((!(this->isInBoard(i + a[2], j + a[3]))) && (LogicCellVector[i + a[0]][j + a[1]]->isBlocked()))
-                    {
                         LogicCellVector[i][j]->setBoxblocked(true);
-                        blocked = true;
-                    }
                 }
-                if (blocked == false)
+                if (LogicCellVector[i][j]->isBlocked() == false)
                 {
-                    LogicCellVector[i][j]->setBoxblocked(false);
                     return false;
                 }
             }
