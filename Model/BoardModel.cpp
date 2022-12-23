@@ -248,18 +248,15 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
     this->steps = 0;
 }
 
-bool BoardModel::getEndOfParty()
-{
-    return this->endOfParty;
-}
 
-void BoardModel::setEndOfParty(bool newValue)
-{
-    this->endOfParty = newValue; 
-}
 
 bool BoardModel::isEndOfParty()
 {
+    if ((this->steps == this->stepsLimit) || (this->isFailure()))
+    {
+        this->winorlose = false;
+        return true;
+    }
     for (size_t i = 0; i < LogicCellVector.size(); i++)
     {
         for (size_t j = 0; j < LogicCellVector[0].size(); j++)
@@ -268,6 +265,7 @@ bool BoardModel::isEndOfParty()
                 return false;
         }
     }
+    this->winorlose = true;
     return true;
 }
 

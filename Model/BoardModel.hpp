@@ -23,14 +23,11 @@ private:
     int minimumSteps = 0;
     int stepsLimit = 0;
     std::vector<std::vector<LogicCell *>> LogicCellVector;
-    bool endOfParty = false;
     bool winorlose;
     
 
 public:
-    // TODO : destructeur
-    // TODO :TOUT EN PRIVATE
-    
+    // TODO : destructeur    
     Player *player;
     BoardModel(std::string filename)
     {
@@ -44,16 +41,12 @@ public:
     void teleport();
     std::string getFilename();
     void setFilename(std::string newFilename);
-    bool getEndOfParty();
-    void setEndOfParty(bool newValue);
     bool getWinOrLose();
     void setWinOrLose(bool newValue);
     int getSteps();
     void setSteps(int newSteps);
     int getStepsLimit();
-    void setStepsLimit(int newStepsLimit);
     int getMinimumSteps();
-    void setMinimumSteps(int newMinimumSteps);
     bool checkIfBlocked(int i, int j);
     void move(int finalPosY, int finalPosX);
     std::string readFileIntoString();

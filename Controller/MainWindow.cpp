@@ -58,7 +58,7 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *userdata)
 void MainWindow::draw()
 {
     Fl_Window::draw();
-    if (this->boardModel->getEndOfParty())
+    if (this->boardModel->isEndOfParty())
     {
         if (this->boardModel->getWinOrLose())
         {
@@ -83,7 +83,7 @@ void MainWindow::draw()
 int MainWindow::handle(int event)
 {
 
-    if (boardModel->getEndOfParty() == false)
+    if (boardModel->isEndOfParty() == false)
     {
 
         if (event == FL_KEYBOARD)
@@ -98,18 +98,6 @@ int MainWindow::handle(int event)
                 boardModel->move(boardModel->player->y, boardModel->player->x - 1);
             else if (Fl::event_key(97))
                 boardModel->teleport();
-
-            if ((this->boardModel->getSteps() == this->boardModel->getStepsLimit()) || (this->boardModel->isFailure()))
-            {
-                this->boardModel->setEndOfParty(true);
-                this->boardModel->setWinOrLose(false);
-            }
-
-            if (this->boardModel->isEndOfParty())
-            {
-                this->boardModel->setEndOfParty(true);
-                this->boardModel->setWinOrLose(true);
-            }
             display->update();
             this->redraw();
         }
@@ -157,7 +145,6 @@ void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 
     MainWindow *a = ((MainWindow *)f);
     a->boardModel->setSteps(0);
-    a->boardModel->setEndOfParty(false);
     a->boardModel->createBoard(a->boardModel->readFileIntoString());
     a->display->update();
     a->redraw();
@@ -169,7 +156,6 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
     Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
     mainWindow->boardModel->saveMinimumSteps();
-    mainWindow->boardModel->setEndOfParty(false);
     switch (choice)
     {
     case -1:
