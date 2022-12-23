@@ -7,10 +7,11 @@
 
 #include "MainWindow.hpp"
 
-MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : Fl_Window(500, 500, windowWidth, windowHeight, "Sokoban")
+MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, HelpWindow *helpWindow) : Fl_Window(500, 500, windowWidth, windowHeight, "Sokoban")
 {
     resizable(this);
     this->boardModel = boardModel;
+    this->helpWindow = helpWindow;
     DisplayBoard *board = new DisplayBoard(boardModel);
 
     display = board;
@@ -19,6 +20,8 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : F
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "Reset Level");
     Fl_Button *resetMinSteps = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "Reset Min Steps");
     Fl_Button *levels = new Fl_Button(choicex, choicey, choicew, choiceh, "Levels");
+    Fl_Button *help = new Fl_Button(helpx, helpy, helpw, helph, "Help");
+    help->callback(helpCallback, (void *)this);
     this->callback(this->windowCallback, this);
     reset->callback(resetLevelCallback, (void *)this);
     levels->callback(changeLevelCallback, (void *)this);
@@ -26,31 +29,6 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : F
     this->resizable(levels);
     this->resizable(resetMinSteps);
     this->resizable(reset);
-    Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
-    menu->add("&Game/&ChooseLevel", "^l", MyMenuCallback, this);
-    menu->add("&Game/&Help", "^o", MyMenuCallback, this);
-    menu->add("&File/&Save", "^s", MyMenuCallback, this, FL_MENU_DIVIDER);
-    menu->add("&File/&Quit", "^q", MyMenuCallback, this);
-}
-
-void MainWindow::MyMenuCallback(Fl_Widget *w, void *userdata)
-{
-    MainWindow *o = static_cast<MainWindow *>(userdata);
-    Fl_Menu_Bar *bar = (Fl_Menu_Bar *)w;      // Get the menubar widget
-    const Fl_Menu_Item *item = bar->mvalue(); // Get the menu item that was picked
-    if (strcmp(item->label(), "&ChooseLevel") == 0)
-    {
-        o->popUp->set_modal();
-        o->popUp->show();
-        while (o->popUp->shown())
-            Fl::wait();
-        o->changeLevelCallback(o->popUp->levels, (void *)o);
-    }
-    if (item->flags & (FL_MENU_RADIO | FL_MENU_TOGGLE))
-        fprintf(stderr, ", value is %s", item->value() ? "on" : "off"); // Print item's value
-    fprintf(stderr, "\n");
-    if (strcmp(item->label(), "&Quit") == 0)
-        exit(0);
 }
 
 void MainWindow::draw()
@@ -176,6 +154,11 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
     mainWindow->boardModel->createBoard(mainWindow->boardModel->readFileIntoString());
     mainWindow->display->update();
     mainWindow->redraw();
+}
+void MainWindow::helpCallback(Fl_Widget *widget, void *f)
+{
+    MainWindow *mainWindow = ((MainWindow *)f);
+    mainWindow->helpWindow->show();
 }
 
 void MainWindow::resetMinStepsCallback(Fl_Widget *w, void *f)

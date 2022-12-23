@@ -73,6 +73,12 @@ const int choicew = 100;
 const int choiceh = 25;
 
 // Level button display
+const int helpx = 350;
+const int helpy = 700;
+const int helpw = 100;
+const int helph = 25;
+
+// Level button display
 const int resetminpasx = 500;
 const int resetminpasy = 620;
 const int resetminpasw = 100;
