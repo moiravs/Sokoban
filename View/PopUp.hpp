@@ -16,6 +16,7 @@ public:
         levels->add("Level 1");
         levels->add("Level 2");
         levels->add("Level 3");
+        levels->add("Level 4");
         levels->show();
         levels->callback(windowCallback, this);
     }
