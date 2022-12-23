@@ -135,6 +135,7 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
     this->teleportation.clear();
     std::vector<LogicCell *> line;
     bool tele = true;
+
     for (int ind = index; ind < (int)fileContent.size(); ind++)
     {
         switch (fileContent[ind])
@@ -181,8 +182,26 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
         }
         case RED_BOX_FINAL_POS:
         {
+            puts("ah");
             LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
             logiccell->setColor(FL_RED);
+            line.push_back(logiccell);
+            break;
+        }
+        case BLUE_BOX:
+        {
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
+            Box *box = new Box();
+            box->color = FL_BLUE;
+            logiccell->setBox(box);
+            line.push_back(logiccell);
+            break;
+        }
+        case BLUE_BOX_FINAL_POS:
+        {
+            puts("ah");
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
+            logiccell->setColor(FL_BLUE);
             line.push_back(logiccell);
             break;
         }
@@ -231,6 +250,7 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
         }
         }
     }
+    puts("agi");
     this->steps = 0;
 }
 
