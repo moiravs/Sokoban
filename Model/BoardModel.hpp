@@ -37,6 +37,7 @@ public:
         Player *player = new Player();
         this->player = player;
     }
+    void createLogicCell(int index, std::string fileContent);
     bool isEndOfParty();
     bool isFailure();
     void teleport();

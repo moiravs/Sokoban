@@ -80,9 +80,10 @@ bool BoardModel::isFailure()
 
 void BoardModel::createBoard(std::string fileContent)
 {
-    this->LogicCellVector.clear();
-    std::vector<LogicCell *> line;
-    for (size_t index = 0; index < fileContent.size(); index++)
+
+    int index = 0;
+    bool finish = false;
+    while (!finish)
     {
         switch (fileContent[index])
         {
@@ -106,99 +107,110 @@ void BoardModel::createBoard(std::string fileContent)
                 stepsLimit += fileContent[index];
             }
             this->stepsLimit = atoi(stepsLimit.c_str());
+            finish = true;
             break;
         }
+        }
+        index++;
+    }
+    this->createLogicCell(index--, fileContent);
+}
+
+void BoardModel::createLogicCell(int index, std::string fileContent)
+{
+    this->LogicCellVector.clear();
+    std::vector<LogicCell *> line;
+    for (int ind = index; ind < (int)fileContent.size(); ind++)
+    {
+        switch (fileContent[ind])
+        {
         case '\n':
         case '\0':
         {
             this->LogicCellVector.push_back(line);
             line.clear();
             break;
-
-        case ' ':
-            break;
-        default:
+        }
+        case EMPTY + '0':
         {
-            LogicCell *logiccell;
-            int charContent = fileContent[index] - '0';
-            switch (charContent)
-            {
-            case EMPTY:
-            {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
-                break;
-            }
-            case PLAYER:
-            {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
-                this->player->y = this->LogicCellVector.size();
-                this->player->x = line.size();
-                logiccell->setPlayer(player);
-                break;
-            }
-            case BOX:
-            {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
-                Box *box = new Box();
-                box->color = FL_GRAY;
-                logiccell->setBox(box);
-                break;
-            }
-            case RED_BOX - '0':
-            {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
-                Box *box = new Box();
-                box->color = FL_RED;
-                logiccell->setBox(box);
-                break;
-            }
-            case RED_BOX_FINAL_POS - '0':
-            {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
-                logiccell->setColor(FL_RED);
-                break;
-            }
-            case WALL:
-            {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), WALL);
-                break;
-            }
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
+            line.push_back(logiccell);
+            break;
+        }
+        case PLAYER + '0':
+        {
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
+            this->player->y = this->LogicCellVector.size();
+            this->player->x = line.size();
+            logiccell->setPlayer(player);
+            line.push_back(logiccell);
+            break;
+        }
+        case BOX + '0':
+        {
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
+            Box *box = new Box();
+            box->color = FL_WHITE;
+            logiccell->setBox(box);
+            line.push_back(logiccell);
+            break;
+        }
+        case RED_BOX:
+        {
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
+            Box *box = new Box();
+            box->color = FL_RED;
+            logiccell->setBox(box);
+            line.push_back(logiccell);
+            break;
+        }
+        case RED_BOX_FINAL_POS:
+        {
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
+            logiccell->setColor(FL_RED);
+            line.push_back(logiccell);
+            break;
+        }
+        case WALL + '0':
+        {
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), WALL);
+            line.push_back(logiccell);
+            break;
+        }
 
-            case TELEPORTATION:
-            {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), TELEPORTATION);
-                Teleportation *firstTeleportationCell;
+        case TELEPORTATION + '0':
+        {
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), TELEPORTATION);
+            Teleportation *firstTeleportationCell;
 
-                if (this->getFirstTeleportation() == false)
-                {
-                    firstTeleportationCell = new Teleportation(logiccell);
-                    this->setFirstTeleportation(true);
-                }
-                else
-                {
-                    firstTeleportationCell->set_second_end(logiccell);
-                    this->teleportation.push_back(firstTeleportationCell);
-                    this->setFirstTeleportation(false);
-                }
-                break;
-            }
-            case LIGHT_BOX:
+            if (this->getFirstTeleportation() == false)
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
-                Box *box = new Box();
-                box->light = true;
-                logiccell->setBox(box);
-                break;
+                firstTeleportationCell = new Teleportation(logiccell);
+                this->setFirstTeleportation(true);
             }
-            case BOX_FINAL_POS:
+            else
             {
-                logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
-                break;
-            }
+                firstTeleportationCell->set_second_end(logiccell);
+                this->teleportation.push_back(firstTeleportationCell);
+                this->setFirstTeleportation(false);
             }
             line.push_back(logiccell);
             break;
         }
+        case LIGHT_BOX + '0':
+        {
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
+            Box *box = new Box();
+            box->light = true;
+            logiccell->setBox(box);
+            line.push_back(logiccell);
+            break;
+        }
+        case BOX_FINAL_POS + '0':
+        {
+            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
+            line.push_back(logiccell);
+            break;
         }
         }
     }
