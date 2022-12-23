@@ -15,7 +15,7 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : F
     board->show();
     this->popUp = popUp;
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
-    Fl_Button *resetminpas = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min steps");
+    Fl_Button *resetMinSteps = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min steps");
     Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choiceh, "levels");
     levels->add("Level 1");
     levels->add("Level 2");
@@ -23,9 +23,9 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : F
     this->callback(this->windowCallback, this);
     reset->callback(resetLevelCallback, (void *)this);
     levels->callback(changeLevelCallback, (void *)this);
-    resetminpas->callback(resetMinStepsCallback, (void *)this);
+    resetMinSteps->callback(resetMinStepsCallback, (void *)this);
     this->resizable(levels);
-    this->resizable(resetminpas);
+    this->resizable(resetMinSteps);
     this->resizable(reset);
     Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
     menu->add("&Game/&ChooseLevel", "^l", MyMenuCallback, this);
@@ -58,12 +58,13 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *userdata)
 void MainWindow::draw()
 {
     Fl_Window::draw();
-    if (this->boardModel->endOfParty == true)
+    if (this->boardModel->endOfParty)
     {
-        if (this->boardModel->winorlose == true)
+        if (this->boardModel->winorlose)
         {
             std::string wonstring = "YOU WON with " + std::to_string(boardModel->stepsLimit - boardModel->steps) + " steps restants, reset or change level";
             fl_draw(wonstring.c_str(), limitpasx + 50, limitpasy + 50);
+            saveMinimumSteps();
         }
         else
         {
@@ -154,7 +155,6 @@ void MainWindow::Timer_CB(void *userdata)
     Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
 }
 
-
 void MainWindow::windowCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *a = ((MainWindow *)f);
@@ -164,7 +164,7 @@ void MainWindow::windowCallback(Fl_Widget *widget, void *f)
 
 void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 {
-    
+
     MainWindow *a = ((MainWindow *)f);
     a->boardModel->steps = 0;
     a->boardModel->endOfParty = false;
@@ -175,7 +175,8 @@ void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 
 void MainWindow::saveMinimumSteps()
 {
-    if (((this->boardModel->steps < this->boardModel->minimumSteps) && (this->boardModel->winorlose == true)) || ((this->boardModel->minimumSteps == 0) && (this->boardModel->winorlose == true)))
+    std::cout << "steps " << this->boardModel->steps << " min steps " << this->boardModel->minimumSteps << std::endl;
+    if (((this->boardModel->steps < this->boardModel->minimumSteps) && (this->boardModel->winorlose)) || ((this->boardModel->minimumSteps == 0 && this->boardModel->winorlose)))
     {
         std::string strReplace = "l" + std::to_string(this->boardModel->minimumSteps);
         std::string strNew = "l" + std::to_string(this->boardModel->steps);
@@ -208,7 +209,6 @@ void MainWindow::saveMinimumSteps()
 void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *mainWindow = ((MainWindow *)f);
-    puts("brurirjoekh");
     Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
     mainWindow->saveMinimumSteps();
@@ -235,6 +235,7 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 void MainWindow::resetMinStepsCallback(Fl_Widget *w, void *f)
 {
     MainWindow *mainWindow = ((MainWindow *)f);
-    mainWindow->boardModel->minimumSteps = 0;
+    mainWindow->boardModel->steps = 0;
+    mainWindow->saveMinimumSteps();
     mainWindow->redraw();
 }

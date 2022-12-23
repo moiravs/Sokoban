@@ -71,7 +71,7 @@ public:
         {
             return true;
         }
-        else if (this->isBoxBlocked() == true)
+        else if (this->isBoxBlocked())
         {
             return true;
         }

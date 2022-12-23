@@ -8,7 +8,6 @@
 
 std::string BoardModel::readFileIntoString()
 {
-    std::cout << this->filename << std::endl;
     std::ifstream ifs(this->filename);
     std::string content((std::istreambuf_iterator<char>(ifs)),
                         (std::istreambuf_iterator<char>()));
@@ -30,17 +29,6 @@ bool BoardModel::getFirstTeleportation()
 {
     return this->firstTeleportation;
 }
-/*
-bool BoardModel::checkIfBlocked(int i, int j)
-{
-    std::vector<std::vector<int, int>> moinsplus = {{0, -1}, {-1, 0}};
-    for (auto move : moinsplus)
-    {
-        if ((0 < i + move[0]) && (i + move[0] < this->LogicCellVector.size()) && (0 < j + move[1]) && (j + move[1]) < this->LogicCellVector[0].size()){
-            if
-        }
-    }
-}*/
 
 bool BoardModel::isFailure()
 {
@@ -205,6 +193,7 @@ void BoardModel::createBoard(std::string fileContent)
         }
         }
     }
+    this->steps = 0;
 }
 
 bool BoardModel::isEndOfParty()
@@ -260,8 +249,6 @@ void BoardModel::move(int finalPosY, int finalPosX)
             {
                 if ((this->isInBoard(finalPosY + 2 * moveY, finalPosX + 2 * moveX)) && (LogicCellVector[finalPosY + 2 * moveY][finalPosX + 2 * moveX]->getType() != WALL))
                 {
-                    puts("here?");
-                    std::cout << "y" << finalPosY + 2 * moveY << "x" << finalPosX + 2 * moveX << std::endl;
                     LogicCellVector[finalPosY + 2 * moveY][finalPosX + 2 * moveX]
                         ->setBox(LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox());
                 }
