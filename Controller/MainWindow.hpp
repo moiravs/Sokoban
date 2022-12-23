@@ -6,44 +6,9 @@
  * */
 #include "../View/DisplayBoard.hpp"
 #include "../View/CellDisplay.hpp"
+#include "../View/PopUp.hpp"
+#include "../View/StartWindow.hpp"
 
-class PopUp : public Fl_Window
-{
-private:
-public:
-    Fl_Choice *levels = new Fl_Choice(200, 200, 200, 50, "ChooseLevel");
-
-    PopUp() : Fl_Window(400, 400, 400, 400, "SOKOBAN")
-    {
-        Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);
-        resizable(this);
-        this->show();
-
-        levels->add("Level 1");
-        levels->add("Level 2");
-        levels->add("Level 3");
-        levels->show();
-        levels->callback(windowCallback, this);
-    }
-    void draw() override
-    {
-        Fl_Window::draw();
-        fl_draw("SOKOBAN", 300, 300);
-    }
-    static void Time_CB(void *userdata)
-    {
-        Fl::repeat_timeout(1.0 / refreshPerSecond, Time_CB, userdata);
-    }
-    void window_non_static_cb(Fl_Widget *widget)
-    {
-        this->hide();
-    }
-
-    static void windowCallback(Fl_Widget *widget, void *f)
-    {
-        ((PopUp *)f)->window_non_static_cb(widget);
-    }
-};
 class MainWindow : public Fl_Window
 {
     std::shared_ptr<BoardModel> boardModel;
@@ -64,33 +29,3 @@ public:
     static void resetMinStepsCallback(Fl_Widget *w, void *f);
 };
 
-class StartWindow : public Fl_Window
-{
-private:
-    Fl_Button *button = new Fl_Button(300, 300, 400, 50, "Andrius Ezerskis & Moïra Vanderslagmolen");
-    int wait = 0;
-
-public:
-    StartWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "SOKOBAN")
-    {
-        Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);
-        resizable(this);
-        this->show();
-    }
-    void draw() override
-    {
-        Fl_Window::draw();
-        fl_draw("SOKOBAN", 300, 300);
-    }
-    static void Time_CB(void *userdata)
-    {
-        StartWindow *o = static_cast<StartWindow *>(userdata);
-        o->wait++;
-        if (o->wait == 10)
-        {
-            sleep(1);
-            o->hide();
-        }
-        Fl::repeat_timeout(1.0 / refreshPerSecond, Time_CB, userdata);
-    }
-};

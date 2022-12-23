@@ -4,6 +4,7 @@
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
+
 #include "MainWindow.hpp"
 
 MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : Fl_Window(500, 500, windowWidth, windowHeight, "Sokoban")
@@ -15,12 +16,9 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : F
     display = board;
     board->show();
     this->popUp = popUp;
-    Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "reset level");
-    Fl_Button *resetMinSteps = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "reset min steps");
-    Fl_Choice *levels = new Fl_Choice(choicex, choicey, choicew, choiceh, "levels");
-    levels->add("Level 1");
-    levels->add("Level 2");
-    levels->add("Level 3");
+    Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "Reset Level");
+    Fl_Button *resetMinSteps = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "Reset Min Steps");
+    Fl_Button *levels = new Fl_Button(choicex, choicey, choicew, choiceh, "Levels");
     this->callback(this->windowCallback, this);
     reset->callback(resetLevelCallback, (void *)this);
     levels->callback(changeLevelCallback, (void *)this);
@@ -154,7 +152,11 @@ void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *mainWindow = ((MainWindow *)f);
-    Fl_Choice *levels = (Fl_Choice *)widget;
+    mainWindow->popUp->set_modal();
+    mainWindow->popUp->show();
+    while (mainWindow->popUp->shown())
+        Fl::wait();
+    Fl_Choice *levels = (Fl_Choice *)mainWindow->popUp->levels;
     int choice = levels->value();
     mainWindow->boardModel->saveMinimumSteps();
     switch (choice)
