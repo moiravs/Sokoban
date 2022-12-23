@@ -45,11 +45,6 @@ void Cell::draw()
         fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);
         fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, this->color);
     }
-    else if (type == EMPTY)
-    {
-        fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, this->color);
-        fl_draw_box(FL_BORDER_FRAME, center.x - w / 2, center.y - h / 2, w, h, FL_BLACK);
-    }
     else
     {
         fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, this->color);

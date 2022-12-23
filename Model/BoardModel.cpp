@@ -139,7 +139,7 @@ void BoardModel::createBoard(std::string fileContent)
             case BOX:
             {
                 logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
-                Box *box = new Box(this->LogicCellVector.size(), line.size());
+                Box *box = new Box();
                 box->color = FL_GRAY;
                 logiccell->setBox(box);
                 break;
@@ -147,7 +147,7 @@ void BoardModel::createBoard(std::string fileContent)
             case RED_BOX - '0':
             {
                 logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
-                Box *box = new Box(this->LogicCellVector.size(), line.size());
+                Box *box = new Box();
                 box->color = FL_RED;
                 logiccell->setBox(box);
                 break;
@@ -185,7 +185,7 @@ void BoardModel::createBoard(std::string fileContent)
             case LIGHT_BOX:
             {
                 logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
-                Box *box = new Box(this->LogicCellVector.size(), line.size());
+                Box *box = new Box();
                 box->light = true;
                 logiccell->setBox(box);
                 break;
