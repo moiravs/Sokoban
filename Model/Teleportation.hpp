@@ -16,16 +16,6 @@ class Teleportation
 
 public:
     Teleportation(){};
-    /**
-     * @brief  Getter for the secondEnd of the teleportation
-     * @retval
-     */
-    LogicCell *getSecondEnd();
-    /**
-     * @brief
-     * @retval
-     */
-    LogicCell *getFirstEnd();
     std::tuple<int, int> getOtherEnd(int x, int y)
     {
         if (y == this->firstEnd->getY() && x == this->firstEnd->getX())

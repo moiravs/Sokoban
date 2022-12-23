@@ -5,12 +5,3 @@
  * Date : 21 december 2022
  * */
 #include "Teleportation.hpp"
-
-LogicCell *Teleportation::getSecondEnd()
-{
-    return this->secondEnd;
-}
-LogicCell *Teleportation::getFirstEnd()
-{
-    return this->firstEnd;
-}

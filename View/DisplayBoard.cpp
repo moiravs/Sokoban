@@ -11,10 +11,8 @@
 
 void DisplayBoard::draw()
 {
-    puts("ahh");
     for (auto &c : cells)
         c.draw();
-    puts("hiii");
 }
 
 std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc)
@@ -39,7 +37,6 @@ void DisplayBoard::update()
     {
         for (size_t x = 0; x < boardmodel->getLogicCellVector()[0].size(); x++)
         {
-            std::cout << boardmodel->getLogicCellVector()[y][x]->getType() << std::endl;
             if (boardmodel->getLogicCellVector()[y][x]->hasPlayer())
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, PLAYER, 50, 50, FL_WHITE});
             else if (boardmodel->getLogicCellVector()[y][x]->hasBox())
