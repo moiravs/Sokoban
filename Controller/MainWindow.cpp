@@ -202,6 +202,7 @@ void MainWindow::saveMinimumSteps()
         filein.close();
         std::remove(this->boardModel->filename.c_str());
         std::rename("fileout.txt", this->boardModel->filename.c_str());
+        this->boardModel->minimumSteps = this->boardModel->steps;
     }
     this->redraw();
 }
