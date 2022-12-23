@@ -265,21 +265,12 @@ void BoardModel::move(int finalPosY, int finalPosX)
                     LogicCellVector[finalPosY + 2 * moveY][finalPosX + 2 * moveX]
                         ->setBox(LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox());
                 }
-                else
-                {
-                    return;
-                }
+                else {return;}
             }
-            else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != EMPTY) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != BOX_FINAL_POS))
-            {
-                return;
-            }
+            else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != EMPTY) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != BOX_FINAL_POS)){return;}
         }
-        else if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX))
-            return;
+        else if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX) || LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() == WALL) return;
         else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light))
-            return;
-        else if (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() == WALL)
             return;
         LogicCellVector[finalPosY + moveY][finalPosX + moveX]
             ->setBox(LogicCellVector[finalPosY][finalPosX]->getBox());

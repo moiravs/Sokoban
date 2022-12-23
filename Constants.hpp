@@ -53,8 +53,8 @@ const int boardw = 600;
 const int boardh = 600;
 
 //Button reset display
-const int resetx = 10;
-const int resety = 115;
+const int resetx = 200;
+const int resety = 620;
 const int resetw = 100;
 const int reseth = 25;
 
@@ -63,14 +63,14 @@ const int pasx = 500;
 const int pasy = 150;
 
 //Level button display
-const int choicex = 10;
-const int choicey = 50;
+const int choicex = 350;
+const int choicey = 620;
 const int choicew = 100;
 const int choiceh = 25;
 
 // Level button display
-const int resetminpasx = 10;
-const int resetminpasy = 200;
+const int resetminpasx = 500;
+const int resetminpasy = 620;
 const int resetminpasw = 100;
 const int resetminpash = 25;
 

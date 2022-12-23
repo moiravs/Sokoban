@@ -6,7 +6,7 @@
  * */
 #include "MainWindow.hpp"
 
-MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp * popUp) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
+MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : Fl_Window(500, 500, windowWidth, windowHeight, "Lab 2")
 {
     resizable(this);
     this->boardModel = boardModel;
@@ -23,13 +23,15 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp * popUp) : 
     this->callback(this->windowCallback, this);
     reset->callback(resetLevelCallback, (void *)this);
     levels->callback(changeLevelCallback, (void *)this);
-    resetminpas->callback(resetminpas_cb_static, (void *)this);
+    resetminpas->callback(resetMinStepsCallback, (void *)this);
+    this->resizable(levels);
+    this->resizable(resetminpas);
+    this->resizable(reset);
     Fl_Menu_Bar *menu = new Fl_Menu_Bar(0, 0, 400, 25); // Create menubar, items..
     menu->add("&Game/&ChooseLevel", "^l", MyMenuCallback, this);
     menu->add("&Game/&Help", "^o", MyMenuCallback, this);
-    menu->add("&File/&Save", "^s", MyMenuCallback,  this, FL_MENU_DIVIDER);
+    menu->add("&File/&Save", "^s", MyMenuCallback, this, FL_MENU_DIVIDER);
     menu->add("&File/&Quit", "^q", MyMenuCallback, this);
-    
 }
 
 void MainWindow::MyMenuCallback(Fl_Widget *w, void *userdata)
@@ -38,13 +40,13 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *userdata)
 
     Fl_Menu_Bar *bar = (Fl_Menu_Bar *)w;      // Get the menubar widget
     const Fl_Menu_Item *item = bar->mvalue(); // Get the menu item that was picked
-    if (strcmp(item->label(),"&ChooseLevel")==0){
-        puts("bruh");
+    if (strcmp(item->label(), "&ChooseLevel") == 0)
+    {
         o->popUp->set_modal();
         o->popUp->show();
         while (o->popUp->shown())
             Fl::wait();
-        o->level_change_non_static(o->popUp->levels);
+        o->changeLevelCallback(o->popUp->levels, (void *)o);
     }
     if (item->flags & (FL_MENU_RADIO | FL_MENU_TOGGLE))
         fprintf(stderr, ", value is %s", item->value() ? "on" : "off"); // Print item's value
@@ -68,9 +70,7 @@ void MainWindow::draw()
             fl_draw("YOU LOSE, reset or change level", limitpasx + 50, limitpasy + 50);
         }
     }
-
     fl_font(Fl_Font(1), 16);
-
     std::string steps = "Steps : " + std::to_string(this->boardModel->steps);
     fl_draw(steps.c_str(), pasx, pasy);
     std::string stepsLimit = "Steps limit : " + std::to_string(this->boardModel->stepsLimit);
@@ -154,35 +154,23 @@ void MainWindow::Timer_CB(void *userdata)
     Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
 }
 
-void MainWindow::window_non_static_cb(Fl_Widget *widget)
-{
-    widget->hide();
-    this->saveMinimumSteps();
-}
 
 void MainWindow::windowCallback(Fl_Widget *widget, void *f)
 {
-    ((MainWindow *)f)->window_non_static_cb(widget);
-}
-
-void MainWindow::reset_level_non_static(Fl_Widget *widget)
-{
-    this->boardModel->steps = 0;
-    this->boardModel->endOfParty = false;
-    this->boardModel->createBoard(this->boardModel->readFileIntoString());
-    this->display->update();
-    this->redraw();
+    MainWindow *a = ((MainWindow *)f);
+    widget->hide();
+    a->saveMinimumSteps();
 }
 
 void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 {
-    ((MainWindow *)f)->reset_level_non_static(w);
-}
-
-void MainWindow::resetminpas_cb()
-{
-    this->boardModel->minimumSteps = 0;
-    this->redraw();
+    
+    MainWindow *a = ((MainWindow *)f);
+    a->boardModel->steps = 0;
+    a->boardModel->endOfParty = false;
+    a->boardModel->createBoard(a->boardModel->readFileIntoString());
+    a->display->update();
+    a->redraw();
 }
 
 void MainWindow::saveMinimumSteps()
@@ -217,38 +205,36 @@ void MainWindow::saveMinimumSteps()
     this->redraw();
 }
 
-void MainWindow::level_change_non_static(Fl_Widget *widget)
+void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 {
+    MainWindow *mainWindow = ((MainWindow *)f);
     puts("brurirjoekh");
     Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
-    this->saveMinimumSteps();
-    this->boardModel->endOfParty = false;
+    mainWindow->saveMinimumSteps();
+    mainWindow->boardModel->endOfParty = false;
     switch (choice)
     {
     case -1:
         return;
     case 0:
-        this->boardModel->filename = level1;
+        mainWindow->boardModel->filename = level1;
         break;
     case 1:
-        this->boardModel->filename = level2;
+        mainWindow->boardModel->filename = level2;
         break;
     case 2:
-        this->boardModel->filename = level3;
+        mainWindow->boardModel->filename = level3;
         break;
     }
-    this->boardModel->createBoard(this->boardModel->readFileIntoString());
-    this->display->update();
-    this->redraw();
+    mainWindow->boardModel->createBoard(mainWindow->boardModel->readFileIntoString());
+    mainWindow->display->update();
+    mainWindow->redraw();
 }
 
-void MainWindow::changeLevelCallback(Fl_Widget *w, void *f)
+void MainWindow::resetMinStepsCallback(Fl_Widget *w, void *f)
 {
-    ((MainWindow *)f)->level_change_non_static(w);
-}
-
-void MainWindow::resetminpas_cb_static(Fl_Widget *w, void *f)
-{
-    ((MainWindow *)f)->resetminpas_cb();
+    MainWindow *mainWindow = ((MainWindow *)f);
+    mainWindow->boardModel->minimumSteps = 0;
+    mainWindow->redraw();
 }

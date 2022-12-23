@@ -10,7 +10,6 @@
 class PopUp : public Fl_Window
 {
 private:
-
 public:
     Fl_Choice *levels = new Fl_Choice(200, 200, 200, 50, "ChooseLevel");
 
@@ -19,7 +18,7 @@ public:
         Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);
         resizable(this);
         this->show();
-        
+
         levels->add("Level 1");
         levels->add("Level 2");
         levels->add("Level 3");
@@ -34,7 +33,6 @@ public:
     static void Time_CB(void *userdata)
     {
         Fl::repeat_timeout(1.0 / refreshPerSecond, Time_CB, userdata);
-    
     }
     void window_non_static_cb(Fl_Widget *widget)
     {
@@ -64,12 +62,8 @@ public:
     static void resetLevelCallback(Fl_Widget *widget, void *board_model);
     static void reset_min_pas_cb(Fl_Widget *widget, void *);
     static void changeLevelCallback(Fl_Widget *widget, void *board_Model);
-    void level_change_non_static(Fl_Widget *widget);
-    void reset_level_non_static(Fl_Widget *widget);
     void saveMinimumSteps();
-    void resetminpas_cb();
-    static void resetminpas_cb_static(Fl_Widget *w, void *f);
-    void window_non_static_cb(Fl_Widget *widget);
+    static void resetMinStepsCallback(Fl_Widget *w, void *f);
 };
 
 class StartWindow : public Fl_Window
