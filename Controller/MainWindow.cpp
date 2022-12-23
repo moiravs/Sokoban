@@ -103,13 +103,6 @@ int MainWindow::handle(int event)
     return Fl_Window::handle(event);
 }
 
-void MainWindow::Timer_CB(void *userdata)
-{
-    MainWindow *o = static_cast<MainWindow *>(userdata);
-    o->redraw();
-    Fl::repeat_timeout(1.0 / refreshPerSecond, Timer_CB, userdata);
-}
-
 void MainWindow::windowCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *a = ((MainWindow *)f);
