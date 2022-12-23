@@ -94,6 +94,7 @@ const int minpasy = 150;
 const std::string level1 = "Niveaux/niveau1.txt";
 const std::string level2 = "Niveaux/niveau2.txt";
 const std::string level3 = "Niveaux/niveau3.txt";
+const std::string level4 = "Niveaux/niveau4.txt";
 
 //Images
 const std::string imageplayer = "Textures/marioooo.png";
