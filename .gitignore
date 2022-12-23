@@ -5,6 +5,7 @@ Cell.o
 MainWindow.o
 Player.o
 jeu.exe
+jeu
 BoxModel.o
 DisplayBoard.o
 CellDisplay.o
