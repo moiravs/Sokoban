@@ -42,47 +42,33 @@ bool BoardModel::isFailure()
                 bool blocked = false;
                 for (auto a : move)
                 {
-                    std::cout << "i " << i << " j " << j << std::endl;
-                    std::cout << "i boite " << i + a[0] << " j boite" << j + a[1] << std::endl;
-                    std::cout << "i boite " << i + a[2] << " j boite" << j + a[3] << std::endl;
                     if (this->isInBoard(i + a[0], j + a[1]) && this->isInBoard(i + a[2], j + a[3]))
                     {
                         if (LogicCellVector[i + a[0]][j + a[1]]->isBlocked() && LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
                         {
-                            puts("dhh");
-
                             LogicCellVector[i][j]->setBoxblocked(true);
                             blocked = true;
                         }
                     }
                     else if ((!this->isInBoard(i + a[0], j + a[1])) && (!this->isInBoard(i + a[2], j + a[3])))
                     {
-                        puts("chh");
-
                         LogicCellVector[i][j]->setBoxblocked(true);
                         blocked = true;
                     }
-                    else if (!(this->isInBoard(i + a[0], j + a[1])))
+                    else if ((!(this->isInBoard(i + a[0], j + a[1]))) && (LogicCellVector[i + a[2]][j + a[3]]->isBlocked()))
                     {
-                        if (LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
-                        {
-                            puts("ahh");
-                            LogicCellVector[i][j]->setBoxblocked(true);
-                            blocked = true;
-                        }
+                        LogicCellVector[i][j]->setBoxblocked(true);
+                        blocked = true;
                     }
-                    else if (!(this->isInBoard(i + a[2], j + a[3])))
-                    {
-                        if (LogicCellVector[i + a[0]][j + a[1]]->isBlocked())
-                        {
-                            puts("bhh");
 
-                            LogicCellVector[i][j]->setBoxblocked(true);
-                            blocked = true;
-                        }
+                    else if ((!(this->isInBoard(i + a[2], j + a[3]))) && (LogicCellVector[i + a[0]][j + a[1]]->isBlocked()))
+                    {
+                        LogicCellVector[i][j]->setBoxblocked(true);
+                        blocked = true;
                     }
                 }
-                if (blocked == false){
+                if (blocked == false)
+                {
                     LogicCellVector[i][j]->setBoxblocked(false);
                     return false;
                 }
