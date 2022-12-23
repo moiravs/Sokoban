@@ -84,24 +84,15 @@ public:
     {
         this->box = box;
     }
-    void setPlayer(Player *player)
-    {
-        this->player = player;
-    }
-    void setType(int type)
-    {
-        this->type = type;
-    }
+    void setPlayer(Player *player) { this->player = player; }
+    void setType(int type) { this->type = type; }
     bool hasBox()
     {
         if (this->box != nullptr)
             return true;
         return false;
     }
-    Box *getBox()
-    {
-        return (this->box);
-    }
+    Box *getBox() { return (this->box); }
     bool hasPlayer()
     {
         if (this->player != nullptr)

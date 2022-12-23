@@ -25,9 +25,31 @@ class Cell
 
 public:
     Cell(Point center, int type, int w, int h, int color);
+    /**
+     * @brief  
+     * @note   
+     * @retval None
+     */
     void draw();
+    /**
+     * @brief  
+     * @note   
+     * @param  p: 
+     * @retval 
+     */
     bool contains(Point p) ;
+    /**
+     * @brief  
+     * @note   
+     * @retval 
+     */
     Point getCenter(){ return center; }
+    /**
+     * @brief  
+     * @note   
+     * @param  mouseLoc: 
+     * @retval 
+     */
     bool mouseClick(Point mouseLoc);
 };
 
