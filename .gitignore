@@ -1,9 +1,15 @@
 InterfaceGraphique.o
 ControllerBoard.o
-Board.o
+BoardModel.o
 Cell.o
 MainWindow.o
 Player.o
 jeu.exe
+BoxModel.o
+DisplayBoard.o
+CellDisplay.o
+LogicCell.o
+Teleportation.o
+Board.o
 ControllerBoard.o
 InterfaceGraphique.o
