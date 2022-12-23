@@ -16,7 +16,6 @@
 class BoardModel
 {
 private:
-    bool firstTeleportation = false;
     std::vector<Teleportation *> teleportation;
     std::string filename;
     int steps = 0;
@@ -51,8 +50,6 @@ public:
     void move(int finalPosY, int finalPosX);
     std::string readFileIntoString();
     void createBoard(std::string fileContent);
-    void setFirstTeleportation(bool value);
-    bool getFirstTeleportation();
     bool isInBoard(int posY, int posX);
     void moveTo(int x, int y);
     void saveMinimumSteps();

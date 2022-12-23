@@ -12,9 +12,5 @@ LogicCell *Teleportation::getSecondEnd()
 }
 LogicCell *Teleportation::getFirstEnd()
 {
-    return this->first_end;
-}
-bool Teleportation::isDone()
-{
-    return this->teleportationDone;
+    return this->firstEnd;
 }

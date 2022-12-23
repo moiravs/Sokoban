@@ -11,6 +11,7 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : F
     resizable(this);
     this->boardModel = boardModel;
     DisplayBoard *board = new DisplayBoard(boardModel);
+
     display = board;
     board->show();
     this->popUp = popUp;
@@ -37,7 +38,6 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp) : F
 void MainWindow::MyMenuCallback(Fl_Widget *w, void *userdata)
 {
     MainWindow *o = static_cast<MainWindow *>(userdata);
-
     Fl_Menu_Bar *bar = (Fl_Menu_Bar *)w;      // Get the menubar widget
     const Fl_Menu_Item *item = bar->mvalue(); // Get the menu item that was picked
     if (strcmp(item->label(), "&ChooseLevel") == 0)
@@ -58,6 +58,7 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *userdata)
 void MainWindow::draw()
 {
     Fl_Window::draw();
+
     if (this->boardModel->isEndOfParty())
     {
         if (this->boardModel->getWinOrLose())

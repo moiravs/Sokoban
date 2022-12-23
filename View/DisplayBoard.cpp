@@ -11,14 +11,15 @@
 
 void DisplayBoard::draw()
 {
+    puts("ahh");
     for (auto &c : cells)
         c.draw();
-
+    puts("hiii");
 }
 
 std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc)
 {
-    for (size_t i = 0; i < 63; i++)
+    for (size_t i = 0; i < (boardmodel->getLogicCellVector().size() * boardmodel->getLogicCellVector()[0].size()) - 1; i++)
     {
         if (cells[i].mouseClick(mouseLoc))
             return std::tuple<int, int>(i / boardmodel->getLogicCellVector().size(), i % boardmodel->getLogicCellVector()[0].size());
@@ -36,8 +37,9 @@ void DisplayBoard::update()
     cells.clear();
     for (size_t y = 0; y < boardmodel->getLogicCellVector().size(); y++)
     {
-        for (size_t x = 0; x < boardmodel->getLogicCellVector()[y].size(); x++)
+        for (size_t x = 0; x < boardmodel->getLogicCellVector()[0].size(); x++)
         {
+            std::cout << boardmodel->getLogicCellVector()[y][x]->getType() << std::endl;
             if (boardmodel->getLogicCellVector()[y][x]->hasPlayer())
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, PLAYER, 50, 50, FL_WHITE});
             else if (boardmodel->getLogicCellVector()[y][x]->hasBox())
@@ -45,7 +47,9 @@ void DisplayBoard::update()
             else if (boardmodel->getLogicCellVector()[y][x]->getType() == BOX_FINAL_POS)
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, BOX_FINAL_POS, 50, 50, boardmodel->getLogicCellVector()[y][x]->getColor()});
             else
+            {
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, boardmodel->getLogicCellVector()[y][x]->getType(), 50, 50, FL_BLACK});
+            }
         }
     }
 }

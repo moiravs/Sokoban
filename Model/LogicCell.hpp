@@ -62,18 +62,9 @@ public:
     }
     bool isBlocked()
     {
-        if (this->type == WALL)
-        {
+        if ((this->type == WALL) || this->isBoxBlocked())
             return true;
-        }
-        else if (this->isBoxBlocked())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     void setBoxblocked(bool blocked)
     {

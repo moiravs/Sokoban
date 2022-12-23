@@ -10,18 +10,20 @@ class Teleportation;
 
 class Teleportation
 {
-    LogicCell *first_end;
+    LogicCell *firstEnd;
     LogicCell *second_end;
-    bool other_end_blocked;
-    bool teleportationDone = false;
     size_t line, column;
 
 public:
-    Teleportation(LogicCell *first_end) : first_end{first_end} {};
+    Teleportation()
+    {};
     LogicCell *getSecondEnd();
     LogicCell *getFirstEnd();
-    bool isDone();
-    void set_second_end(LogicCell *second_end)
+    void setFirstEnd(LogicCell *firstEnd)
+    {
+        this->firstEnd= firstEnd;
+    }
+    void setSecondEnd(LogicCell *second_end)
     {
         this->second_end = second_end;
     }

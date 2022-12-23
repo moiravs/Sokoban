@@ -19,12 +19,6 @@ std::vector<std::vector<LogicCell *>> BoardModel::getLogicCellVector()
     return this->LogicCellVector;
 }
 
-void BoardModel::setFirstTeleportation(bool value)
-{
-    if (!(this->firstTeleportation == value))
-        this->firstTeleportation = value;
-}
-
 std::string BoardModel::getFilename()
 {
     return this->filename;
@@ -55,42 +49,45 @@ int BoardModel::getMinimumSteps()
     return this->minimumSteps;
 }
 
-bool BoardModel::getFirstTeleportation()
-{
-    return this->firstTeleportation;
-}
-
-
 bool BoardModel::isFailure()
 {
     std::vector<std::vector<int>> move{{0, -1, -1, 0}, {-1, 0, 0, 1}, {0, 1, 1, 0}, {1, 0, 0, -1}};
+    bool allBoxes = true;
     for (int j = 0; j < (int)LogicCellVector.size(); j++)
     {
         for (int i = 0; i < (int)LogicCellVector[0].size(); i++)
         {
-            if (LogicCellVector[i][j]->hasBox())
+            if (LogicCellVector[i][j]->hasBox() && (LogicCellVector[i][j]->isBlocked() == false))
             {
                 for (auto a : move)
                 {
-                    if (this->isInBoard(i + a[0], j + a[1]) && this->isInBoard(i + a[2], j + a[3]))
+                    if (this->isInBoard(i + a[0], j + a[1]) == false && this->isInBoard(i + a[2], j + a[3]) == false)
+                    {
+                        LogicCellVector[i][j]->setBoxblocked(true);
+                    }
+                    else if (this->isInBoard(i + a[0], j + a[1]) && this->isInBoard(i + a[2], j + a[3]))
                     {
                         if (LogicCellVector[i + a[0]][j + a[1]]->isBlocked() && LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
+                        {
                             LogicCellVector[i][j]->setBoxblocked(true);
+                        }
                     }
-                    else if ((!this->isInBoard(i + a[0], j + a[1])) && (!this->isInBoard(i + a[2], j + a[3])))
+                    else if (this->isInBoard(i + a[0], j + a[1]) && LogicCellVector[i + a[0]][j + a[1]]->isBlocked())
+                    {
                         LogicCellVector[i][j]->setBoxblocked(true);
-                    else if ((!(this->isInBoard(i + a[0], j + a[1]))) && (LogicCellVector[i + a[2]][j + a[3]]->isBlocked()))
+                    }
+                    else if (this->isInBoard(i + a[2], j + a[3]) && LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
+                    {
                         LogicCellVector[i][j]->setBoxblocked(true);
-                    else if ((!(this->isInBoard(i + a[2], j + a[3]))) && (LogicCellVector[i + a[0]][j + a[1]]->isBlocked()))
-                        LogicCellVector[i][j]->setBoxblocked(true);
+                    }
                 }
                 if (LogicCellVector[i][j]->isBlocked() == false)
-                {
-                    return false;
-                }
+                    allBoxes = false;
             }
         }
     }
+    if (allBoxes == false)
+        return false;
     return true;
 }
 
@@ -135,7 +132,9 @@ void BoardModel::createBoard(std::string fileContent)
 void BoardModel::createLogicCell(int index, std::string fileContent)
 {
     this->LogicCellVector.clear();
+    this->teleportation.clear();
     std::vector<LogicCell *> line;
+    bool tele = true;
     for (int ind = index; ind < (int)fileContent.size(); ind++)
     {
         switch (fileContent[ind])
@@ -196,21 +195,23 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
 
         case TELEPORTATION + '0':
         {
-            LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), TELEPORTATION);
             Teleportation *firstTeleportationCell;
-
-            if (this->getFirstTeleportation() == false)
+            if (tele)
             {
-                firstTeleportationCell = new Teleportation(logiccell);
-                this->setFirstTeleportation(true);
+                LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), TELEPORTATION);
+                firstTeleportationCell = new Teleportation();
+                firstTeleportationCell->setFirstEnd(logiccell);
+                tele = false;
+                line.push_back(logiccell);
             }
             else
             {
-                firstTeleportationCell->set_second_end(logiccell);
+                LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), TELEPORTATION);
+                firstTeleportationCell->setSecondEnd(logiccell);
                 this->teleportation.push_back(firstTeleportationCell);
-                this->setFirstTeleportation(false);
+                tele = true;
+                line.push_back(logiccell);
             }
-            line.push_back(logiccell);
             break;
         }
         case LIGHT_BOX + '0':
@@ -232,8 +233,6 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
     }
     this->steps = 0;
 }
-
-
 
 bool BoardModel::isEndOfParty()
 {
