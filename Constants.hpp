@@ -62,6 +62,10 @@ const int reseth = 25;
 const int pasx = 500;
 const int pasy = 150;
 
+// PAS
+const int winorlosex = 200;
+const int winorlosey = 100;
+
 //Level button display
 const int choicex = 350;
 const int choicey = 620;

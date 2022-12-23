@@ -63,12 +63,12 @@ void MainWindow::draw()
         if (this->boardModel->winorlose)
         {
             std::string wonstring = "YOU WON with " + std::to_string(boardModel->stepsLimit - boardModel->steps) + " steps restants, reset or change level";
-            fl_draw(wonstring.c_str(), limitpasx + 50, limitpasy + 50);
+            fl_draw(wonstring.c_str(), winorlosex, winorlosey);
             this->boardModel->saveMinimumSteps();
         }
         else
         {
-            fl_draw("YOU LOSE, reset or change level", limitpasx + 50, limitpasy + 50);
+            fl_draw("YOU LOSE, reset or change level", winorlosex, winorlosey);
         }
     }
     fl_font(Fl_Font(1), 16);
@@ -89,25 +89,15 @@ int MainWindow::handle(int event)
         if (event == FL_KEYBOARD)
         {
             if (Fl::event_key() == FL_Up)
-            {
                 boardModel->move(boardModel->player->y - 1, boardModel->player->x);
-            }
             else if (Fl::event_key() == FL_Down)
-            {
                 boardModel->move(boardModel->player->y + 1, boardModel->player->x);
-            }
             else if (Fl::event_key() == FL_Right)
-            {
                 boardModel->move(boardModel->player->y, boardModel->player->x + 1);
-            }
             else if (Fl::event_key() == FL_Left)
-            {
                 boardModel->move(boardModel->player->y, boardModel->player->x - 1);
-            }
             else if (Fl::event_key(97))
-            {
                 boardModel->teleport();
-            }
 
             if ((this->boardModel->steps == this->boardModel->stepsLimit) || (this->boardModel->isFailure()))
             {
@@ -172,8 +162,6 @@ void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
     a->display->update();
     a->redraw();
 }
-
-
 
 void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 {
