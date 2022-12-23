@@ -11,7 +11,7 @@ struct Box
 {
     int x;
     int y;
-    int color = FL_LIGHT1;
+    int color = FL_WHITE;
     bool light = false;
     bool blocked = false;
     Box(int x, int y) : x{x}, y{y}{}

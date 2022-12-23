@@ -17,10 +17,9 @@ private:
     size_t line, column;
     Box *box = nullptr;
     Player *player = nullptr;
-    int color = FL_YELLOW;
+    int color = FL_WHITE;
     int type;
 
-protected:
 public:
     LogicCell(){};
     LogicCell(size_t line, size_t column, int type) : line{line}, column{column}, type{type} {};
@@ -39,9 +38,7 @@ public:
     bool isBoxBlocked()
     {
         if (this->box != nullptr)
-        {
             return this->box->blocked;
-        }
         return false;
     }
     void setColor(int color)
@@ -54,9 +51,7 @@ public:
         if (this->type == BOX_FINAL_POS)
         {
             if (this->box != nullptr)
-            {
                 return (this->box->color == this->color);
-            }
             return false;
         }
         return true;
@@ -110,9 +105,7 @@ public:
     bool hasPlayer()
     {
         if (this->player != nullptr)
-        {
             return true;
-        }
         return false;
     }
     /*~LogicCell()

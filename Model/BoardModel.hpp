@@ -37,7 +37,6 @@ public:
         Player *player = new Player();
         this->player = player;
     }
-    void maxpasandlimit();
     bool isEndOfParty();
     bool isFailure();
     void teleport();

@@ -32,38 +32,35 @@ bool BoardModel::getFirstTeleportation()
 
 bool BoardModel::isFailure()
 {
+    std::vector<std::vector<int>> move{{0, -1, -1, 0}, {-1, 0, 0, 1}, {0, 1, 1, 0}, {1, 0, 0, -1}};
     for (size_t i = 0; i < LogicCellVector.size(); i++)
     {
         for (size_t j = 0; j < LogicCellVector[0].size(); j++)
         {
             if (LogicCellVector[i][j]->hasBox())
             {
-                if ((i == 0 && j == 0) || (i == 0 && j == LogicCellVector.size() - 1) || (i == LogicCellVector[0].size() && j == 0) || (i == LogicCellVector[0].size() - 1 && j == LogicCellVector.size() - 1))
-                    LogicCellVector[i][j]->setBoxblocked();
-
-                // si la boite est bloquée par des murs ou par une boite bloquée
-                else if (this->isInBoard(i, j - 1) && this->isInBoard(i - 1, j) && LogicCellVector[i][j - 1]->isBlocked() && LogicCellVector[i - 1][j]->isBlocked())
+                for (auto a : move)
                 {
-                    LogicCellVector[i][j]->setBoxblocked();
-                }
-                else if (this->isInBoard(i - 1, j) && this->isInBoard(i, j + 1) && LogicCellVector[i - 1][j]->isBlocked() && LogicCellVector[i][j + 1]->isBlocked())
-                {
-                    LogicCellVector[i][j]->setBoxblocked();
-                }
-                else if (this->isInBoard(i, j + 1) && this->isInBoard(i + 1, j) && LogicCellVector[i][j + 1]->isBlocked() && LogicCellVector[i + 1][j]->isBlocked())
-                {
-                    LogicCellVector[i][j]->setBoxblocked();
-                }
-                else if (this->isInBoard(i + 1, j) && this->isInBoard(i, j - 1) && LogicCellVector[i + 1][j]->isBlocked() && LogicCellVector[i][j - 1]->isBlocked())
-                {
-                    LogicCellVector[i][j]->setBoxblocked();
-                }
-                else
-                {
-                    return false;
+                    // si la boite est bloquée par des murs ou par une boite bloquée
+                    if (this->isInBoard(i + a[0], j + a[1]) && this->isInBoard(i + a[2], j + a[3]))
+                    {
+                        if (LogicCellVector[i + a[0]][j + a[1]]->isBlocked() && LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
+                        {
+                            LogicCellVector[i][j]->setBoxblocked();
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else if (!(this->isInBoard(i + a[0], j + a[1]) && this->isInBoard(i + a[2], j + a[3])))
+                    {
+                        LogicCellVector[i][j]->setBoxblocked();
+                    }
                 }
             }
         }
+
     }
     return true;
 }
@@ -183,7 +180,6 @@ void BoardModel::createBoard(std::string fileContent)
             case BOX_FINAL_POS:
             {
                 logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
-                logiccell->setColor(FL_GRAY);
                 break;
             }
             }
@@ -211,7 +207,7 @@ bool BoardModel::isEndOfParty()
 
 bool BoardModel::isInBoard(int posY, int posX)
 {
-    return 0 <= posY && posY < (int)LogicCellVector.size() && 0 <= posX && posX < (int)LogicCellVector[0].size();
+    return 0 <= posY && posY < (int)LogicCellVector.size() && 0 <= posX && posX < (int)LogicCellVector[posY].size();
 }
 
 void BoardModel::teleport()
@@ -241,22 +237,23 @@ void BoardModel::move(int finalPosY, int finalPosX)
         int moveX = finalPosX - this->player->x, moveY = finalPosY - this->player->y;
         if (LogicCellVector[finalPosY][finalPosX]->getBox()->light)
         {
-            if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX))
-            {
-                return;
-            }
+            if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX)){
+                return;}
             if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light))
             {
                 if ((this->isInBoard(finalPosY + 2 * moveY, finalPosX + 2 * moveX)) && (LogicCellVector[finalPosY + 2 * moveY][finalPosX + 2 * moveX]->getType() != WALL))
-                {
                     LogicCellVector[finalPosY + 2 * moveY][finalPosX + 2 * moveX]
                         ->setBox(LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox());
-                }
-                else {return;}
+                else
+                    return;
             }
-            else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != EMPTY) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != BOX_FINAL_POS)){return;}
+            else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != EMPTY) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != BOX_FINAL_POS))
+            {
+                return;
+            }
         }
-        else if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX) || LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() == WALL) return;
+        else if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX) || LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() == WALL)
+            return;
         else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light))
             return;
         LogicCellVector[finalPosY + moveY][finalPosX + moveX]
@@ -302,7 +299,7 @@ void BoardModel::saveMinimumSteps()
         std::string strReplace = "l" + std::to_string(this->minimumSteps);
         std::string strNew = "l" + std::to_string(this->steps);
         std::ifstream filein(this->filename); // File to read from
-        std::ofstream fileout("fileout.txt");             // Temporary file
+        std::ofstream fileout("fileout.txt"); // Temporary file
         if (!filein || !fileout)
         {
             std::cout << "Error opening files!" << std::endl;
