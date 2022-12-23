@@ -108,11 +108,11 @@ public:
             return true;
         return false;
     }
-    /*~LogicCell()
+    ~LogicCell()
     {
         delete this->player;
         delete this->box;
         delete this;
-    }*/
+    }
 };
 #endif
