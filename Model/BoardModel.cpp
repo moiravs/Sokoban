@@ -25,10 +25,41 @@ void BoardModel::setFirstTeleportation(bool value)
         this->firstTeleportation = value;
 }
 
+std::string BoardModel::getFilename()
+{
+    return this->filename;
+}
+
+void BoardModel::setFilename(std::string newFilename)
+{
+    this->filename = newFilename;
+}
+
+int BoardModel::getSteps()
+{
+    return this->steps;
+}
+
+void BoardModel::setSteps(int newSteps)
+{
+    this->steps = newSteps;
+}
+
+int BoardModel::getStepsLimit()
+{
+    return this->stepsLimit;
+}
+
+int BoardModel::getMinimumSteps()
+{
+    return this->minimumSteps;
+}
+
 bool BoardModel::getFirstTeleportation()
 {
     return this->firstTeleportation;
 }
+
 
 bool BoardModel::isFailure()
 {
@@ -217,6 +248,16 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
     this->steps = 0;
 }
 
+bool BoardModel::getEndOfParty()
+{
+    return this->endOfParty;
+}
+
+void BoardModel::setEndOfParty(bool newValue)
+{
+    this->endOfParty = newValue; 
+}
+
 bool BoardModel::isEndOfParty()
 {
     for (size_t i = 0; i < LogicCellVector.size(); i++)
@@ -228,6 +269,16 @@ bool BoardModel::isEndOfParty()
         }
     }
     return true;
+}
+
+bool BoardModel::getWinOrLose()
+{
+    return this->winorlose;
+}
+
+void BoardModel::setWinOrLose(bool newValue)
+{
+    this->winorlose = newValue;
 }
 
 bool BoardModel::isInBoard(int posY, int posX)

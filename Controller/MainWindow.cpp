@@ -58,11 +58,11 @@ void MainWindow::MyMenuCallback(Fl_Widget *w, void *userdata)
 void MainWindow::draw()
 {
     Fl_Window::draw();
-    if (this->boardModel->endOfParty)
+    if (this->boardModel->getEndOfParty())
     {
-        if (this->boardModel->winorlose)
+        if (this->boardModel->getWinOrLose())
         {
-            std::string wonstring = "YOU WON with " + std::to_string(boardModel->stepsLimit - boardModel->steps) + " steps restants, reset or change level";
+            std::string wonstring = "YOU WON with " + std::to_string(boardModel->getStepsLimit() - boardModel->getSteps()) + " steps restants, reset or change level";
             fl_draw(wonstring.c_str(), winorlosex, winorlosey);
             this->boardModel->saveMinimumSteps();
         }
@@ -72,18 +72,18 @@ void MainWindow::draw()
         }
     }
     fl_font(Fl_Font(1), 16);
-    std::string steps = "Steps : " + std::to_string(this->boardModel->steps);
+    std::string steps = "Steps : " + std::to_string(this->boardModel->getSteps());
     fl_draw(steps.c_str(), pasx, pasy);
-    std::string stepsLimit = "Steps limit : " + std::to_string(this->boardModel->stepsLimit);
+    std::string stepsLimit = "Steps limit : " + std::to_string(this->boardModel->getStepsLimit());
     fl_draw(stepsLimit.c_str(), limitpasx, limitpasy);
-    std::string minimumSteps = "Minimum Steps : " + std::to_string(this->boardModel->minimumSteps);
+    std::string minimumSteps = "Minimum Steps : " + std::to_string(this->boardModel->getMinimumSteps());
     fl_draw(minimumSteps.c_str(), minpasx, minpasy);
 }
 
 int MainWindow::handle(int event)
 {
 
-    if (boardModel->endOfParty == false)
+    if (boardModel->getEndOfParty() == false)
     {
 
         if (event == FL_KEYBOARD)
@@ -99,16 +99,16 @@ int MainWindow::handle(int event)
             else if (Fl::event_key(97))
                 boardModel->teleport();
 
-            if ((this->boardModel->steps == this->boardModel->stepsLimit) || (this->boardModel->isFailure()))
+            if ((this->boardModel->getSteps() == this->boardModel->getStepsLimit()) || (this->boardModel->isFailure()))
             {
-                this->boardModel->endOfParty = true;
-                this->boardModel->winorlose = false;
+                this->boardModel->setEndOfParty(true);
+                this->boardModel->setWinOrLose(false);
             }
 
             if (this->boardModel->isEndOfParty())
             {
-                this->boardModel->endOfParty = true;
-                this->boardModel->winorlose = true;
+                this->boardModel->setEndOfParty(true);
+                this->boardModel->setWinOrLose(true);
             }
             display->update();
             this->redraw();
@@ -156,8 +156,8 @@ void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 {
 
     MainWindow *a = ((MainWindow *)f);
-    a->boardModel->steps = 0;
-    a->boardModel->endOfParty = false;
+    a->boardModel->setSteps(0);
+    a->boardModel->setEndOfParty(false);
     a->boardModel->createBoard(a->boardModel->readFileIntoString());
     a->display->update();
     a->redraw();
@@ -169,19 +169,19 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
     Fl_Choice *levels = (Fl_Choice *)widget;
     int choice = levels->value();
     mainWindow->boardModel->saveMinimumSteps();
-    mainWindow->boardModel->endOfParty = false;
+    mainWindow->boardModel->setEndOfParty(false);
     switch (choice)
     {
     case -1:
         return;
     case 0:
-        mainWindow->boardModel->filename = level1;
+        mainWindow->boardModel->setFilename(level1);
         break;
     case 1:
-        mainWindow->boardModel->filename = level2;
+        mainWindow->boardModel->setFilename(level2);
         break;
     case 2:
-        mainWindow->boardModel->filename = level3;
+        mainWindow->boardModel->setFilename(level3);
         break;
     }
     mainWindow->boardModel->createBoard(mainWindow->boardModel->readFileIntoString());
@@ -192,7 +192,7 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 void MainWindow::resetMinStepsCallback(Fl_Widget *w, void *f)
 {
     MainWindow *mainWindow = ((MainWindow *)f);
-    mainWindow->boardModel->steps = 0;
+    mainWindow->boardModel->setSteps(0);
     mainWindow->boardModel->saveMinimumSteps();
     mainWindow->redraw();
 }

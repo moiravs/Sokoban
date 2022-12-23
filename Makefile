@@ -31,7 +31,7 @@ Teleportation.o:  Model/Teleportation.cpp Model/Teleportation.hpp Constants.hpp
 
 clean :
 	rm -f *.o
-	jeu.exe
+	rm jeu.exe
 
 
 
