@@ -11,20 +11,42 @@ class Teleportation;
 class Teleportation
 {
     LogicCell *firstEnd;
-    LogicCell *second_end;
+    LogicCell *secondEnd;
     size_t line, column;
 
 public:
-    Teleportation()
-    {};
+    Teleportation(){};
+    /**
+     * @brief  Getter for the secondEnd of the teleportation
+     * @retval
+     */
     LogicCell *getSecondEnd();
+    /**
+     * @brief
+     * @retval
+     */
     LogicCell *getFirstEnd();
+    std::tuple<int, int> getOtherEnd(int x, int y)
+    {
+        if (y == this->firstEnd->getY() && x == this->firstEnd->getX())
+        {
+            return {this->secondEnd->getY(), this->secondEnd->getX()};
+        }
+        else if (y == this->secondEnd->getY() && x == this->secondEnd->getX())
+        {
+            return {this->firstEnd->getY(), this->firstEnd->getX()};
+        }
+        else
+        {
+            return {-1, -1};
+        }
+    }
     void setFirstEnd(LogicCell *firstEnd)
     {
-        this->firstEnd= firstEnd;
+        this->firstEnd = firstEnd;
     }
-    void setSecondEnd(LogicCell *second_end)
+    void setSecondEnd(LogicCell *secondEnd)
     {
-        this->second_end = second_end;
+        this->secondEnd = secondEnd;
     }
 };

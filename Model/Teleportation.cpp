@@ -8,7 +8,7 @@
 
 LogicCell *Teleportation::getSecondEnd()
 {
-    return this->second_end;
+    return this->secondEnd;
 }
 LogicCell *Teleportation::getFirstEnd()
 {

@@ -7,10 +7,19 @@
 #ifndef LOGICCELL_HPP
 #define LOGICCELL_HPP
 
-#include "BoxModel.hpp"
-#include "Player.hpp"
 #include "../Constants.hpp"
 
+struct Player
+{
+    int x;
+    int y;
+};
+struct Box
+{
+    int color = FL_WHITE;
+    bool light = false;
+    bool blocked = false;
+};
 class LogicCell
 {
 private:

@@ -6,10 +6,7 @@
  * */
 #ifndef BOARD_HPP
 #define BOARD_HPP
-#include "BoxModel.hpp"
-#include "Player.hpp"
 #include "../Constants.hpp"
-#include "Player.hpp"
 #include "Teleportation.hpp"
 #include "LogicCell.hpp"
 

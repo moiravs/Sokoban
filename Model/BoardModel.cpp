@@ -270,19 +270,13 @@ bool BoardModel::isInBoard(int posY, int posX)
 
 void BoardModel::teleport()
 {
-    if ((this->player->y == this->teleportation[0]->getFirstEnd()->getY()) && this->player->x == this->teleportation[0]->getFirstEnd()->getX())
+    std::tuple <int, int> teleportationCase = this->teleportation[0]->getOtherEnd(this->player->y, this->player->x);
+    if (std::get<0>(teleportationCase) != -1 && std::get<1>(teleportationCase) != -1)
     {
         LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
-        LogicCellVector[this->teleportation[0]->getSecondEnd()->getY()][this->teleportation[0]->getSecondEnd()->getX()]->setPlayer(this->player);
-        this->player->x = this->teleportation[0]->getSecondEnd()->getX();
-        this->player->y = this->teleportation[0]->getSecondEnd()->getY();
-    }
-    else if ((this->player->x == this->teleportation[0]->getSecondEnd()->getX()) && this->player->y == this->teleportation[0]->getSecondEnd()->getY())
-    {
-        LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
-        LogicCellVector[this->teleportation[0]->getFirstEnd()->getY()][this->teleportation[0]->getFirstEnd()->getX()]->setPlayer(this->player);
-        this->player->x = this->teleportation[0]->getFirstEnd()->getX();
-        this->player->y = this->teleportation[0]->getFirstEnd()->getY();
+        LogicCellVector[std::get<0>(teleportationCase)][std::get<1>(teleportationCase)]->setPlayer(this->player);
+        this->player->x = std::get<1>(teleportationCase);
+        this->player->y = std::get<0>(teleportationCase);
     }
 }
 
