@@ -25,12 +25,7 @@ private:
 public:
     // TODO : destructeur    
     Player *player;
-    BoardModel(std::string filename)
-    {
-        this->filename = filename;
-        Player *player = new Player();
-        this->player = player;
-    }
+    BoardModel(std::string filename);
     /**
      * @brief  Creates the LogicCellVector
      * @param  index: the index in the file where the LogicCell is starting

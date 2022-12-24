@@ -52,5 +52,12 @@
         "optional": "cpp",
         "random": "cpp",
         "ranges": "cpp"
-    }
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/emily/Documents/Projet-LDP-BA2",
+            "binaryPath": "/home/emily/Documents/Projet-LDP-BA2/jeu",
+            "binaryArgs": []
+        }
+    ]
 }

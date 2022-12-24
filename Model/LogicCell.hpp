@@ -32,78 +32,21 @@ private:
 public:
     LogicCell(){};
     LogicCell(size_t line, size_t column, int type) : line{line}, column{column}, type{type} {};
-    int getType()
-    {
-        return this->type;
-    };
-    int getX()
-    {
-        return this->column;
-    }
-    int getY()
-    {
-        return this->line;
-    }
-    bool isBoxBlocked()
-    {
-        if (this->box != nullptr)
-            return this->box->blocked;
-        return false;
-    }
-    void setColor(int color)
-    {
-        this->color = color;
-    }
-
-    bool isComplete()
-    {
-        if (this->type == BOX_FINAL_POS)
-        {
-            if (this->box != nullptr)
-                return (this->box->color == this->color);
-            return false;
-        }
-        return true;
-    }
-    int getColor()
-    {
-        return this->color;
-    }
-    bool isBlocked()
-    {
-        if ((this->type == WALL) || this->isBoxBlocked())
-            return true;
-        return false;
-    }
-    void setBoxblocked(bool blocked)
-    {
-        if (this->box != nullptr)
-            this->box->blocked = blocked;
-    }
-    void setBox(Box *box)
-    {
-        this->box = box;
-    }
+    int getType() { return this->type; };
+    int getX() { return this->column; }
+    int getY() { return this->line; }
+    void setColor(int color) { this->color = color; }
+    void setBoxblocked(bool blocked);
+    void setBox(Box *box) { this->box = box; }
     void setPlayer(Player *player) { this->player = player; }
     void setType(int type) { this->type = type; }
-    bool hasBox()
-    {
-        if (this->box != nullptr)
-            return true;
-        return false;
-    }
+    int getColor() { return this->color; }
     Box *getBox() { return (this->box); }
-    bool hasPlayer()
-    {
-        if (this->player != nullptr)
-            return true;
-        return false;
-    }
-    ~LogicCell()
-    {
-        delete this->player;
-        delete this->box;
-        delete this;
-    }
+    bool isBoxBlocked();
+    bool isComplete();
+    bool isBlocked();
+    bool hasBox();
+    bool hasPlayer();
+    ~LogicCell();
 };
 #endif

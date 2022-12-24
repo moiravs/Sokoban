@@ -16,27 +16,7 @@ class Teleportation
 
 public:
     Teleportation(){};
-    std::tuple<int, int> getOtherEnd(int x, int y)
-    {
-        if (y == this->firstEnd->getY() && x == this->firstEnd->getX())
-        {
-            return {this->secondEnd->getY(), this->secondEnd->getX()};
-        }
-        else if (y == this->secondEnd->getY() && x == this->secondEnd->getX())
-        {
-            return {this->firstEnd->getY(), this->firstEnd->getX()};
-        }
-        else
-        {
-            return {-1, -1};
-        }
-    }
-    void setFirstEnd(LogicCell *firstEnd)
-    {
-        this->firstEnd = firstEnd;
-    }
-    void setSecondEnd(LogicCell *secondEnd)
-    {
-        this->secondEnd = secondEnd;
-    }
+    std::tuple<int, int> getOtherEnd(int x, int y);
+    void setFirstEnd(LogicCell *firstEnd) { this->firstEnd = firstEnd; }
+    void setSecondEnd(LogicCell *secondEnd) { this->secondEnd = secondEnd; }
 };

@@ -355,7 +355,7 @@ void BoardModel::moveTo(int x, int y)
             moveX = 1;
         else if (x < this->player->x)
             moveX = -1;
-        while ((this->player->y != y || this->player->x != x) && !this->LogicCellVector[this->player->y + moveY][this->player->x + moveX]->hasBox())
+        while ((this->player->y != y || this->player->x != x) && !this->LogicCellVector[this->player->y + moveY][this->player->x + moveX]->hasBox() && this->LogicCellVector[this->player->y + moveY][this->player->x + moveX]->getType() != WALL)
         {
             this->steps += 1;
             this->LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
@@ -396,4 +396,11 @@ void BoardModel::saveMinimumSteps()
         std::rename("fileout.txt", this->filename.c_str());
         this->minimumSteps = this->steps;
     }
+}
+
+BoardModel::BoardModel(std::string filename)
+{
+    this->filename = filename;
+    Player *player = new Player();
+    this->player = player;
 }
