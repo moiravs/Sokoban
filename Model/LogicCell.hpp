@@ -30,8 +30,11 @@ private:
     int type;
 
 public:
+    // Constructors
     LogicCell(){};
     LogicCell(size_t line, size_t column, int type) : line{line}, column{column}, type{type} {};
+
+    // Setters and Getters
     int getType() { return this->type; };
     int getX() { return this->column; }
     int getY() { return this->line; }
@@ -42,6 +45,8 @@ public:
     void setType(int type) { this->type = type; }
     int getColor() { return this->color; }
     Box *getBox() { return (this->box); }
+
+    // Methods
     /**
      * @brief  Check if there is a box on the box final pos
      * @retval return true if there is a box of the same color on the final box

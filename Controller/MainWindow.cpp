@@ -65,13 +65,13 @@ int MainWindow::handle(int event)
         if (event == FL_KEYBOARD)
         {
             if (Fl::event_key() == FL_Up)
-                boardModel->move(boardModel->player->y - 1, boardModel->player->x);
+                boardModel->move(boardModel->getPlayer()->y - 1, boardModel->getPlayer()->x);
             else if (Fl::event_key() == FL_Down)
-                boardModel->move(boardModel->player->y + 1, boardModel->player->x);
+                boardModel->move(boardModel->getPlayer()->y + 1, boardModel->getPlayer()->x);
             else if (Fl::event_key() == FL_Right)
-                boardModel->move(boardModel->player->y, boardModel->player->x + 1);
+                boardModel->move(boardModel->getPlayer()->y, boardModel->getPlayer()->x + 1);
             else if (Fl::event_key() == FL_Left)
-                boardModel->move(boardModel->player->y, boardModel->player->x - 1);
+                boardModel->move(boardModel->getPlayer()->y, boardModel->getPlayer()->x - 1);
             else if (Fl::event_key(97))
                 boardModel->teleport();
             display->update();

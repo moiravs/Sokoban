@@ -20,12 +20,18 @@ private:
     int stepsLimit = 0;
     std::vector<std::vector<LogicCell *>> LogicCellVector;
     bool winorlose;
-    
+    Player *player;
 
 public:
-    Player *player;
-    // Getters and setters
+    // Constructor
+    BoardModel(std::string filename);
+    /**
+     * @brief  Creates the LogicCellVector
+     * @param  index: the index in the file where the LogicCell is starting
+     * @param  fileContent: the content of the file
+     */
 
+    // Getters and setters
     std::vector<std::vector<LogicCell *>> getLogicCellVector() { return this->LogicCellVector; }
     std::string getFilename() { return this->filename; }
     void setFilename(std::string newFilename) { this->filename = newFilename; }
@@ -35,22 +41,15 @@ public:
     int getMinimumSteps() { return this->minimumSteps; }
     bool getWinOrLose() { return this->winorlose; }
     void setWinOrLose(bool newValue) { this->winorlose = newValue; }
+    Player *getPlayer() { return this->player; }
 
-    //Constructor
-    BoardModel(std::string filename);
-    /**
-     * @brief  Creates the LogicCellVector
-     * @param  index: the index in the file where the LogicCell is starting
-     * @param  fileContent: the content of the file
-     */
-    
-    //Methods
+    // Methods
     void createLogicCell(int index, std::string fileContent);
     /**
      * @brief  Check if level is finished
      * @retval return true if the level is finished
      */
-    
+
     bool isEndOfParty();
     /**
      * @brief  Check if there are no more possible moves ( if all the boxes are blocked)
@@ -62,7 +61,7 @@ public:
      * @brief  Teleport from one side to another
      * @retval None
      */
-    
+
     void teleport();
     /**
      * @brief  Move the player to finalPosY and finalPosX
@@ -101,7 +100,6 @@ public:
      * @retval None
      */
     void saveMinimumSteps();
-
 };
 
 #endif

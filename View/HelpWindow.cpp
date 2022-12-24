@@ -1,3 +1,9 @@
+/*
+ * Projet : Sokoban project
+ * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Matricule : 000542698 & 000547486
+ * Date : 21 december 2022
+ * */
 #include "HelpWindow.hpp"
 
 HelpWindow::HelpWindow() : Fl_Window(400, 400, 400, 400, "Help")

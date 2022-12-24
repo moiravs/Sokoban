@@ -15,7 +15,14 @@ class Teleportation
     size_t line, column;
 
 public:
+    // Constructors
     Teleportation(){};
+
+    // Setters
+    void setFirstEnd(LogicCell *firstEnd) { this->firstEnd = firstEnd; }
+    void setSecondEnd(LogicCell *secondEnd) { this->secondEnd = secondEnd; }
+    
+    // Methods
     /**
      * @brief  Getter for the other end of the teleportation
      * @param  x: position X of the player
@@ -23,6 +30,4 @@ public:
      * @retval tuple of the other end, {-1,-1} if the player is not on a teleportation case
      */
     std::tuple<int, int> getOtherEnd(int x, int y);
-    void setFirstEnd(LogicCell *firstEnd) { this->firstEnd = firstEnd; }
-    void setSecondEnd(LogicCell *secondEnd) { this->secondEnd = secondEnd; }
 };
