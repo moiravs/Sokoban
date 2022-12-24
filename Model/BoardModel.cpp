@@ -6,6 +6,13 @@
  * */
 #include "BoardModel.hpp"
 
+BoardModel::BoardModel(std::string filename)
+{
+    this->filename = filename;
+    Player *player = new Player();
+    this->player = player;
+}
+
 std::string BoardModel::readFileIntoString()
 {
     std::ifstream ifs(this->filename);
@@ -27,24 +34,16 @@ bool BoardModel::isFailure()
                 for (auto a : move)
                 {
                     if (this->isInBoard(i + a[0], j + a[1]) == false && this->isInBoard(i + a[2], j + a[3]) == false)
-                    {
                         LogicCellVector[i][j]->setBoxblocked(true);
-                    }
                     else if (this->isInBoard(i + a[0], j + a[1]) && this->isInBoard(i + a[2], j + a[3]))
                     {
                         if (LogicCellVector[i + a[0]][j + a[1]]->isBlocked() && LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
-                        {
                             LogicCellVector[i][j]->setBoxblocked(true);
-                        }
                     }
                     else if (this->isInBoard(i + a[0], j + a[1]) && LogicCellVector[i + a[0]][j + a[1]]->isBlocked())
-                    {
                         LogicCellVector[i][j]->setBoxblocked(true);
-                    }
                     else if (this->isInBoard(i + a[2], j + a[3]) && LogicCellVector[i + a[2]][j + a[3]]->isBlocked())
-                    {
                         LogicCellVector[i][j]->setBoxblocked(true);
-                    }
                 }
                 if (LogicCellVector[i][j]->isBlocked() == false)
                     allBoxes = false;
@@ -58,40 +57,24 @@ bool BoardModel::isFailure()
 
 void BoardModel::createBoard(std::string fileContent)
 {
-
     int index = 0;
-    bool finish = false;
-    while (!finish)
+    std::string minimumSteps = "";
+    while (fileContent[index] != '\n')
     {
-        switch (fileContent[index])
-        {
-        case 'l':
-        {
-            std::string minimumSteps = "";
-            while (fileContent[index] != '\n')
-            {
-                index++;
-                minimumSteps += fileContent[index];
-            }
-            this->minimumSteps = atoi(minimumSteps.c_str());
-            break;
-        }
-        case 'm':
-        {
-            std::string stepsLimit = "";
-            while (fileContent[index] != '\n')
-            {
-                index++;
-                stepsLimit += fileContent[index];
-            }
-            this->stepsLimit = atoi(stepsLimit.c_str());
-            finish = true;
-            break;
-        }
-        }
         index++;
+        minimumSteps += fileContent[index];
     }
-    this->createLogicCell(index--, fileContent);
+    this->minimumSteps = atoi(minimumSteps.c_str());
+    std::string stepsLimit = "";
+    index++;
+    while (fileContent[index] != '\n')
+    {
+        index++;
+        stepsLimit += fileContent[index];
+    }
+    this->stepsLimit = atoi(stepsLimit.c_str());
+    index++;
+    this->createLogicCell(index, fileContent);
 }
 
 void BoardModel::createLogicCell(int index, std::string fileContent)
@@ -100,7 +83,6 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
     this->teleportation.clear();
     std::vector<LogicCell *> line;
     bool tele = true;
-
     for (int ind = index; ind < (int)fileContent.size(); ind++)
     {
         switch (fileContent[ind])
@@ -147,7 +129,6 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
         }
         case RED_BOX_FINAL_POS:
         {
-            puts("ah");
             LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
             logiccell->setColor(FL_RED);
             line.push_back(logiccell);
@@ -164,7 +145,6 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
         }
         case BLUE_BOX_FINAL_POS:
         {
-            puts("ah");
             LogicCell *logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS);
             logiccell->setColor(FL_BLUE);
             line.push_back(logiccell);
@@ -215,7 +195,6 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
         }
         }
     }
-    puts("agi");
     this->steps = 0;
 }
 
@@ -237,7 +216,6 @@ bool BoardModel::isEndOfParty()
     this->winorlose = true;
     return true;
 }
-
 
 bool BoardModel::isInBoard(int posY, int posX)
 {
@@ -266,9 +244,7 @@ void BoardModel::move(int finalPosY, int finalPosX)
         if (LogicCellVector[finalPosY][finalPosX]->getBox()->light)
         {
             if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX))
-            {
                 return;
-            }
             if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light))
             {
                 if ((this->isInBoard(finalPosY + 2 * moveY, finalPosX + 2 * moveX)) && (LogicCellVector[finalPosY + 2 * moveY][finalPosX + 2 * moveX]->getType() != WALL))
@@ -278,9 +254,7 @@ void BoardModel::move(int finalPosY, int finalPosX)
                     return;
             }
             else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != EMPTY) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != BOX_FINAL_POS))
-            {
                 return;
-            }
         }
         else if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX) || LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() == WALL)
             return;
@@ -326,14 +300,12 @@ void BoardModel::saveMinimumSteps()
 {
     if (((this->steps < this->minimumSteps) && (this->winorlose)) || ((this->minimumSteps == 0 && this->winorlose)))
     {
-        std::string strReplace = "l" + std::to_string(this->minimumSteps);
+        std::string strReplace = "l" + std::to_string(this->minimumSteps); // Source : StackOverflow
         std::string strNew = "l" + std::to_string(this->steps);
         std::ifstream filein(this->filename); // File to read from
         std::ofstream fileout("fileout.txt"); // Temporary file
         if (!filein || !fileout)
-        {
             std::cout << "Error opening files!" << std::endl;
-        }
 
         std::string strTemp;
         bool found = false;
@@ -352,11 +324,4 @@ void BoardModel::saveMinimumSteps()
         std::rename("fileout.txt", this->filename.c_str());
         this->minimumSteps = this->steps;
     }
-}
-
-BoardModel::BoardModel(std::string filename)
-{
-    this->filename = filename;
-    Player *player = new Player();
-    this->player = player;
 }

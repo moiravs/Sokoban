@@ -16,18 +16,22 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, Hel
     display = board;
     board->show();
     this->popUp = popUp;
+    // Initialisation of the buttons
     Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "Reset Level");
     Fl_Button *resetMinSteps = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "Reset Min Steps");
     Fl_Button *levels = new Fl_Button(choicex, choicey, choicew, choiceh, "Levels");
     Fl_Button *help = new Fl_Button(helpx, helpy, helpw, helph, "Help");
+    // Callback for the buttons
     help->callback(helpCallback, (void *)this);
     this->callback(this->windowCallback, this);
     reset->callback(resetLevelCallback, (void *)this);
     levels->callback(changeLevelCallback, (void *)this);
     resetMinSteps->callback(resetMinStepsCallback, (void *)this);
+
     this->resizable(levels);
     this->resizable(resetMinSteps);
     this->resizable(reset);
+    this->resizable(help);
 }
 
 void MainWindow::draw()
@@ -38,13 +42,13 @@ void MainWindow::draw()
     {
         if (this->boardModel->getWinOrLose())
         {
-            std::string wonstring = "YOU WON with " + std::to_string(boardModel->getStepsLimit() - boardModel->getSteps()) + " steps restants, reset or change level";
+            std::string wonstring = "You won with " + std::to_string(boardModel->getStepsLimit() - boardModel->getSteps()) + " steps left, reset or change level";
             fl_draw(wonstring.c_str(), winorlosex, winorlosey);
             this->boardModel->saveMinimumSteps();
         }
         else
         {
-            fl_draw("YOU LOSE, reset or change level", winorlosex, winorlosey);
+            fl_draw("You lose, reset or change level", winorlosex, winorlosey);
         }
     }
     fl_font(Fl_Font(1), 16);
@@ -59,46 +63,29 @@ void MainWindow::draw()
 int MainWindow::handle(int event)
 {
 
-    if (boardModel->isEndOfParty() == false)
+    if (event == FL_KEYBOARD && boardModel->isEndOfParty() == false)
     {
-
-        if (event == FL_KEYBOARD)
-        {
-            if (Fl::event_key() == FL_Up)
-                boardModel->move(boardModel->getPlayer()->y - 1, boardModel->getPlayer()->x);
-            else if (Fl::event_key() == FL_Down)
-                boardModel->move(boardModel->getPlayer()->y + 1, boardModel->getPlayer()->x);
-            else if (Fl::event_key() == FL_Right)
-                boardModel->move(boardModel->getPlayer()->y, boardModel->getPlayer()->x + 1);
-            else if (Fl::event_key() == FL_Left)
-                boardModel->move(boardModel->getPlayer()->y, boardModel->getPlayer()->x - 1);
-            else if (Fl::event_key(97))
-                boardModel->teleport();
-            display->update();
-            this->redraw();
-        }
-
-        if (Fl::event_inside(this->display))
-        {
-            if (event == FL_PUSH)
-            {
-                std::tuple<int, int> position = display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
-                this->boardModel->moveTo(std::get<1>(position), std::get<0>(position));
-                display->update();
-                this->redraw();
-            }
-        }
+        if (Fl::event_key() == FL_Up)
+            boardModel->move(boardModel->getPlayer()->y - 1, boardModel->getPlayer()->x);
+        else if (Fl::event_key() == FL_Down)
+            boardModel->move(boardModel->getPlayer()->y + 1, boardModel->getPlayer()->x);
+        else if (Fl::event_key() == FL_Right)
+            boardModel->move(boardModel->getPlayer()->y, boardModel->getPlayer()->x + 1);
+        else if (Fl::event_key() == FL_Left)
+            boardModel->move(boardModel->getPlayer()->y, boardModel->getPlayer()->x - 1);
+        else if (Fl::event_key(97))
+            boardModel->teleport();
+        display->update();
+        this->redraw();
     }
 
-    if (Fl::event_inside(this)) // if
+    if (Fl::event_inside(this->display) && event == FL_PUSH) // if user clicks on a cell
     {
-        if (event == FL_PUSH)
-        {
-            display->update();
-            this->redraw();
-        }
+        std::tuple<int, int> position = display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
+        this->boardModel->moveTo(std::get<1>(position), std::get<0>(position));
+        display->update();
+        this->redraw();
     }
-
     return Fl_Window::handle(event);
 }
 

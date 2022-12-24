@@ -6,7 +6,7 @@
  * */
 #include "Teleportation.hpp"
 
-std::tuple<int, int> Teleportation::getOtherEnd(int x, int y)
+std::tuple<int, int> Teleportation::getOtherEnd(int y, int x)
 {
     if (y == this->firstEnd->getY() && x == this->firstEnd->getX())
     {

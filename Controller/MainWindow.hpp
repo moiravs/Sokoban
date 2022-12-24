@@ -42,28 +42,28 @@ public:
     /**
      * @brief
      * @param  *widget:
-     * @param  *mainWindow:
+     * @param  *mainWindow: Instance of mainWindow
      * @retval None
      */
     static void resetLevelCallback(Fl_Widget *widget, void *mainWindow);
     /**
      * @brief Callback for the resetLevel button, resets the level
      * @param  *widget: the resetLevel button
-     * @param  *mainWindow:
+     * @param  *mainWindow: Instance of mainWindow
      * @retval None
      */
     static void changeLevelCallback(Fl_Widget *widget, void *mainWindow);
     /**
      * @brief Callback for the changeLevel button, opens a new window with all levels
      * @param  *widget: The changeLevel button
-     * @param  *mainWindow:
+     * @param  *mainWindow: Instance of mainWindow
      * @retval None
      */
     static void resetMinStepsCallback(Fl_Widget *widget, void *mainWindow);
     /**
      * @brief  Callback for the help button, opens a new window and shows help
-     * @param  *widget: The help button 
-     * @param  *mainWindow:
+     * @param  *widget: The help button
+     * @param  *mainWindow: Instance of mainWindow
      * @retval None
      */
     static void helpCallback(Fl_Widget *widget, void *mainWindow);

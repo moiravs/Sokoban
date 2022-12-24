@@ -9,13 +9,13 @@
 
 #include "DisplayBoard.hpp"
 
-void DisplayBoard::draw()
+void DisplayBoard::draw() // Source : Programmation Language Course
 {
     for (auto &c : cells)
         c.draw();
 }
 
-std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc)
+std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc) // Source : Programmation Language Course
 {
     for (size_t i = 0; i < (boardmodel->getLogicCellVector().size() * boardmodel->getLogicCellVector()[0].size()) - 1; i++)
     {

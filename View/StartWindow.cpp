@@ -6,7 +6,7 @@
  * */
 #include "StartWindow.hpp"
 
-StartWindow::StartWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "SOKOBAN")
+StartWindow::StartWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "SOKOBAN") // Source : Programmation Language Course
 {
     Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);
     resizable(this);
@@ -17,7 +17,7 @@ void StartWindow::draw()
     Fl_Window::draw();
     fl_draw("SOKOBAN", 300, 300);
 }
-void StartWindow::Time_CB(void *userdata)
+void StartWindow::Time_CB(void *userdata) // Source : Programmation Language Course
 {
     StartWindow *o = static_cast<StartWindow *>(userdata);
     o->wait++;

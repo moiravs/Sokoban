@@ -24,11 +24,11 @@ class Cell
 
 public:
     // Constructors
-
     Cell(Point center, int type, int w, int h, int color);
 
     // Getters and Setters
-    Point getCenter() { return center; }
+    Point getCenter() { return center; } // Source : Programmation Language Course
+
     // Methods
     /**
      * @brief  draw the Cell

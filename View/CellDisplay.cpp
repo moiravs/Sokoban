@@ -46,7 +46,7 @@ void Cell::draw()
     }
 }
 
-bool Cell::mouseClick(Point mouseLoc)
+bool Cell::mouseClick(Point mouseLoc) // Source : Programmation Language Course
 {
     if ((center.x - w / 2 < mouseLoc.x) && (mouseLoc.x < w + center.x - w / 2) && (center.y - h / 2 < mouseLoc.y) && (mouseLoc.y < h + center.y - h / 2))
         return true;
