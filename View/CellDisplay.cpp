@@ -22,12 +22,6 @@ Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, ty
     }
 }
 
-bool Cell::contains(Point p)
-{
-    return p.x >= center.x - w / 2 && p.x < center.x + w / 2 &&
-           p.y >= center.y - h / 2 && p.y < center.y + h / 2;
-}
-
 void Cell::draw()
 {
     if (type == PLAYER)

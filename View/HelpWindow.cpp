@@ -17,12 +17,9 @@ void HelpWindow::Time_CB(void *userdata)
 {
     Fl::repeat_timeout(1.0 / refreshPerSecond, Time_CB, userdata);
 }
-void HelpWindow::window_non_static_cb(Fl_Widget *widget)
-{
-    this->hide();
-}
 
 void HelpWindow::windowCallback(Fl_Widget *widget, void *f)
 {
-    ((HelpWindow *)f)->window_non_static_cb(widget);
+    HelpWindow *a = ((HelpWindow *)f);
+    a->hide();
 }

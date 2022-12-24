@@ -23,12 +23,9 @@ void PopUp::Time_CB(void *userdata)
 {
     Fl::repeat_timeout(1.0 / refreshPerSecond, Time_CB, userdata);
 }
-void PopUp::window_non_static_cb(Fl_Widget *widget)
-{
-    this->hide();
-}
 
 void PopUp::windowCallback(Fl_Widget *widget, void *f)
 {
-    ((PopUp *)f)->window_non_static_cb(widget);
+    PopUp *a = ((PopUp *)f);
+    a->hide();
 }

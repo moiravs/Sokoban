@@ -12,9 +12,8 @@ struct Point
     int x, y;
 };
 
-class Cell 
+class Cell
 {
-    bool on = false;
     Point center;
     int type;
     int w, h;
@@ -24,31 +23,22 @@ class Cell
     int color;
 
 public:
+    // Constructors
+
     Cell(Point center, int type, int w, int h, int color);
+
+    // Getters and Setters
+    Point getCenter() { return center; }
+    // Methods
     /**
-     * @brief  
-     * @note   
+     * @brief  draw the Cell
      * @retval None
      */
     void draw();
     /**
-     * @brief  
-     * @note   
-     * @param  p: 
-     * @retval 
-     */
-    bool contains(Point p) ;
-    /**
-     * @brief  
-     * @note   
-     * @retval 
-     */
-    Point getCenter(){ return center; }
-    /**
-     * @brief  
-     * @note   
-     * @param  mouseLoc: 
-     * @retval 
+     * @brief  Check if the cell contains the mouseLoc
+     * @param  mouseLoc: the mouse location
+     * @retval true if the mouse location is in the cell
      */
     bool mouseClick(Point mouseLoc);
 };

@@ -14,41 +14,6 @@ std::string BoardModel::readFileIntoString()
     return content;
 }
 
-std::vector<std::vector<LogicCell *>> BoardModel::getLogicCellVector()
-{
-    return this->LogicCellVector;
-}
-
-std::string BoardModel::getFilename()
-{
-    return this->filename;
-}
-
-void BoardModel::setFilename(std::string newFilename)
-{
-    this->filename = newFilename;
-}
-
-int BoardModel::getSteps()
-{
-    return this->steps;
-}
-
-void BoardModel::setSteps(int newSteps)
-{
-    this->steps = newSteps;
-}
-
-int BoardModel::getStepsLimit()
-{
-    return this->stepsLimit;
-}
-
-int BoardModel::getMinimumSteps()
-{
-    return this->minimumSteps;
-}
-
 bool BoardModel::isFailure()
 {
     std::vector<std::vector<int>> move{{0, -1, -1, 0}, {-1, 0, 0, 1}, {0, 1, 1, 0}, {1, 0, 0, -1}};
@@ -273,15 +238,6 @@ bool BoardModel::isEndOfParty()
     return true;
 }
 
-bool BoardModel::getWinOrLose()
-{
-    return this->winorlose;
-}
-
-void BoardModel::setWinOrLose(bool newValue)
-{
-    this->winorlose = newValue;
-}
 
 bool BoardModel::isInBoard(int posY, int posX)
 {
@@ -290,7 +246,7 @@ bool BoardModel::isInBoard(int posY, int posX)
 
 void BoardModel::teleport()
 {
-    std::tuple <int, int> teleportationCase = this->teleportation[0]->getOtherEnd(this->player->y, this->player->x);
+    std::tuple<int, int> teleportationCase = this->teleportation[0]->getOtherEnd(this->player->y, this->player->x);
     if (std::get<0>(teleportationCase) != -1 && std::get<1>(teleportationCase) != -1)
     {
         LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);

@@ -20,7 +20,9 @@ bool LogicCell::hasPlayer()
 }
 bool LogicCell::isBlocked()
 {
-    if ((this->type == WALL) || this->isBoxBlocked())
+    if ((this->box != nullptr))
+        return this->box->blocked;
+    if ((this->type == WALL))
         return true;
     return false;
 }
@@ -28,12 +30,6 @@ void LogicCell::setBoxblocked(bool blocked)
 {
     if (this->box != nullptr)
         this->box->blocked = blocked;
-}
-bool LogicCell::isBoxBlocked()
-{
-    if (this->box != nullptr)
-        return this->box->blocked;
-    return false;
 }
 
 bool LogicCell::isComplete()

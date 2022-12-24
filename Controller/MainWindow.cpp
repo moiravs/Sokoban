@@ -13,7 +13,6 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, Hel
     this->boardModel = boardModel;
     this->helpWindow = helpWindow;
     DisplayBoard *board = new DisplayBoard(boardModel);
-
     display = board;
     board->show();
     this->popUp = popUp;

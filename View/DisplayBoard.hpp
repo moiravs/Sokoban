@@ -17,8 +17,12 @@ private:
     std::vector<Cell> cells;
 
 public:
+    //Constructors
     DisplayBoard(std::shared_ptr<BoardModel> board);
     DisplayBoard() : Fl_Box(boardx, boardy, boardw, boardh){};
+
+    //Methods
+    
     /**
      * @brief  Iterates over a vector of cell, and if the mouse location is in the cell, 
      * returns a tuple with the position of the cell

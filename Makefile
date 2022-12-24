@@ -8,7 +8,7 @@ SOURCES=Model/BoardModel.cpp View/CellDisplay.cpp Model/LogicCell.cpp Controller
 	${COMPILER} -c %.cpp ${FLAGS}
 
 main:  LogicCell.o BoardModel.o main.cpp DisplayBoard.o  MainWindow.o Teleportation.o CellDisplay.o PopUp.o HelpWindow.o StartWindow.o
-	${COMPILER} -o jeu main.cpp DisplayBoard.o MainWindow.o BoardModel.o Teleportation.o CellDisplay.o LogicCell.o PopUp.o HelpWindow.o StartWindow.o ${FLAGS}
+	${COMPILER} -o jeu main.cpp DisplayBoard.o BoardModel.o MainWindow.o  Teleportation.o CellDisplay.o LogicCell.o PopUp.o HelpWindow.o StartWindow.o ${FLAGS}
 
 run:
 	make main 

@@ -23,8 +23,20 @@ private:
     
 
 public:
-    // TODO : destructeur    
     Player *player;
+    // Getters and setters
+
+    std::vector<std::vector<LogicCell *>> getLogicCellVector() { return this->LogicCellVector; }
+    std::string getFilename() { return this->filename; }
+    void setFilename(std::string newFilename) { this->filename = newFilename; }
+    int getSteps() { return this->steps; }
+    void setSteps(int newSteps) { this->steps = newSteps; }
+    int getStepsLimit() { return this->stepsLimit; }
+    int getMinimumSteps() { return this->minimumSteps; }
+    bool getWinOrLose() { return this->winorlose; }
+    void setWinOrLose(bool newValue) { this->winorlose = newValue; }
+
+    //Constructor
     BoardModel(std::string filename);
     /**
      * @brief  Creates the LogicCellVector
@@ -32,6 +44,7 @@ public:
      * @param  fileContent: the content of the file
      */
     
+    //Methods
     void createLogicCell(int index, std::string fileContent);
     /**
      * @brief  Check if level is finished
@@ -51,52 +64,6 @@ public:
      */
     
     void teleport();
-    /**
-     * @brief  Getter for the filename
-     * @retval Return the filename
-     */
-    std::string getFilename();
-    /**
-     * @brief  Setter for the filename
-     * @param  newFilename: the filename
-     * @retval None
-     */
-    void setFilename(std::string newFilename);
-    /**
-     * @brief  Getter for winorlose
-     * @retval return true if the player won, false if the player lose
-     */
-    bool getWinOrLose();
-    /**
-     * @brief  Setter for winorlose
-     * @param  newValue: WinOrLose value
-     * @retval None
-     */
-    void setWinOrLose(bool newValue);
-    /**
-     * @brief  Getter for steps
-     * @retval Steps
-     */
-    
-    int getSteps();
-    /**
-     * @brief  Setter for steps
-     * @param  newSteps: Steps
-     * @retval None
-     */
-
-    void setSteps(int newSteps);
-    /**
-     * @brief  Getter for StepsLimit
-     * @retval StepsLimit
-     */
-    
-    int getStepsLimit();
-    /**
-     * @brief  Getter for MinimumSteps
-     * @retval MinSteps
-     */
-    int getMinimumSteps();
     /**
      * @brief  Move the player to finalPosY and finalPosX
      * @param  finalPosY: Final position of the player in Y
@@ -134,11 +101,6 @@ public:
      * @retval None
      */
     void saveMinimumSteps();
-    /**
-     * @brief  Getter for LogicCellVector
-     * @retval the LogicCellVector
-     */
-    std::vector<std::vector<LogicCell *>> getLogicCellVector();
 
 };
 
