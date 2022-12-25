@@ -14,3 +14,4 @@ Teleportation.o
 Board.o
 ControllerBoard.o
 InterfaceGraphique.o
+*.o
