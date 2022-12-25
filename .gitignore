@@ -15,4 +15,3 @@ Board.o
 ControllerBoard.o
 InterfaceGraphique.o
 *.o
-HelpWindow.o

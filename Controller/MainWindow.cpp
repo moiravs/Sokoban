@@ -131,6 +131,7 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
         break;
     case 3:
         mainWindow->boardModel->setFilename(level4);
+        break;
     }
     mainWindow->boardModel->createBoard(mainWindow->boardModel->readFileIntoString());
     mainWindow->display->update();
