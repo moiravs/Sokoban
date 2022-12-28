@@ -14,3 +14,7 @@ Teleportation.o
 Board.o
 ControllerBoard.o
 InterfaceGraphique.o
+*.o
+StartWindow.o
+PopUp.o
+HelpWindow.o
