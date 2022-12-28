@@ -25,9 +25,9 @@ bool BoardModel::isFailure()
 {
     std::vector<std::vector<int>> move{{0, -1, -1, 0}, {-1, 0, 0, 1}, {0, 1, 1, 0}, {1, 0, 0, -1}};
     bool allBoxes = true;
-    for (int j = 0; j < (int)LogicCellVector.size(); j++)
+    for (int i = 0; i < (int)LogicCellVector.size(); i++)
     {
-        for (int i = 0; i < (int)LogicCellVector[0].size(); i++)
+        for (int j = 0; j < (int)LogicCellVector[0].size(); j++)
         {
             if (LogicCellVector[i][j]->hasBox() && (LogicCellVector[i][j]->isBlocked() == false))
             {
