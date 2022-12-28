@@ -68,6 +68,5 @@ public:
      * @retval Returns true if the LogicCell has a player
      */
     bool hasPlayer();
-    ~LogicCell(){delete box; delete player;};
 };
 #endif
