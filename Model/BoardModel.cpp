@@ -182,6 +182,10 @@ void BoardModel::teleport()
     }
 }
 
+void BoardModel::moveBox(int finalPosX, int finalPosY)
+{
+}
+
 void BoardModel::move(int finalPosY, int finalPosX)
 {
     if ((this->isInBoard(finalPosY, finalPosX) == false) || (LogicCellVector[finalPosY][finalPosX]->getType() == WALL))
@@ -190,12 +194,16 @@ void BoardModel::move(int finalPosY, int finalPosX)
     {
         // TODO moveBox function
         int moveX = finalPosX - this->player->x, moveY = finalPosY - this->player->y;
+        if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX) || LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() == WALL)
+            return;
         if (LogicCellVector[finalPosY][finalPosX]->getBox()->light)
         {
             if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX))
                 return;
-            if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light))
+            if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()))
             {
+                if (!LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light)
+                    return;
                 if ((this->isInBoard(finalPosY + 2 * moveY, finalPosX + 2 * moveX)) && (LogicCellVector[finalPosY + 2 * moveY][finalPosX + 2 * moveX]->getType() != WALL))
                     LogicCellVector[finalPosY + 2 * moveY][finalPosX + 2 * moveX]
                         ->setBox(LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox());
@@ -205,10 +213,11 @@ void BoardModel::move(int finalPosY, int finalPosX)
             else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != EMPTY) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() != BOX_FINAL_POS))
                 return;
         }
-        else if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX) || LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() == WALL)
-            return;
-        else if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()) && (LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getBox()->light))
-            return;
+        else
+        {
+            if ((LogicCellVector[finalPosY + moveY][finalPosX + moveX]->hasBox()))
+                return;
+        }
         LogicCellVector[finalPosY + moveY][finalPosX + moveX]
             ->setBox(LogicCellVector[finalPosY][finalPosX]->getBox());
         LogicCellVector[finalPosY][finalPosX]->setBox(nullptr);

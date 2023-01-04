@@ -26,6 +26,6 @@ void PopUp::Time_CB(void *userdata)
 
 void PopUp::windowCallback(Fl_Widget *widget, void *f)
 {
-    PopUp *a = ((PopUp *)f);
+    PopUp *a = static_cast<PopUp *>(f);
     a->hide();
 }

@@ -100,6 +100,13 @@ public:
      * @retval None
      */
     void saveMinimumSteps();
+    /**
+     * @brief move the box if the player pushes it
+     * @param  finalPosX: final position in X of the player
+     * @param  finalPosY: final position in Y of the player
+     * @retval None
+     */
+    void moveBox(int finalPosX, int finalPosY);
 };
 
 #endif

@@ -30,6 +30,6 @@ void HelpWindow::Time_CB(void *userdata) // Source : Programmation Language Cour
 
 void HelpWindow::windowCallback(Fl_Widget *widget, void *f)
 {
-    HelpWindow *a = ((HelpWindow *)f);
+    HelpWindow *a = static_cast<HelpWindow *>(f);
     a->hide();
 }
