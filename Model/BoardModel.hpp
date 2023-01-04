@@ -16,10 +16,10 @@ private:
     std::vector<Teleportation *> teleportation;
     std::string filename;
     int steps = 0;
-    int minimumSteps = 0;
+    int bestScore = 0;
     int stepsLimit = 0;
     std::vector<std::vector<LogicCell *>> LogicCellVector;
-    bool winorlose;
+    bool partyWin;
     Player *player;
 
 public:
@@ -38,9 +38,9 @@ public:
     int getSteps() { return this->steps; }
     void setSteps(int newSteps) { this->steps = newSteps; }
     int getStepsLimit() { return this->stepsLimit; }
-    int getMinimumSteps() { return this->minimumSteps; }
-    bool getWinOrLose() { return this->winorlose; }
-    void setWinOrLose(bool newValue) { this->winorlose = newValue; }
+    int getMinimumSteps() { return this->bestScore; }
+    bool getWinOrLose() { return this->partyWin; }
+    void setWinOrLose(bool newValue) { this->partyWin = newValue; }
     Player *getPlayer() { return this->player; }
 
     // Methods
@@ -99,7 +99,7 @@ public:
      * @brief  Save the minimum steps in the file of the level
      * @retval None
      */
-    void saveMinimumSteps();
+    void saveBestScore();
     /**
      * @brief move the box if the player pushes it
      * @param  finalPosX: final position in X of the player

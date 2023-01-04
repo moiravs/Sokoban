@@ -58,13 +58,13 @@ bool BoardModel::isFailure()
 void BoardModel::createBoard(std::string fileContent)
 {
     int index = 0;
-    std::string minimumSteps = "";
+    std::string bestScore = "";
     while (fileContent[index] != '\n')
     {
         index++;
-        minimumSteps += fileContent[index];
+        bestScore += fileContent[index];
     }
-    this->minimumSteps = atoi(minimumSteps.c_str());
+    this->bestScore = atoi(bestScore.c_str());
     std::string stepsLimit = "";
     index++;
     while (fileContent[index] != '\n')
@@ -149,7 +149,7 @@ bool BoardModel::isEndOfParty()
 {
     if ((this->steps == this->stepsLimit) || (this->isFailure()))
     {
-        this->winorlose = false;
+        this->partyWin = false;
         return true;
     }
     for (size_t i = 0; i < LogicCellVector.size(); i++)
@@ -160,7 +160,7 @@ bool BoardModel::isEndOfParty()
                 return false;
         }
     }
-    this->winorlose = true;
+    this->partyWin = true;
     return true;
 }
 
@@ -171,14 +171,16 @@ bool BoardModel::isInBoard(int posY, int posX)
 
 void BoardModel::teleport()
 {
-    // TODO multiple teleportation
-    std::tuple<int, int> teleportationCase = this->teleportation[0]->getOtherEnd(this->player->y, this->player->x);
-    if (std::get<0>(teleportationCase) != -1 && std::get<1>(teleportationCase) != -1)
+    for (auto i : this->teleportation)
     {
-        LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
-        LogicCellVector[std::get<0>(teleportationCase)][std::get<1>(teleportationCase)]->setPlayer(this->player);
-        this->player->x = std::get<1>(teleportationCase);
-        this->player->y = std::get<0>(teleportationCase);
+        std::tuple<int, int> teleportationCase = i->getOtherEnd(this->player->y, this->player->x);
+        if (std::get<0>(teleportationCase) != -1 && std::get<1>(teleportationCase) != -1)
+        {
+            LogicCellVector[this->player->y][this->player->x]->setPlayer(nullptr);
+            LogicCellVector[std::get<0>(teleportationCase)][std::get<1>(teleportationCase)]->setPlayer(this->player);
+            this->player->x = std::get<1>(teleportationCase);
+            this->player->y = std::get<0>(teleportationCase);
+        }
     }
 }
 
@@ -192,7 +194,6 @@ void BoardModel::move(int finalPosY, int finalPosX)
         return;
     if (LogicCellVector[finalPosY][finalPosX]->hasBox())
     {
-        // TODO moveBox function
         int moveX = finalPosX - this->player->x, moveY = finalPosY - this->player->y;
         if (!this->isInBoard(finalPosY + moveY, finalPosX + moveX) || LogicCellVector[finalPosY + moveY][finalPosX + moveX]->getType() == WALL)
             return;
@@ -250,11 +251,11 @@ void BoardModel::moveTo(int x, int y)
 }
 
 // TODO rename bestscore
-void BoardModel::saveMinimumSteps()
+void BoardModel::saveBestScore()
 {
-    if (((this->steps < this->minimumSteps) && (this->winorlose)) || ((this->minimumSteps == 0 && this->winorlose)))
+    if (((this->steps < this->bestScore) && (this->partyWin)) || ((this->bestScore == 0 && this->partyWin)))
     {
-        std::string strReplace = "l" + std::to_string(this->minimumSteps); // Source : StackOverflow
+        std::string strReplace = "l" + std::to_string(this->bestScore); // Source : StackOverflow
         std::string strNew = "l" + std::to_string(this->steps);
         std::ifstream filein(this->filename); // File to read from
         std::ofstream fileout("fileout.txt"); // Temporary file
@@ -276,6 +277,6 @@ void BoardModel::saveMinimumSteps()
         filein.close();
         std::remove(this->filename.c_str());
         std::rename("fileout.txt", this->filename.c_str());
-        this->minimumSteps = this->steps;
+        this->bestScore = this->steps;
     }
 }

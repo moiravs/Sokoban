@@ -44,7 +44,7 @@ void MainWindow::draw()
         {
             std::string wonstring = "You won with " + std::to_string(boardModel->getStepsLimit() - boardModel->getSteps()) + " steps left, reset or change level";
             fl_draw(wonstring.c_str(), winorlosex, winorlosey);
-            this->boardModel->saveMinimumSteps();
+            this->boardModel->saveBestScore();
         }
         else
         {
@@ -56,8 +56,8 @@ void MainWindow::draw()
     fl_draw(steps.c_str(), pasx, pasy);
     std::string stepsLimit = "Steps limit : " + std::to_string(this->boardModel->getStepsLimit());
     fl_draw(stepsLimit.c_str(), limitpasx, limitpasy);
-    std::string minimumSteps = "Minimum Steps : " + std::to_string(this->boardModel->getMinimumSteps());
-    fl_draw(minimumSteps.c_str(), minpasx, minpasy);
+    std::string bestScore = "Minimum Steps : " + std::to_string(this->boardModel->getMinimumSteps());
+    fl_draw(bestScore.c_str(), minpasx, minpasy);
 }
 
 int MainWindow::handle(int event)
@@ -93,7 +93,7 @@ void MainWindow::windowCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *mainWindow = static_cast<MainWindow *>(f);
     widget->hide();
-    mainWindow->boardModel->saveMinimumSteps();
+    mainWindow->boardModel->saveBestScore();
 }
 
 void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
@@ -115,7 +115,7 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
         Fl::wait();
     Fl_Choice *levels = (Fl_Choice *)mainWindow->popUp->levels;
     int choice = levels->value();
-    mainWindow->boardModel->saveMinimumSteps();
+    mainWindow->boardModel->saveBestScore();
     switch (choice)
     {
     case -1:
@@ -147,6 +147,6 @@ void MainWindow::resetMinStepsCallback(Fl_Widget *w, void *f)
 {
     MainWindow *mainWindow = static_cast<MainWindow *>(f);
     mainWindow->boardModel->setSteps(0);
-    mainWindow->boardModel->saveMinimumSteps();
+    mainWindow->boardModel->saveBestScore();
     mainWindow->redraw();
 }
