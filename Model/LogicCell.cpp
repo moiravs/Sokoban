@@ -26,7 +26,7 @@ bool LogicCell::isBlocked()
         return true;
     return false;
 }
-void LogicCell::setBoxblocked(bool blocked)
+void LogicCell::setBoxBlocked(bool blocked)
 {
     if (this->box != nullptr)
         this->box->blocked = blocked;
@@ -41,10 +41,4 @@ bool LogicCell::isComplete()
         return false;
     }
     return true;
-}
-LogicCell::~LogicCell()
-{
-    delete this->player;
-    delete this->box;
-    delete this;
 }

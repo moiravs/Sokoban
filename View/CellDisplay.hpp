@@ -41,7 +41,6 @@ public:
      * @retval true if the mouse location is in the cell
      */
     bool mouseClick(Point mouseLoc);
-    ~Cell(){delete personnage; delete wall;}
 };
 
 #endif

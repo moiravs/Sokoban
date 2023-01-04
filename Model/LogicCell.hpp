@@ -16,9 +16,21 @@ struct Player
 };
 struct Box
 {
-    int color = FL_WHITE;
+    int color;
     bool light = false;
     bool blocked = false;
+    Box(int color){
+        if (color == BLUE_BOX)
+            this->color = FL_BLUE;
+        else if (color == RED_BOX)
+            this->color = FL_RED;
+        else if (color == BOX + '0')
+            this->color = FL_WHITE;
+        else if (color == LIGHT_BOX + '0'){
+            this->color = FL_WHITE;
+            this->light = true;
+            }
+    };
 };
 class LogicCell
 {
@@ -26,20 +38,27 @@ private:
     size_t line, column;
     Box *box = nullptr;
     Player *player = nullptr;
-    int color = FL_WHITE;
     int type;
+    int color = FL_WHITE;
 
 public:
     // Constructors
     LogicCell(){};
-    LogicCell(size_t line, size_t column, int type) : line{line}, column{column}, type{type} {};
+    LogicCell(size_t line, size_t column, int type, int color = FL_WHITE) : line{line}, column{column}, type{type} {
+        if (color == BLUE_BOX_FINAL_POS)
+            this->color = FL_BLUE;
+        else if (color == RED_BOX_FINAL_POS)
+            this->color = FL_RED;
+        else if (color == BOX_FINAL_POS + '0')
+            this->color = FL_WHITE;
+    };
 
     // Setters and Getters
     int getType() { return this->type; };
     int getX() { return this->column; }
     int getY() { return this->line; }
     void setColor(int color) { this->color = color; }
-    void setBoxblocked(bool blocked);
+    void setBoxBlocked(bool blocked);
     void setBox(Box *box) { this->box = box; }
     void setPlayer(Player *player) { this->player = player; }
     void setType(int type) { this->type = type; }
@@ -68,6 +87,5 @@ public:
      * @retval Returns true if the LogicCell has a player
      */
     bool hasPlayer();
-    ~LogicCell();
 };
 #endif
