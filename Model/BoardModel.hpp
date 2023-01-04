@@ -34,7 +34,7 @@ public:
     // Getters and setters
     std::vector<std::vector<LogicCell *>> getLogicCellVector() { return this->LogicCellVector; }
     std::string getFilename() { return this->filename; }
-    void setFilename(std::string newFilename) { this->filename = newFilename; }
+    void setFilename(const std::string newFilename) { this->filename = newFilename; }
     int getSteps() { return this->steps; }
     void setSteps(int newSteps) { this->steps = newSteps; }
     int getStepsLimit() { return this->stepsLimit; }

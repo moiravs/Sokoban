@@ -6,7 +6,7 @@
  * */
 #include "BoardModel.hpp"
 
-BoardModel::BoardModel(std::string filename)
+BoardModel::BoardModel(const std::string filename)
 {
     this->filename = filename;
     Player *player = new Player();
@@ -85,19 +85,19 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
     bool tele = true;
     for (int ind = index; ind < (int)fileContent.size(); ind++)
     {
-        LogicCell *logiccell;
+        LogicCell *logicCell;
         switch (fileContent[ind])
         {
         case EMPTY + '0':
         case WALL + '0':
-            logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), fileContent[ind] - '0');
+            logicCell = new LogicCell(this->LogicCellVector.size(), line.size(), fileContent[ind] - '0');
             break;
         case PLAYER + '0':
         {
-            logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
+            logicCell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
             this->player->y = this->LogicCellVector.size();
             this->player->x = line.size();
-            logiccell->setPlayer(player);
+            logicCell->setPlayer(player);
             break;
         }
         case BOX + '0':
@@ -105,29 +105,29 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
         case BLUE_BOX:
         case LIGHT_BOX + '0':
         {
-            logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
+            logicCell = new LogicCell(this->LogicCellVector.size(), line.size(), EMPTY);
             Box *box = new Box(fileContent[ind]);
-            logiccell->setBox(box);
+            logicCell->setBox(box);
             break;
         }
         case RED_BOX_FINAL_POS:
         case BLUE_BOX_FINAL_POS:
         case BOX_FINAL_POS + '0':
-            logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS, fileContent[ind]);
+            logicCell = new LogicCell(this->LogicCellVector.size(), line.size(), BOX_FINAL_POS, fileContent[ind]);
             break;
         case TELEPORTATION + '0':
         {
             Teleportation *firstTeleportationCell;
-            logiccell = new LogicCell(this->LogicCellVector.size(), line.size(), TELEPORTATION);
+            logicCell = new LogicCell(this->LogicCellVector.size(), line.size(), TELEPORTATION);
             if (tele)
             {
                 firstTeleportationCell = new Teleportation();
-                firstTeleportationCell->setFirstEnd(logiccell);
+                firstTeleportationCell->setFirstEnd(logicCell);
                 tele = false;
             }
             else
             {
-                firstTeleportationCell->setSecondEnd(logiccell);
+                firstTeleportationCell->setSecondEnd(logicCell);
                 this->teleportation.push_back(firstTeleportationCell);
                 tele = true;
             }
@@ -140,7 +140,7 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
             line.clear();
         }
         else
-            line.push_back(logiccell);
+            line.push_back(logicCell);
     }
     this->steps = 0;
 }

@@ -12,7 +12,6 @@ class Teleportation
 {
     LogicCell *firstEnd;
     LogicCell *secondEnd;
-    size_t line, column;
 
 public:
     // Constructors

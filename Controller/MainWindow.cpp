@@ -91,24 +91,24 @@ int MainWindow::handle(int event)
 
 void MainWindow::windowCallback(Fl_Widget *widget, void *f)
 {
-    MainWindow *a = ((MainWindow *)f);
+    MainWindow *mainWindow = static_cast<MainWindow *>(f);
     widget->hide();
-    a->boardModel->saveMinimumSteps();
+    mainWindow->boardModel->saveMinimumSteps();
 }
 
 void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 {
 
-    MainWindow *a = ((MainWindow *)f);
-    a->boardModel->setSteps(0);
-    a->boardModel->createBoard(a->boardModel->readFileIntoString());
-    a->display->update();
-    a->redraw();
+    MainWindow *mainWindow = static_cast<MainWindow *>(f);
+    mainWindow->boardModel->setSteps(0);
+    mainWindow->boardModel->createBoard(mainWindow->boardModel->readFileIntoString());
+    mainWindow->display->update();
+    mainWindow->redraw();
 }
 
 void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 {
-    MainWindow *mainWindow = ((MainWindow *)f);
+    MainWindow *mainWindow = static_cast<MainWindow *>(f);
     mainWindow->popUp->set_modal();
     mainWindow->popUp->show();
     while (mainWindow->popUp->shown())
@@ -139,13 +139,13 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 }
 void MainWindow::helpCallback(Fl_Widget *widget, void *f)
 {
-    MainWindow *mainWindow = ((MainWindow *)f);
+    MainWindow *mainWindow = static_cast<MainWindow *>(f);
     mainWindow->helpWindow->show();
 }
 
 void MainWindow::resetMinStepsCallback(Fl_Widget *w, void *f)
 {
-    MainWindow *mainWindow = ((MainWindow *)f);
+    MainWindow *mainWindow = static_cast<MainWindow *>(f);
     mainWindow->boardModel->setSteps(0);
     mainWindow->boardModel->saveMinimumSteps();
     mainWindow->redraw();
