@@ -142,7 +142,7 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
             line.clear();
             if ((LogicCellVector.size() > 15) || (line.size() > 15))
             {
-                puts("Matrix is too big");
+                perror("Matrix is too big");
                 exit(1);
             }
         }
@@ -287,7 +287,8 @@ void BoardModel::checkBoard(bool teleportationEnd)
 {
     if (!teleportationEnd)
     {
-        throw("Board Error: One of the teleportation has no second end");
+        perror("One of the teleportation has no second end");
+        exit(1);
     }
     size_t previousSize = LogicCellVector[0].size();
     size_t currentSize;
@@ -296,14 +297,14 @@ void BoardModel::checkBoard(bool teleportationEnd)
         currentSize = LogicCellVector[i].size();
         if (currentSize != previousSize)
         {
-            puts("The lines of the board don't have the same size");
+            perror("The lines of the board don't have the same size");
             exit(1);
         }
         previousSize = currentSize;
     }
     if (this->player->x == -1)
     {
-        puts("Player doesn't exists");
+        perror("Player doesn't exists");
         exit(1);
     }
 }
