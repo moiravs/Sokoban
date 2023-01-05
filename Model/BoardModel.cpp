@@ -6,12 +6,6 @@
  * */
 #include "BoardModel.hpp"
 
-BoardModel::BoardModel(const std::string filename)
-{
-    this->filename = filename;
-    Player *player = new Player();
-    this->player = player;
-}
 
 std::string BoardModel::readFileIntoString()
 {

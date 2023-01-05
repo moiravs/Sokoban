@@ -20,16 +20,11 @@ private:
     int stepsLimit = 0;
     std::vector<std::vector<LogicCell *>> LogicCellVector;
     bool partyWin;
-    Player *player;
+    Player *player = new Player();
 
 public:
     // Constructor
-    BoardModel(std::string filename);
-    /**
-     * @brief  Creates the LogicCellVector
-     * @param  index: the index in the file where the LogicCell is starting
-     * @param  fileContent: the content of the file
-     */
+    BoardModel(const std::string filename) : filename{filename}{};
 
     // Getters and setters
     std::vector<std::vector<LogicCell *>> getLogicCellVector() { return this->LogicCellVector; }
@@ -44,6 +39,11 @@ public:
     Player *getPlayer() { return this->player; }
 
     // Methods
+    /**
+     * @brief  Creates the LogicCellVector
+     * @param  index: the index in the file where the LogicCell is starting
+     * @param  fileContent: the content of the file
+     */
     void createLogicCell(int index, std::string fileContent);
     /**
      * @brief  Check if level is finished
