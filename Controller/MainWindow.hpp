@@ -20,9 +20,9 @@ class MainWindow : public Fl_Window
     HelpWindow *helpWindow;
 
 public:
-    MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, HelpWindow *helpWindow);
+    MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, HelpWindow *helpWindow) ;
     /**
-     * @brief  Override the drawing function from Fl_Window, draw the number of steps, the steps limit, the 
+     * @brief  Override the drawing function from Fl_Window, draw the number of steps, the steps limit, the
      * minimum steps for this level and draw a text if the player win or lose.
      * @retval None
      */
@@ -40,22 +40,22 @@ public:
      */
     static void windowCallback(Fl_Widget *widget, void *);
     /**
-     * @brief
-     * @param  *widget:
-     * @param  *mainWindow: Instance of mainWindow
-     * @retval None
-     */
-    static void resetLevelCallback(Fl_Widget *widget, void *mainWindow);
-    /**
      * @brief Callback for the resetLevel button, resets the level
      * @param  *widget: the resetLevel button
      * @param  *mainWindow: Instance of mainWindow
      * @retval None
      */
-    static void changeLevelCallback(Fl_Widget *widget, void *mainWindow);
+    static void resetLevelCallback(Fl_Widget *widget, void *mainWindow);
     /**
      * @brief Callback for the changeLevel button, opens a new window with all levels
      * @param  *widget: The changeLevel button
+     * @param  *mainWindow: Instance of mainWindow
+     * @retval None
+     */
+    static void changeLevelCallback(Fl_Widget *widget, void *mainWindow);
+    /**
+     * @brief Callback for the reset minimum steps button, resets the minimum steps
+     * @param  *widget: The reset minimum steps button
      * @param  *mainWindow: Instance of mainWindow
      * @retval None
      */
@@ -68,4 +68,3 @@ public:
      */
     static void helpCallback(Fl_Widget *widget, void *mainWindow);
 };
-

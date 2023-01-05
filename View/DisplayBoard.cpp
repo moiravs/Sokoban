@@ -17,35 +17,29 @@ void DisplayBoard::draw() // Source : Programmation Language Course
 
 std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc) // Source : Programmation Language Course
 {
-    for (size_t i = 0; i < (boardmodel->getLogicCellVector().size() * boardmodel->getLogicCellVector()[0].size()) - 1; i++)
+    for (size_t i = 0; i < (boardModel->getLogicCellVector().size() * boardModel->getLogicCellVector()[0].size()) - 1; i++)
     {
         if (cells[i].mouseClick(mouseLoc))
-            return std::tuple<int, int>(i / boardmodel->getLogicCellVector().size(), i % boardmodel->getLogicCellVector()[0].size());
+            return std::tuple<int, int>(i / boardModel->getLogicCellVector().size(), i % boardModel->getLogicCellVector()[0].size());
     }
-}
-
-DisplayBoard::DisplayBoard(std::shared_ptr<BoardModel> board) : Fl_Box(boardx, boardy, boardw, boardh)
-{
-    this->boardmodel = board;
-    this->update();
 }
 
 void DisplayBoard::update()
 {
     cells.clear();
-    for (size_t y = 0; y < boardmodel->getLogicCellVector().size(); y++)
+    for (size_t y = 0; y < boardModel->getLogicCellVector().size(); y++)
     {
-        for (size_t x = 0; x < boardmodel->getLogicCellVector()[0].size(); x++)
+        for (size_t x = 0; x < boardModel->getLogicCellVector()[0].size(); x++)
         {
-            if (boardmodel->getLogicCellVector()[y][x]->hasPlayer())
+            if (boardModel->getLogicCellVector()[y][x]->hasPlayer())
                 cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, PLAYER, 50, 50, FL_WHITE});
-            else if (boardmodel->getLogicCellVector()[y][x]->hasBox())
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, BOX, 50, 50, boardmodel->getLogicCellVector()[y][x]->getBox()->color});
-            else if (boardmodel->getLogicCellVector()[y][x]->getType() == BOX_FINAL_POS)
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, BOX_FINAL_POS, 50, 50, boardmodel->getLogicCellVector()[y][x]->getColor()});
+            else if (boardModel->getLogicCellVector()[y][x]->hasBox())
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, BOX, 50, 50, boardModel->getLogicCellVector()[y][x]->getBox()->color});
+            else if (boardModel->getLogicCellVector()[y][x]->getType() == BOX_FINAL_POS)
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, BOX_FINAL_POS, 50, 50, boardModel->getLogicCellVector()[y][x]->getColor()});
             else
             {
-                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, boardmodel->getLogicCellVector()[y][x]->getType(), 50, 50, FL_BLACK});
+                cells.push_back(Cell{Point{boardx + 50 * ((int)x % 20), boardy + 50 * ((int)y)}, boardModel->getLogicCellVector()[y][x]->getType(), 50, 50, FL_BLACK});
             }
         }
     }

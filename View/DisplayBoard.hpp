@@ -13,16 +13,15 @@
 class DisplayBoard : public Fl_Box
 {
 private:
-    std::shared_ptr<BoardModel> boardmodel;
+    std::shared_ptr<BoardModel> boardModel;
     std::vector<Cell> cells;
 
 public:
     //Constructors
-    DisplayBoard(std::shared_ptr<BoardModel> board);
     DisplayBoard() : Fl_Box(boardx, boardy, boardw, boardh){};
+    DisplayBoard(std::shared_ptr<BoardModel> boardModel) : Fl_Box(boardx, boardy, boardw, boardh), boardModel{boardModel} { this->update(); }
 
     //Methods
-    
     /**
      * @brief  Iterates over a vector of cell, and if the mouse location is in the cell, 
      * returns a tuple with the position of the cell

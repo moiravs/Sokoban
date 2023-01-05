@@ -7,11 +7,9 @@
 
 #include "MainWindow.hpp"
 
-MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, HelpWindow *helpWindow) : Fl_Window(500, 500, windowWidth, windowHeight, "Sokoban")
+MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, HelpWindow *helpWindow) : Fl_Window(500, 500, windowWidth, windowHeight, "Sokoban"), boardModel{boardModel}, helpWindow{helpWindow}
 {
     resizable(this);
-    this->boardModel = boardModel;
-    this->helpWindow = helpWindow;
     DisplayBoard *board = new DisplayBoard(boardModel);
     display = board;
     board->show();
