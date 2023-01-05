@@ -101,12 +101,11 @@ public:
      */
     void saveBestScore();
     /**
-     * @brief move the box if the player pushes it
-     * @param  finalPosX: final position in X of the player
-     * @param  finalPosY: final position in Y of the player
+     * @brief Check if the board has one player, if the board is a rectangle and if all teleportation have a second end.
+     * @param  teleportationEnd : true if the teleportation is finished
      * @retval None
      */
-    void moveBox(int finalPosX, int finalPosY);
+    void checkBoard(bool teleportationEnd);
 };
 
 #endif

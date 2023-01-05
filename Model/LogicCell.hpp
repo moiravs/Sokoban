@@ -11,8 +11,8 @@
 
 struct Player
 {
-    int x;
-    int y;
+    int x = -1;
+    int y = -1;
 };
 struct Box
 {

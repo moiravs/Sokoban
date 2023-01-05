@@ -6,7 +6,6 @@
  * */
 #include "BoardModel.hpp"
 
-
 std::string BoardModel::readFileIntoString()
 {
     std::ifstream ifs(this->filename);
@@ -76,7 +75,7 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
     this->LogicCellVector.clear();
     this->teleportation.clear();
     std::vector<LogicCell *> line;
-    bool tele = true;
+    bool teleportationEnd = true;
     for (int ind = index; ind < (int)fileContent.size(); ind++)
     {
         LogicCell *logicCell;
@@ -113,18 +112,27 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
         {
             Teleportation *firstTeleportationCell;
             logicCell = new LogicCell(this->LogicCellVector.size(), line.size(), TELEPORTATION);
-            if (tele)
+            if (teleportationEnd)
             {
                 firstTeleportationCell = new Teleportation();
                 firstTeleportationCell->setFirstEnd(logicCell);
-                tele = false;
+                teleportationEnd = false;
             }
             else
             {
                 firstTeleportationCell->setSecondEnd(logicCell);
                 this->teleportation.push_back(firstTeleportationCell);
-                tele = true;
+                teleportationEnd = true;
             }
+            break;
+        }
+        case ' ':
+        case (char)10:
+            break;
+        default:
+        {
+            std::cout << "Number not recognized by the program" << (int)fileContent[ind] << std::endl;
+            exit(1);
             break;
         }
         }
@@ -132,11 +140,17 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
         {
             this->LogicCellVector.push_back(line);
             line.clear();
+            if ((LogicCellVector.size() > 15) || (line.size() > 15))
+            {
+                puts("Matrix is too big");
+                exit(1);
+            }
         }
         else
             line.push_back(logicCell);
     }
     this->steps = 0;
+    checkBoard(teleportationEnd);
 }
 
 bool BoardModel::isEndOfParty()
@@ -176,10 +190,6 @@ void BoardModel::teleport()
             this->player->y = std::get<0>(teleportationCase);
         }
     }
-}
-
-void BoardModel::moveBox(int finalPosX, int finalPosY)
-{
 }
 
 void BoardModel::move(int finalPosY, int finalPosX)
@@ -244,7 +254,6 @@ void BoardModel::moveTo(int x, int y)
     }
 }
 
-// TODO rename bestscore
 void BoardModel::saveBestScore()
 {
     if (((this->steps < this->bestScore) && (this->partyWin)) || ((this->bestScore == 0 && this->partyWin)))
@@ -272,5 +281,30 @@ void BoardModel::saveBestScore()
         std::remove(this->filename.c_str());
         std::rename("fileout.txt", this->filename.c_str());
         this->bestScore = this->steps;
+    }
+}
+void BoardModel::checkBoard(bool teleportationEnd)
+{
+    if (!teleportationEnd)
+    {
+        puts("One of the teleportation has no second end");
+        exit(1);
+    }
+    size_t previousSize = LogicCellVector[0].size();
+    size_t currentSize;
+    for (size_t i = 1; i < LogicCellVector.size(); i++)
+    {
+        currentSize = LogicCellVector[i].size();
+        if (currentSize != previousSize)
+        {
+            puts("The lines of the board don't have the same size");
+            exit(1);
+        }
+        previousSize = currentSize;
+    }
+    if (this->player->x == -1)
+    {
+        puts("Player doesn't exists");
+        exit(1);
     }
 }
