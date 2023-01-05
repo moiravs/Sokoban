@@ -4,7 +4,6 @@
 #include "View/DisplayBoard.hpp"
 #include "Controller/MainWindow.hpp"
 
-
 #include <iostream>
 #include <FL/Fl.H>
 #include <FL/fl_draw.H>
@@ -23,7 +22,7 @@
 int main(int argc, char const *argv[])
 {
     Fl::scheme("gtk+");
-    std::string file = level1;
+    std::string file = LEVEL1;
     auto boardModel = std::make_shared<BoardModel>(file);
     std::string buffer = boardModel->readFileIntoString();
     boardModel->createBoard(buffer);

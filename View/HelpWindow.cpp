@@ -1,6 +1,6 @@
 /*
  * Projet : Sokoban project
- * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Authors : Andrius Ezerskis & Moïra Vanderslagmolen
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
@@ -8,7 +8,7 @@
 
 HelpWindow::HelpWindow() : Fl_Window(400, 400, 400, 400, "Help") // Source : Programmation Language Course
 {
-    Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);
+    Fl::add_timeout(1.0 / REFRESH_PER_SECOND, Time_CB, this);
     resizable(this);
     this->show();
     this->callback(windowCallback, this);
@@ -25,7 +25,7 @@ void HelpWindow::draw()
 }
 void HelpWindow::Time_CB(void *userdata) // Source : Programmation Language Course
 {
-    Fl::repeat_timeout(1.0 / refreshPerSecond, Time_CB, userdata);
+    Fl::repeat_timeout(1.0 / REFRESH_PER_SECOND, Time_CB, userdata);
 }
 
 void HelpWindow::windowCallback(Fl_Widget *widget, void *f)

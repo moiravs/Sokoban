@@ -1,6 +1,6 @@
 /*
  * Projet : Sokoban project
- * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Authors : Andrius Ezerskis & Moïra Vanderslagmolen
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
@@ -10,7 +10,7 @@ Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, ty
 {
     if (type == PLAYER)
     {
-        this->personnage = new Fl_PNG_Image(imageplayer.c_str());
+        this->personnage = new Fl_PNG_Image(PLAYER_IMAGE.c_str());
     }
     else if (type == TELEPORTATION)
     {
@@ -18,7 +18,7 @@ Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, ty
     }
     else if (type == WALL)
     {
-        this->wall = new Fl_PNG_Image(imagewall.c_str());
+        this->wall = new Fl_PNG_Image(WALL_IMAGE.c_str());
     }
 }
 

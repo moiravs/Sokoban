@@ -1,5 +1,5 @@
 
-FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE  -lfltk -lfltk_images 
+FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE  -lfltk -lfltk_images
 COMPILER=g++
 
 SOURCES=Model/BoardModel.cpp View/CellDisplay.cpp Model/LogicCell.cpp Controller/MainWindow.cpp Model/Teleportation.cpp

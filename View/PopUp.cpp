@@ -2,7 +2,7 @@
 
 PopUp::PopUp() : Fl_Window(400, 400, 400, 400, "Help")
 {
-    Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);
+    Fl::add_timeout(1.0 / REFRESH_PER_SECOND, Time_CB, this);
     resizable(this);
     this->show();
 
@@ -21,7 +21,7 @@ void PopUp::draw()
 }
 void PopUp::Time_CB(void *userdata)
 {
-    Fl::repeat_timeout(1.0 / refreshPerSecond, Time_CB, userdata);
+    Fl::repeat_timeout(1.0 / REFRESH_PER_SECOND, Time_CB, userdata);
 }
 
 void PopUp::windowCallback(Fl_Widget *widget, void *f)

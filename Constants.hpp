@@ -1,6 +1,6 @@
 /*
  * Projet : Sokoban project
- * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Authors : Andrius Ezerskis & Moïra Vanderslagmolen
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
@@ -42,62 +42,62 @@ const char RED_BOX = 'C';
 const char RED_BOX_FINAL_POS = 'D';
 
 // Main Window
-const int windowWidth = 900;
-const int windowHeight = 900;
-const double refreshPerSecond = 60;
+const int WINDOW_WIDTH = 900;
+const int WINDOW_HEIGHT = 900;
+const double REFRESH_PER_SECOND = 60;
 
-//Board display
-const int boardx = 200;
-const int boardy = 200;
-const int boardw = 600;
-const int boardh = 600;
+// Board display
+const int BOARD_X = 200;
+const int BOARD_Y = 200;
+const int BOARD_W = 600;
+const int BOARD_H = 600;
 
-//Button reset display
-const int resetx = 200;
-const int resety = 620;
-const int resetw = 100;
-const int reseth = 25;
-
-//PAS
-const int pasx = 500;
-const int pasy = 150;
+// Button reset display
+const int RESET_X = 200;
+const int RESET_Y = 620;
+const int RESET_W = 100;
+const int RESET_H = 25;
 
 // PAS
-const int winorlosex = 200;
-const int winorlosey = 100;
+const int PAS_X = 500;
+const int PAS_Y = 150;
 
-//Level button display
-const int choicex = 350;
-const int choicey = 620;
-const int choicew = 100;
-const int choiceh = 25;
+// PAS
+const int PARTY_WON_X = 200;
+const int PARTY_WON_Y = 100;
 
 // Level button display
-const int helpx = 350;
-const int helpy = 700;
-const int helpw = 100;
-const int helph = 25;
+const int CHOICE_X = 350;
+const int CHOICE_Y = 620;
+const int CHOICE_W = 100;
+const int CHOICE_H = 25;
 
 // Level button display
-const int resetminpasx = 500;
-const int resetminpasy = 620;
-const int resetminpasw = 100;
-const int resetminpash = 25;
+const int HELP_X = 350;
+const int HELP_Y = 700;
+const int HELP_W = 100;
+const int HELP_H = 25;
 
-const int limitpasx = 200;
-const int limitpasy = 150;
+// Level button display
+const int RESET_BEST_SCORE_X = 500;
+const int RESET_BEST_SCORE_Y = 620;
+const int RESET_BEST_SCORE_W = 100;
+const int RESET_BEST_SCORE_H = 25;
 
-const int minpasx = 330;
-const int minpasy = 150;
+const int STEPS_LIMIT_X = 200;
+const int STEPS_LIMIT_Y = 150;
 
-//levels
-const std::string level1 = "Niveaux/niveau1.txt";
-const std::string level2 = "Niveaux/niveau2.txt";
-const std::string level3 = "Niveaux/niveau3.txt";
-const std::string level4 = "Niveaux/niveau4.txt";
+const int MIN_STEPS_X = 330;
+const int MIN_STEPS_Y = 150;
 
-//Images
-const std::string imageplayer = "Textures/marioooo.png";
-const std::string imagewall = "Textures/Stone_Wall.png";
+// levels
+const std::string LEVEL1 = "Niveaux/niveau1.txt";
+const std::string LEVEL2 = "Niveaux/niveau2.txt";
+const std::string LEVEL3 = "Niveaux/niveau3.txt";
+const std::string LEVEL4 = "Niveaux/niveau4.txt";
+
+// Images
+const std::string PLAYER_IMAGE = "Textures/Mario.png";
+const std::string WALL_IMAGE = "Textures/Stone_Wall.png";
 
 #endif

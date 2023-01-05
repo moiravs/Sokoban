@@ -1,13 +1,13 @@
 /*
  * Projet : Sokoban project
- * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Authors : Andrius Ezerskis & Moïra Vanderslagmolen
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
 
 #include "MainWindow.hpp"
 
-MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, HelpWindow *helpWindow) : Fl_Window(500, 500, windowWidth, windowHeight, "Sokoban"), boardModel{boardModel}, helpWindow{helpWindow}
+MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, HelpWindow *helpWindow) : Fl_Window(500, 500, WINDOW_WIDTH, WINDOW_HEIGHT, "Sokoban"), boardModel{boardModel}, helpWindow{helpWindow}
 {
     resizable(this);
     DisplayBoard *board = new DisplayBoard(boardModel);
@@ -15,10 +15,10 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, Hel
     board->show();
     this->popUp = popUp;
     // Initialisation of the buttons
-    Fl_Button *reset = new Fl_Button(resetx, resety, resetw, reseth, "Reset Level");
-    Fl_Button *resetMinSteps = new Fl_Button(resetminpasx, resetminpasy, resetminpasw, resetminpash, "Reset Min Steps");
-    Fl_Button *levels = new Fl_Button(choicex, choicey, choicew, choiceh, "Levels");
-    Fl_Button *help = new Fl_Button(helpx, helpy, helpw, helph, "Help");
+    Fl_Button *reset = new Fl_Button(RESET_X, RESET_Y, RESET_W, RESET_H, "Reset Level");
+    Fl_Button *resetMinSteps = new Fl_Button(RESET_BEST_SCORE_X, RESET_BEST_SCORE_Y, RESET_BEST_SCORE_W, RESET_BEST_SCORE_H, "Reset Min Steps");
+    Fl_Button *levels = new Fl_Button(CHOICE_X, CHOICE_Y, CHOICE_W, CHOICE_H, "Levels");
+    Fl_Button *help = new Fl_Button(HELP_X, HELP_Y, HELP_W, HELP_H, "Help");
     // Callback for the buttons
     help->callback(helpCallback, (void *)this);
     this->callback(this->windowCallback, this);
@@ -40,22 +40,22 @@ void MainWindow::draw()
     {
         if (this->boardModel->getWinOrLose())
         {
-            std::string wonstring = "You won with " + std::to_string(boardModel->getStepsLimit() - boardModel->getSteps()) + " steps left, reset or change level";
-            fl_draw(wonstring.c_str(), winorlosex, winorlosey);
+            std::string wonString = "You won with " + std::to_string(boardModel->getStepsLimit() - boardModel->getSteps()) + " steps left, reset or change level";
+            fl_draw(wonString.c_str(), PARTY_WON_X, PARTY_WON_Y);
             this->boardModel->saveBestScore();
         }
         else
         {
-            fl_draw("You lose, reset or change level", winorlosex, winorlosey);
+            fl_draw("You lose, reset or change level", PARTY_WON_X, PARTY_WON_Y);
         }
     }
     fl_font(Fl_Font(1), 16);
     std::string steps = "Steps : " + std::to_string(this->boardModel->getSteps());
-    fl_draw(steps.c_str(), pasx, pasy);
+    fl_draw(steps.c_str(), PAS_X, PAS_Y);
     std::string stepsLimit = "Steps limit : " + std::to_string(this->boardModel->getStepsLimit());
-    fl_draw(stepsLimit.c_str(), limitpasx, limitpasy);
+    fl_draw(stepsLimit.c_str(), STEPS_LIMIT_X, STEPS_LIMIT_Y);
     std::string bestScore = "Minimum Steps : " + std::to_string(this->boardModel->getMinimumSteps());
-    fl_draw(bestScore.c_str(), minpasx, minpasy);
+    fl_draw(bestScore.c_str(), MIN_STEPS_X, MIN_STEPS_Y);
 }
 
 int MainWindow::handle(int event)
@@ -119,16 +119,16 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
     case -1:
         return;
     case 0:
-        mainWindow->boardModel->setFilename(level1);
+        mainWindow->boardModel->setFilename(LEVEL1);
         break;
     case 1:
-        mainWindow->boardModel->setFilename(level2);
+        mainWindow->boardModel->setFilename(LEVEL2);
         break;
     case 2:
-        mainWindow->boardModel->setFilename(level3);
+        mainWindow->boardModel->setFilename(LEVEL3);
         break;
     case 3:
-        mainWindow->boardModel->setFilename(level4);
+        mainWindow->boardModel->setFilename(LEVEL4);
         break;
     }
     mainWindow->boardModel->createBoard(mainWindow->boardModel->readFileIntoString());

@@ -1,6 +1,6 @@
 /*
  * Projet : Sokoban project
- * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Authors : Andrius Ezerskis & Moïra Vanderslagmolen
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
@@ -19,32 +19,34 @@ struct Box
     int color;
     bool light = false;
     bool blocked = false;
-    Box(int color){
+    Box(int color)
+    {
         if (color == BLUE_BOX)
             this->color = FL_BLUE;
         else if (color == RED_BOX)
             this->color = FL_RED;
         else if (color == BOX + '0')
             this->color = FL_WHITE;
-        else if (color == LIGHT_BOX + '0'){
+        else if (color == LIGHT_BOX + '0')
+        {
             this->color = FL_WHITE;
             this->light = true;
-            }
+        }
     };
 };
 class LogicCell
 {
 private:
     size_t line, column;
-    Box *box = nullptr;
-    Player *player = nullptr;
     int type;
     int color = FL_WHITE;
+    Box *box = nullptr;
+    Player *player = nullptr;
 
 public:
     // Constructors
-    LogicCell(){};
-    LogicCell(size_t line, size_t column, int type, int color = FL_WHITE) : line{line}, column{column}, type{type} {
+    LogicCell(size_t line, size_t column, int type, int color = FL_WHITE) : line{line}, column{column}, type{type}
+    {
         if (color == BLUE_BOX_FINAL_POS)
             this->color = FL_BLUE;
         else if (color == RED_BOX_FINAL_POS)

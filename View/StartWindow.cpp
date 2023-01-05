@@ -1,14 +1,14 @@
 /*
  * Projet : Sokoban project
- * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Authors : Andrius Ezerskis & Moïra Vanderslagmolen
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
 #include "StartWindow.hpp"
 
-StartWindow::StartWindow() : Fl_Window(500, 500, windowWidth, windowHeight, "SOKOBAN") // Source : Programmation Language Course
+StartWindow::StartWindow() : Fl_Window(500, 500, WINDOW_WIDTH, WINDOW_HEIGHT, "SOKOBAN") // Source : Programmation Language Course
 {
-    Fl::add_timeout(1.0 / refreshPerSecond, Time_CB, this);
+    Fl::add_timeout(1.0 / REFRESH_PER_SECOND, Time_CB, this);
     resizable(this);
     this->show();
 }
@@ -26,5 +26,5 @@ void StartWindow::Time_CB(void *userdata) // Source : Programmation Language Cou
         sleep(1);
         o->hide();
     }
-    Fl::repeat_timeout(1.0 / refreshPerSecond, Time_CB, userdata);
+    Fl::repeat_timeout(1.0 / REFRESH_PER_SECOND, Time_CB, userdata);
 }

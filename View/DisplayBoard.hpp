@@ -1,6 +1,6 @@
 /*
  * Projet : Sokoban project
- * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Authors : Andrius Ezerskis & Moïra Vanderslagmolen
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
@@ -18,8 +18,8 @@ private:
 
 public:
     //Constructors
-    DisplayBoard() : Fl_Box(boardx, boardy, boardw, boardh){};
-    DisplayBoard(std::shared_ptr<BoardModel> boardModel) : Fl_Box(boardx, boardy, boardw, boardh), boardModel{boardModel} { this->update(); }
+    DisplayBoard() : Fl_Box(BOARD_X, BOARD_Y, BOARD_W, BOARD_H){};
+    DisplayBoard(std::shared_ptr<BoardModel> boardModel) : Fl_Box(BOARD_X, BOARD_Y, BOARD_W, BOARD_H), boardModel{boardModel} { this->update(); }
 
     //Methods
     /**

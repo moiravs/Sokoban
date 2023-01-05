@@ -1,6 +1,6 @@
 /*
  * Projet : Sokoban project
- * Autors : Andrius Ezerskis & Moïra Vanderslagmolen
+ * Authors : Andrius Ezerskis & Moïra Vanderslagmolen
  * Matricule : 000542698 & 000547486
  * Date : 21 december 2022
  * */
@@ -260,14 +260,14 @@ void BoardModel::saveBestScore()
     {
         std::string strReplace = "l" + std::to_string(this->bestScore); // Source : StackOverflow
         std::string strNew = "l" + std::to_string(this->steps);
-        std::ifstream filein(this->filename); // File to read from
-        std::ofstream fileout("fileout.txt"); // Temporary file
-        if (!filein || !fileout)
+        std::ifstream fileIn(this->filename); // File to read from
+        std::ofstream fileOut("fileOut.txt"); // Temporary file
+        if (!fileIn || !fileOut)
             std::cout << "Error opening files!" << std::endl;
 
         std::string strTemp;
         bool found = false;
-        while (filein >> strTemp)
+        while (fileIn >> strTemp)
         {
             if ((strTemp == strReplace) && (found == false))
             {
@@ -275,11 +275,11 @@ void BoardModel::saveBestScore()
                 found = true;
             }
             strTemp += "\n";
-            fileout << strTemp;
+            fileOut << strTemp;
         }
-        filein.close();
+        fileIn.close();
         std::remove(this->filename.c_str());
-        std::rename("fileout.txt", this->filename.c_str());
+        std::rename("fileOut.txt", this->filename.c_str());
         this->bestScore = this->steps;
     }
 }
@@ -287,8 +287,7 @@ void BoardModel::checkBoard(bool teleportationEnd)
 {
     if (!teleportationEnd)
     {
-        puts("One of the teleportation has no second end");
-        exit(1);
+        throw("Board Error: One of the teleportation has no second end");
     }
     size_t previousSize = LogicCellVector[0].size();
     size_t currentSize;
