@@ -75,68 +75,100 @@ Nous avons séparé nos classes en trois fichiers distincts : Model, Controller 
 \subsubsection{BoardModel}
 \indent
 \par
-Nous avons le BoardModel, qui s'occupe de gérer la logique du plateau. Elle fait
-bouger le personnage, compte le nombre de steps, détermine si la partie est
+BoardModel est la classe qui s'occupe de gérer la logique du plateau. Elle fait
+bouger le personnage, compte le nombre de pas, détermine si la partie est
 terminée ou si elle ne peut plus être résolue. Elle peut aussi téléporter le
 personnage d'une case de téléportation à une autre et charger les niveaux en
-mémoire.
+mémoire et s'occupe de sauvegarder le meilleur score en mémoire.
+\par
+\indent
+\par
+Nous avons mis les niveaux dans des fichiers, nous avons donc aussi implémenté
+une fonction qui permet de vérifier si le plateau de jeu est fonctionnel. Nous
+vérifions si le plateau de jeu a bien un joueur, si les téléportations ont bien une
+case arrivée et si le plateau de jeu a des lignes de même taille.
 \par
 Les niveaux sont affichés comme ceci : la première ligne indique la limite de
 pas. Elle affiche un l et un nombre ensuite. La deuxième ligne indique le
-meilleur score, le fichier écrit un m suivi du meilleur score.
+meilleur score, le fichier affiche un m suivi du meilleur score.
 \par
 
 \subsubsection{LogicCell}
 \indent
 \par
-Cette classe représente une cellule ou une case. Elle a une position, peut avoir
-un joueur ou alors une boîte. Elle a aussi une couleur et un type. Elle peut
-avoir 4 types différents (mur, vide, téléportation ou position finale d'une
-boîte). Si le type est la position finale d'une boîte, alors elle est "complète"
-que si la couleur de LogicCell correspond à celle de la boîte. La cellule est
-bloquée si son type est un mur ou si la boîte sur la case est bloquée.
+Nous avons implémenté deux structures : Player et Box, que nous avons placé dans
+le fichier de LogicCell. Player contient seulement deux attributs, x et y, qui
+représentent la ligne et la colonne dans laquelle est placé le player. Box
+contient trois attributs, la couleur de la boîte, un booléen indiquant si elle
+est légère et un autre booléen indiquant si la boîte est bloquée.
+\par
+\indent
+\par
+Cette classe représente une cellule ou une case. Elle a une position, et
+contient un joueur ou une boîte. La case a aussi une couleur et un type. Elle
+peut avoir 4 types différents (mur, vide, téléportation, position finale d'une
+boîte). 
+\par
+\indent
+\par
+Nous avons écrit une méthode qui permet de vérifier si la case est
+"complète". En effet, si le type de la case est la position finale d'une boîte,
+alors elle est complète que si elle possède une boîte et si cette boîte a la
+même couleur que la cellule qui la contient. Elle est aussi complète lorsque le
+type n'est pas la position finale d'une boîte. Cette fonction est utile
+lorsqu'on veut vérifier si le joueur a terminé son niveau, nous itérons alors
+dans le vecteur contenant toutes les cases et nous vérifions si chacune des
+cases est complète. La cellule est bloquée si son type est un mur ou si la boîte
+sur la case est bloquée.
 \par
 \subsubsection{Téléportation}
 \indent
 \par
-La classe téléportation est un peu plus complexe. En effet, elle prend deux
-LogicCell en paramètre. 
+La classe téléportation prend deux LogicCell en paramètre, la case de départ et
+la case d'arrivée. Elle contient aussi une méthode qui prend un tuple d'int (la
+position du joueur), et qui renvoie un tuple de la position de la case d'arrivée
+de la téléportation si le joueur est sur une case de téléportation ou un tuple
+de -1 sinon.
 \par
 \subsection{Classes de la Vue}
 \subsubsection{CellDisplay}
 \indent
 \par
-Cette classe s'occupe de dessiner chaque cellule en fonction de son type
+Cette classe s'occupe de dessiner chaque cellule en fonction de son type. Elle
+contient aussi une méthode qui renvoie la position de la cellule si elle
+contient la position de la souris.
 \par
 \subsubsection{DisplayBoard}
 \indent
 \par
-Le DisplayBoard va itérer à travers les LogicCell et créer des instances de
-CellDisplay. Enfin, lorsque l'utilisateur clique sur le
-DisplayBoard, il va demander à chaque Cell si elle a été cliquée et renverra le
-résultat au MainWindow.
+Le DisplayBoard va itérer à travers le vecteur de LogicCell et créer des
+instances de CellDisplay. Enfin, lorsque l'utilisateur clique sur le
+DisplayBoard, il va demander à chaque instance de CellDisplay si elle a elle
+contient la position de la souris et renverra le résultat au MainWindow.
 \par
 \subsubsection{HelpWindow}
 \indent
 \par
 Cette fenêtre s'ouvre quand l'utilisateur appuie sur le bouton Help. Elle
-affiche toutes les commandes disponibles
+affiche toutes les commandes disponibles. Cette fenêtre permet aussi d'afficher
+les niveaux disponibles, lorsque l'utilisateur appuie sur le bouton Levels.
 \par
 \subsubsection{StartWindow}
 \indent
 \par
 Cette fenêtre permet d'afficher un écran d'accueil et affiche le nom des
-auteurs. Elle se lance en premier et disparaît après 10 secondes.
+auteurs. C'est la première fenêtre qui s'affiche et disparaît après 10 secondes.
 \par
 
-\subsection{Classes du Controlleur}
+\subsection{Classes du contrôleur}
 \subsubsection{MainWindow}
 \indent
 \par
-Cette classe sert de controlleur. Il va aussi dessiner les limite de steps, le
-compteur de pas et le nombre de pas minimum sur la fenêtre. Cette classe
-gère les commandes entrées par l'utilisateur. Il s'occupe aussi des clicks.
-Il affiche aussi la fenêtre principale du jeu.
+Cette classe sert de contrôleur. En effet, elle s'occupe de faire le lien entre
+le modèle et la view. Elle va aussi dessiner les limite de pas, le compteur de
+pas et le meilleur score. Cette classe gère aussi les commandes entrées par
+l'utilisateur et s'occupe aussi des callback de chaque bouton. Il affiche aussi
+la fenêtre principale du jeu.
 \par
 \section{Logique du jeu}
 \subsection{Démarrer le jeu}
@@ -212,7 +244,7 @@ Lorsque nous quittons le jeu, le callback s'occupant de fermer la fenêtre va
 enregistrer le meilleur score de l'utilisateur.
 \par
 
-\section{Modèle-Vue-Controlleur}
+\section{Modèle-Vue-contrôler}
 \indent
 \par
 Nous avons implémenté le modèle MVC uniquement pour le board. Premièrement, nous
@@ -222,7 +254,7 @@ statiques, nous étions donc obligés d'appeller notre Controller dans le
 MainWindow, ce qui n'avait pas beaucoup de sens. 
 \par
 Nous avons donc décidé que la
-fenêtre principale serait le Controlleur, vu qu'il gère les commandes entrées
+fenêtre principale serait le contrôleur, vu qu'il gère les commandes entrées
 par l'utilisateur et met à jour le boardModel  et le display en fonction.
 \par
 \section{Conclusion}
