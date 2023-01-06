@@ -7,8 +7,8 @@ SOURCES=Model/BoardModel.cpp View/CellDisplay.cpp Model/LogicCell.cpp Controller
 %.o: %.cpp %.hpp Constants.hpp
 	${COMPILER} -c %.cpp ${FLAGS}
 
-main:  LogicCell.o BoardModel.o main.cpp DisplayBoard.o  MainWindow.o Teleportation.o CellDisplay.o PopUp.o HelpWindow.o StartWindow.o
-	${COMPILER} -o jeu main.cpp DisplayBoard.o BoardModel.o MainWindow.o  Teleportation.o CellDisplay.o LogicCell.o PopUp.o HelpWindow.o StartWindow.o ${FLAGS}
+main:  LogicCell.o BoardModel.o main.cpp DisplayBoard.o  MainWindow.o Teleportation.o CellDisplay.o HelpWindow.o StartWindow.o
+	${COMPILER} -o jeu main.cpp DisplayBoard.o BoardModel.o MainWindow.o  Teleportation.o CellDisplay.o LogicCell.o  HelpWindow.o StartWindow.o ${FLAGS}
 
 run:
 	make main 
@@ -25,8 +25,7 @@ LogicCell.o: Model/LogicCell.cpp Model/LogicCell.hpp Constants.hpp
 DisplayBoard.o:  View/DisplayBoard.cpp View/DisplayBoard.hpp Constants.hpp
 	${COMPILER} -c View/DisplayBoard.cpp ${FLAGS}
 
-PopUp.o:  View/PopUp.cpp View/PopUp.hpp Constants.hpp
-	${COMPILER} -c View/PopUp.cpp ${FLAGS}
+
 
 HelpWindow.o:  View/HelpWindow.cpp View/HelpWindow.hpp Constants.hpp
 	${COMPILER} -c View/HelpWindow.cpp ${FLAGS}

@@ -22,7 +22,7 @@ std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc) // Source : Progra
         if (cells[i].mouseClick(mouseLoc))
             return std::tuple<int, int>(i / boardModel->getLogicCellVector().size(), i % boardModel->getLogicCellVector()[0].size());
     }
-    throw("Unexpected Error: Problem with mouseClick");
+    return std::tuple<int, int>(-1,-1);
 }
 
 void DisplayBoard::update()

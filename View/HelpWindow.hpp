@@ -11,6 +11,8 @@ class HelpWindow : public Fl_Window
 {
 private:
 public:
+    Fl_Choice *levels = new Fl_Choice(100, 150, 200, 50);
+    bool help = true;
     HelpWindow();
     /**
      * @brief  Override the drawing function from Fl_Window, writes text

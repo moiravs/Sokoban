@@ -6,7 +6,6 @@
  * */
 #include "../View/DisplayBoard.hpp"
 #include "../View/CellDisplay.hpp"
-#include "../View/PopUp.hpp"
 #include "../View/HelpWindow.hpp"
 #include "../View/StartWindow.hpp"
 
@@ -16,11 +15,10 @@ class MainWindow : public Fl_Window
     DisplayBoard *display;
     const char *steps;
     Fl_Text_Buffer *buff;
-    PopUp *popUp;
     HelpWindow *helpWindow;
 
 public:
-    MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, HelpWindow *helpWindow) ;
+    MainWindow(std::shared_ptr<BoardModel> boardModel, HelpWindow *helpWindow) ;
     /**
      * @brief  Override the drawing function from Fl_Window, draw the number of steps, the steps limit, the
      * minimum steps for this level and draw a text if the player win or lose.

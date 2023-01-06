@@ -7,13 +7,12 @@
 
 #include "MainWindow.hpp"
 
-MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, PopUp *popUp, HelpWindow *helpWindow) : Fl_Window(500, 500, WINDOW_WIDTH, WINDOW_HEIGHT, "Sokoban"), boardModel{boardModel}, helpWindow{helpWindow}
+MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, HelpWindow *helpWindow) : Fl_Window(500, 500, WINDOW_WIDTH, WINDOW_HEIGHT, "Sokoban"), boardModel{boardModel}, helpWindow{helpWindow}
 {
     resizable(this);
     DisplayBoard *board = new DisplayBoard(boardModel);
     display = board;
     board->show();
-    this->popUp = popUp;
     // Initialisation of the buttons
     Fl_Button *reset = new Fl_Button(RESET_X, RESET_Y, RESET_W, RESET_H, "Reset Level");
     Fl_Button *resetMinSteps = new Fl_Button(RESET_BEST_SCORE_X, RESET_BEST_SCORE_Y, RESET_BEST_SCORE_W, RESET_BEST_SCORE_H, "Reset Min Steps");
@@ -80,9 +79,12 @@ int MainWindow::handle(int event)
     if (Fl::event_inside(this->display) && event == FL_PUSH) // if user clicks on a cell
     {
         std::tuple<int, int> position = display->mouseClick(Point{Fl::event_x(), Fl::event_y()});
-        this->boardModel->moveTo(std::get<1>(position), std::get<0>(position));
-        display->update();
-        this->redraw();
+        if (std::get<1>(position) != -1 && std::get<0>(position) != -1)
+        {
+            this->boardModel->moveTo(std::get<1>(position), std::get<0>(position));
+            display->update();
+            this->redraw();
+        }
     }
     return Fl_Window::handle(event);
 }
@@ -107,11 +109,12 @@ void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *mainWindow = static_cast<MainWindow *>(f);
-    mainWindow->popUp->set_modal();
-    mainWindow->popUp->show();
-    while (mainWindow->popUp->shown())
+    mainWindow->helpWindow->help = false;
+    mainWindow->helpWindow->set_modal();
+    mainWindow->helpWindow->show();
+    while (mainWindow->helpWindow->shown())
         Fl::wait();
-    Fl_Choice *levels = (Fl_Choice *)mainWindow->popUp->levels;
+    Fl_Choice *levels = (Fl_Choice *)mainWindow->helpWindow->levels;
     int choice = levels->value();
     mainWindow->boardModel->saveBestScore();
     switch (choice)
@@ -138,6 +141,7 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 void MainWindow::helpCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *mainWindow = static_cast<MainWindow *>(f);
+    mainWindow->helpWindow->help = true;
     mainWindow->helpWindow->show();
 }
 
