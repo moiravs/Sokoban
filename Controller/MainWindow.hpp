@@ -16,9 +16,16 @@ class MainWindow : public Fl_Window
     const char *steps;
     Fl_Text_Buffer *buff;
     HelpWindow *helpWindow;
+    Fl_Button *reset = new Fl_Button(RESET_X, RESET_Y, RESET_W, RESET_H, "Reset Level");
+    Fl_Button *resetMinSteps = new Fl_Button(RESET_BEST_SCORE_X, RESET_BEST_SCORE_Y, RESET_BEST_SCORE_W, RESET_BEST_SCORE_H, "Reset Min Steps");
+    Fl_Button *levels = new Fl_Button(CHOICE_X, CHOICE_Y, CHOICE_W, CHOICE_H, "Levels");
+    Fl_Button *help = new Fl_Button(HELP_X, HELP_Y, HELP_W, HELP_H, "Help");
 
 public:
-    MainWindow(std::shared_ptr<BoardModel> boardModel, HelpWindow *helpWindow) ;
+    // Constructors and Destructors
+    MainWindow(std::shared_ptr<BoardModel> boardModel, HelpWindow *helpWindow);
+    ~MainWindow();
+    // Methods
     /**
      * @brief  Override the drawing function from Fl_Window, draw the number of steps, the steps limit, the
      * minimum steps for this level and draw a text if the player win or lose.

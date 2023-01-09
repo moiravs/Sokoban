@@ -25,6 +25,7 @@ class Cell
 public:
     // Constructors
     Cell(Point center, int type, int w, int h, int color);
+    ~Cell();
 
     // Getters and Setters
     Point getCenter() { return center; } // Source : Programmation Language Course
@@ -41,7 +42,6 @@ public:
      * @retval true if the mouse location is in the cell
      */
     bool mouseClick(Point mouseLoc);
-    //~Cell(){delete personnage; delete wall;}
 };
 
 #endif

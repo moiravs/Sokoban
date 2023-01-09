@@ -23,8 +23,9 @@ private:
     Player *player = new Player();
 
 public:
-    // Constructor
+    // Constructor and destructors
     BoardModel(const std::string filename) : filename{filename} {};
+    ~BoardModel();
 
     // Getters and setters
     std::vector<std::vector<LogicCell *>> getLogicCellVector() { return this->LogicCellVector; }

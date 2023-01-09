@@ -22,7 +22,7 @@ std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc) // Source : Progra
         if (cells[i].mouseClick(mouseLoc))
             return std::tuple<int, int>(i / boardModel->getLogicCellVector().size(), i % boardModel->getLogicCellVector()[0].size());
     }
-    return std::tuple<int, int>(-1,-1);
+    return std::tuple<int, int>(-1, -1);
 }
 
 void DisplayBoard::update()
@@ -33,15 +33,13 @@ void DisplayBoard::update()
         for (size_t x = 0; x < boardModel->getLogicCellVector()[0].size(); x++)
         {
             if (boardModel->getLogicCellVector()[y][x]->hasPlayer())
-                cells.push_back(Cell{Point{BOARD_X + 50 * ((int)x % 20), BOARD_Y + 50 * ((int)y)}, PLAYER, 50, 50, FL_WHITE});
+                cells.push_back(Cell{Point{BOARD_X + 50 * (static_cast<int>(x) % 20), BOARD_Y + 50 * (static_cast<int>(y))}, PLAYER, 50, 50, FL_WHITE});
             else if (boardModel->getLogicCellVector()[y][x]->hasBox())
-                cells.push_back(Cell{Point{BOARD_X + 50 * ((int)x % 20), BOARD_Y + 50 * ((int)y)}, BOX, 50, 50, boardModel->getLogicCellVector()[y][x]->getBox()->color});
+                cells.push_back(Cell{Point{BOARD_X + 50 * (static_cast<int>(x) % 20), BOARD_Y + 50 * (static_cast<int>(y))}, BOX, 50, 50, boardModel->getLogicCellVector()[y][x]->getBox()->color});
             else if (boardModel->getLogicCellVector()[y][x]->getType() == BOX_FINAL_POS)
-                cells.push_back(Cell{Point{BOARD_X + 50 * ((int)x % 20), BOARD_Y + 50 * ((int)y)}, BOX_FINAL_POS, 50, 50, boardModel->getLogicCellVector()[y][x]->getColor()});
+                cells.push_back(Cell{Point{BOARD_X + 50 * (static_cast<int>(x) % 20), BOARD_Y + 50 * (static_cast<int>(y))}, BOX_FINAL_POS, 50, 50, boardModel->getLogicCellVector()[y][x]->getColor()});
             else
-            {
-                cells.push_back(Cell{Point{BOARD_X + 50 * ((int)x % 20), BOARD_Y + 50 * ((int)y)}, boardModel->getLogicCellVector()[y][x]->getType(), 50, 50, FL_BLACK});
-            }
+                cells.push_back(Cell{Point{BOARD_X + 50 * (static_cast<int>(x) % 20), BOARD_Y + 50 * (static_cast<int>(y))}, boardModel->getLogicCellVector()[y][x]->getType(), 50, 50, FL_BLACK});
         }
     }
 }

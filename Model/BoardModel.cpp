@@ -18,9 +18,9 @@ bool BoardModel::isFailure()
 {
     std::vector<std::vector<int>> move{{0, -1, -1, 0}, {-1, 0, 0, 1}, {0, 1, 1, 0}, {1, 0, 0, -1}};
     bool allBoxes = true;
-    for (int i = 0; i < (int)LogicCellVector.size(); i++)
+    for (int i = 0; i < static_cast<int>(LogicCellVector.size()); i++)
     {
-        for (int j = 0; j < (int)LogicCellVector[0].size(); j++)
+        for (int j = 0; j < static_cast<int>(LogicCellVector[0].size()); j++)
         {
             if (LogicCellVector[i][j]->hasBox() && (LogicCellVector[i][j]->isBlocked() == false))
             {
@@ -76,7 +76,7 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
     this->teleportation.clear();
     std::vector<LogicCell *> line;
     bool teleportationEnd = true;
-    for (int ind = index; ind < (int)fileContent.size(); ind++)
+    for (int ind = index; ind < static_cast<int>(fileContent.size()); ind++)
     {
         LogicCell *logicCell;
         switch (fileContent[ind])
@@ -127,11 +127,11 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
             break;
         }
         case ' ':
-        case (char)10:
+        case static_cast<char>(10):
             break;
         default:
         {
-            std::cout << "Number not recognized by the program" << (int)fileContent[ind] << std::endl;
+            std::cout << "Number not recognized by the program" << static_cast<int>(fileContent[ind]) << std::endl;
             exit(1);
             break;
         }
@@ -174,7 +174,7 @@ bool BoardModel::isEndOfParty()
 
 bool BoardModel::isInBoard(int posY, int posX)
 {
-    return 0 <= posY && posY < (int)LogicCellVector.size() && 0 <= posX && posX < (int)LogicCellVector[posY].size();
+    return 0 <= posY && posY < static_cast<int>(LogicCellVector.size()) && 0 <= posX && posX < static_cast<int>(LogicCellVector[posY].size());
 }
 
 void BoardModel::teleport()
@@ -306,5 +306,20 @@ void BoardModel::checkBoard(bool teleportationEnd)
     {
         perror("Player doesn't exists");
         exit(1);
+    }
+}
+
+BoardModel::~BoardModel()
+{
+    for (int i = 0; i < static_cast<int>(LogicCellVector.size()); ++i)
+    {
+        for (int j = 0; j < static_cast<int>(LogicCellVector[0].size()); ++j)
+        {
+            delete LogicCellVector[i][j];
+        }
+    }
+
+    for (int i = 0; i < static_cast<int>(teleportation.size()); ++i){
+        delete teleportation[i];
     }
 }

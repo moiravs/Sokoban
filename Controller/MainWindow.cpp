@@ -14,21 +14,25 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, HelpWindow *helpW
     display = board;
     board->show();
     // Initialisation of the buttons
-    Fl_Button *reset = new Fl_Button(RESET_X, RESET_Y, RESET_W, RESET_H, "Reset Level");
-    Fl_Button *resetMinSteps = new Fl_Button(RESET_BEST_SCORE_X, RESET_BEST_SCORE_Y, RESET_BEST_SCORE_W, RESET_BEST_SCORE_H, "Reset Min Steps");
-    Fl_Button *levels = new Fl_Button(CHOICE_X, CHOICE_Y, CHOICE_W, CHOICE_H, "Levels");
-    Fl_Button *help = new Fl_Button(HELP_X, HELP_Y, HELP_W, HELP_H, "Help");
+
     // Callback for the buttons
-    help->callback(helpCallback, (void *)this);
-    this->callback(this->windowCallback, this);
-    reset->callback(resetLevelCallback, (void *)this);
-    levels->callback(changeLevelCallback, (void *)this);
-    resetMinSteps->callback(resetMinStepsCallback, (void *)this);
+    help->callback(helpCallback, static_cast<void *>(this));
+    this->callback(this->windowCallback, static_cast<void *>(this));
+    reset->callback(resetLevelCallback, static_cast<void *>(this));
+    levels->callback(changeLevelCallback, static_cast<void *>(this));
+    resetMinSteps->callback(resetMinStepsCallback, static_cast<void *>(this));
 
     this->resizable(levels);
     this->resizable(resetMinSteps);
     this->resizable(reset);
     this->resizable(help);
+}
+
+MainWindow::~MainWindow(){
+    delete reset;
+    delete levels;
+    delete help;
+    delete resetMinSteps;
 }
 
 void MainWindow::draw()
@@ -114,7 +118,7 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
     mainWindow->helpWindow->show();
     while (mainWindow->helpWindow->shown())
         Fl::wait();
-    Fl_Choice *levels = (Fl_Choice *)mainWindow->helpWindow->levels;
+    Fl_Choice *levels = static_cast<Fl_Choice *>(mainWindow->helpWindow->levels);
     int choice = levels->value();
     mainWindow->boardModel->saveBestScore();
     switch (choice)
