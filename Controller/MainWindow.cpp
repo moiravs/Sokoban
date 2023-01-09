@@ -13,7 +13,6 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, HelpWindow *helpW
     DisplayBoard *board = new DisplayBoard(boardModel);
     display = board;
     board->show();
-    // Initialisation of the buttons
 
     // Callback for the buttons
     help->callback(helpCallback, static_cast<void *>(this));
