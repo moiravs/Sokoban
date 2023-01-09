@@ -55,6 +55,8 @@ public:
             this->color = FL_WHITE;
     };
 
+    ~LogicCell(){if (this->hasBox()) {delete box;}}
+
     // Setters and Getters
     int getType() { return this->type; };
     int getX() { return this->column; }

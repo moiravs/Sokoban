@@ -19,7 +19,7 @@
 #include <array>
 #include <memory>
 
-int main(int argc, char const *argv[])
+int main()
 {
     Fl::scheme("gtk+");
     std::string file = LEVEL1;

@@ -23,7 +23,6 @@ Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, ty
 }
 
 Cell::~Cell(){
-
 }
 
 void Cell::draw()

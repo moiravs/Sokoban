@@ -32,6 +32,8 @@ MainWindow::~MainWindow(){
     delete levels;
     delete help;
     delete resetMinSteps;
+    delete helpWindow;
+    delete display;
 }
 
 void MainWindow::draw()

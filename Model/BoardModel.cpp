@@ -322,4 +322,5 @@ BoardModel::~BoardModel()
     for (int i = 0; i < static_cast<int>(teleportation.size()); ++i){
         delete teleportation[i];
     }
+    delete player;
 }

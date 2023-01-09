@@ -1,5 +1,6 @@
 
-FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE  -lfltk -lfltk_images -Wold-style-cast -Werror -fsanitize=address
+FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE  -lfltk -lfltk_images -Wold-style-cast -fsanitize=address -Wall -Wextra -Wstrict-aliasing -fstrict-aliasing -Wredundant-decls -Wmissing-declarations -Wmissing-field-initializers
+
 COMPILER=g++
 
 SOURCES=Model/BoardModel.cpp View/CellDisplay.cpp Model/LogicCell.cpp Controller/MainWindow.cpp Model/Teleportation.cpp
