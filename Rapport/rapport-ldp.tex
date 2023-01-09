@@ -68,7 +68,7 @@ Nous avons implémenté :
 \section{Classes}
 \indent
 \par
-Nous avons séparé nos classes en trois fichiers distincts : Model, Controller et View.
+Nous avons séparé nos classes en trois fichiers distincts : Model, Controller et Vue.
 \par
 \subsection{Classes du Modèle}
 
@@ -112,7 +112,7 @@ Nous avons écrit une méthode qui permet de vérifier si la case est
 alors elle est complète que si elle possède une boîte et si cette boîte a la
 même couleur que la cellule qui la contient. Elle est aussi complète lorsque le
 type n'est pas la position finale d'une boîte. Cette fonction est utile
-lorsqu'on veut vérifier si le joueur a terminé son niveau, nous itérons alors
+lorsque nous voulons vérifier si le joueur a terminé son niveau, nous itérons alors
 dans le vecteur contenant toutes les cases et nous vérifions si chacune des
 cases est complète. La cellule est bloquée si son type est un mur ou si la boîte
 sur la case est bloquée.
@@ -161,7 +161,7 @@ auteurs. C'est la première fenêtre qui s'affiche et disparaît après 10 secon
 \indent
 \par
 Cette classe sert de contrôleur. En effet, elle s'occupe de faire le lien entre
-le modèle et la view. Elle va aussi dessiner les limite de pas, le compteur de
+le modèle et la Vue. Elle va aussi dessiner les limite de pas, le compteur de
 pas et le meilleur score. Cette classe gère aussi les commandes entrées par
 l'utilisateur et s'occupe aussi des callback de chaque bouton. Chaque callback
 change l'information dans le modèle et met à jour le display en fonction. Il
@@ -217,7 +217,7 @@ l'utilisateur s'il a gagné ou perdu.
 \par
 Si l'utilisateur clique sur le bouton Help, une nouvelle fenêtre va s'ouvrir.
 Nous mettons l'attribut de help à true, pour indiquer à helpWindow d'afficher
-l'aide. Ensuite, nous appelons la fonction show de Fl_Window sur l'instance de
+l'aide. Ensuite, nous appelons la fonction show de Fl\_Window sur l'instance de
 HelpWindow.
 \par
 \subsubsection{Levels}
@@ -225,7 +225,7 @@ HelpWindow.
 \par
 Si l'utilisateur appuie sur le bouton changeLevel, une nouvelle fenêtre va être
 affichée grâce à la fonction show de FLTK. Tant que la fenêtre est affichée (la
-fonction shown de Fl_Window), nous appelons la fonction Fl::wait. La fenêtre est
+fonction shown de Fl\_Window), nous appelons la fonction Fl::wait. La fenêtre est
 modale, c'est à dire que l'utilisateur ne peut plus faire aucune autre action
 dans une autre fenêtre tant qu'il n'a pas cliqué sur le bouton pour choisir le
 niveau. Lorsque l'utilisateur a cliqué sur un des niveaux, le callback de ce
@@ -233,6 +233,7 @@ bouton va fermer la fenêtre. Ensuite, MainWindow va demander à BoardModel
 d'enregistrer le meilleur score va récupérer l'information de HelpWindow et
 enverra l'information à BoardModel, qui va recréer un nouveau board. Enfin,
 MainWindow va demander à DisplayBoard de se mettre à jour.
+
 \par
 
 \subsubsection{ResetMinPas}
@@ -260,19 +261,31 @@ enregistrer le meilleur score de l'utilisateur.
 \indent
 \par
 Nous avons implémenté le modèle MVC uniquement pour le board. Premièrement, nous
-avons d'abord essayé d'implémenté tout le jeu en modèle MVC, mais FLTK n'est pas
-adapté au modèle MVC. En effet, les callback des widgets sont premièrement
-statiques, nous étions donc obligés d'appeler notre Contrôleur dans le
-MainWindow, ce qui n'avait pas beaucoup de sens. 
+avons d'abord essayé d'implémenter tout le jeu en modèle MVC, mais FLTK n'est
+pas adapté au modèle MVC. En effet, les callback des widgets sont statiques et
+nous étions donc obligés d'appeler notre Contrôleur dans le MainWindow. Nous
+avons donc décidé que la fenêtre principale serait le contrôleur du board vu
+qu'il gère les commandes entrées par l'utilisateur et met à jour le boardModel
+et le display en fonction et il s'occupe aussi de l'affichage des boutons et de
+leur callback.
 \par
-Nous avons donc décidé que la
-fenêtre principale serait le contrôleur, vu qu'il gère les commandes entrées
-par l'utilisateur et met à jour le boardModel et le display en fonction.
+Nous avons aussi décidé par souci de performance d'implémenter la vue dans le
+contrôleur. En effet, nous avions implémenté une fonction qui rafraîchit le
+board 60 fois par seconde, et il n'était donc pas nécessaire d'avoir cette
+classe dans le contrôleur. Seulement, cela ralentissait beaucoup notre programme
+et le jeu clignotait. Nous avons donc mis DisplayBoard dans MainWindow. Lorsque
+nous avons une commande entrée par l'utilisateur, nous mettons à jour le plateau
+de jeu (le modèle) et nous appelons la fonction update de display pour
+lui dire de se mettre à jour. 
 \par
 \section{Conclusion}
 \indent
 \par
-En Conclusion,
+En conclusion, nous avons implémenté les 10 tâches requises, nous avons écrit
+plusieurs classes, séparés dans des fichiers différents et dans trois dossiers
+différents : Modèle, Vue et Contrôleur. Nous avons essayé de respecter le modèle
+MVC, mais par souci de performance nous avons décidé de mettre la vue dans le
+contrôleur, pour qu'il puisse être notifié des changements du boardModel.
 \par
 
 \end{large}
