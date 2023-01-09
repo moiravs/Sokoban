@@ -13,7 +13,7 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, HelpWindow *helpW
     DisplayBoard *board = new DisplayBoard(boardModel);
     display = board;
     board->show();
-    // Initialisation of the buttons
+    // Initialization of the buttons
     Fl_Button *reset = new Fl_Button(RESET_X, RESET_Y, RESET_W, RESET_H, "Reset Level");
     Fl_Button *resetMinSteps = new Fl_Button(RESET_BEST_SCORE_X, RESET_BEST_SCORE_Y, RESET_BEST_SCORE_W, RESET_BEST_SCORE_H, "Reset Min Steps");
     Fl_Button *levels = new Fl_Button(CHOICE_X, CHOICE_Y, CHOICE_W, CHOICE_H, "Levels");

@@ -139,7 +139,7 @@ contient la position de la souris.
 \par
 Le DisplayBoard va itérer à travers le vecteur de LogicCell et créer des
 instances de CellDisplay. Enfin, lorsque l'utilisateur clique sur le
-DisplayBoard, il va demander à chaque instance de CellDisplay si elle a elle
+DisplayBoard, il va demander à chaque instance de CellDisplay si elle
 contient la position de la souris et renverra le résultat au MainWindow.
 \par
 \subsubsection{HelpWindow}
@@ -161,7 +161,7 @@ auteurs. C'est la première fenêtre qui s'affiche et disparaît après 10 secon
 \indent
 \par
 Cette classe sert de contrôleur. En effet, elle s'occupe de faire le lien entre
-le modèle et la Vue. Elle va aussi dessiner les limite de pas, le compteur de
+le modèle et la vue. Elle va aussi dessiner les limites de pas, le compteur de
 pas et le meilleur score. Cette classe gère aussi les commandes entrées par
 l'utilisateur et s'occupe aussi des callback de chaque bouton. Chaque callback
 change l'information dans le modèle et met à jour le display en fonction. Il
@@ -263,7 +263,7 @@ enregistrer le meilleur score de l'utilisateur.
 Nous avons implémenté le modèle MVC uniquement pour le board. Premièrement, nous
 avons d'abord essayé d'implémenter tout le jeu en modèle MVC, mais FLTK n'est
 pas adapté au modèle MVC. En effet, les callback des widgets sont statiques et
-nous étions donc obligés d'appeler notre Contrôleur dans le MainWindow. Nous
+nous étions donc obligés d'appeler notre contrôleur dans le MainWindow. Nous
 avons donc décidé que la fenêtre principale serait le contrôleur du board vu
 qu'il gère les commandes entrées par l'utilisateur et met à jour le boardModel
 et le display en fonction et il s'occupe aussi de l'affichage des boutons et de
@@ -284,7 +284,7 @@ lui dire de se mettre à jour.
 En conclusion, nous avons implémenté les 10 tâches requises, nous avons écrit
 plusieurs classes, séparés dans des fichiers différents et dans trois dossiers
 différents : Modèle, Vue et Contrôleur. Nous avons essayé de respecter le modèle
-MVC, mais par souci de performance nous avons décidé de mettre la vue dans le
+MVC, mais par souci de performance, nous avons décidé de mettre la vue dans le
 contrôleur, pour qu'il puisse être notifié des changements du boardModel.
 \par
 
