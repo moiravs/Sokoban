@@ -14,12 +14,13 @@ class DisplayBoard : public Fl_Box
 {
 private:
     std::shared_ptr<BoardModel> boardModel;
-    std::vector<Cell> cells;
+    std::vector<Cell *> cells;
 
 public:
     //Constructors
     DisplayBoard() : Fl_Box(BOARD_X, BOARD_Y, BOARD_W, BOARD_H){};
     DisplayBoard(std::shared_ptr<BoardModel> boardModel) : Fl_Box(BOARD_X, BOARD_Y, BOARD_W, BOARD_H), boardModel{boardModel} { this->update(); }
+    ~DisplayBoard();
 
     //Methods
     /**

@@ -23,19 +23,25 @@ Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, ty
 }
 
 Cell::~Cell(){
+    if (type == PLAYER)
+    {
+        delete this->personnage;
+    }
+    else if (type == WALL)
+    {
+        delete this->wall;
+    }
 }
 
 void Cell::draw()
 {
     if (type == PLAYER)
     {
-        Fl_Image *picture = this->personnage;
-        picture->draw(center.x - w / 2, center.y - h / 2, w, h);
+        personnage->draw(center.x - w / 2, center.y - h / 2, w, h);
     }
     else if (type == WALL)
     {
-        Fl_Image *picture = this->wall;
-        picture->draw(center.x - w / 2, center.y - h / 2, w, h);
+        wall->draw(center.x - w / 2, center.y - h / 2, w, h);
     }
     else if (type == BOX_FINAL_POS)
     {

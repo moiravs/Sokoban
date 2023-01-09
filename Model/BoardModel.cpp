@@ -311,9 +311,9 @@ void BoardModel::checkBoard(bool teleportationEnd)
 
 BoardModel::~BoardModel()
 {
-    for (int i = 0; i < static_cast<int>(LogicCellVector.size()); ++i)
+    for (int i = 0; i < static_cast<int>(LogicCellVector.size()); i++)
     {
-        for (int j = 0; j < static_cast<int>(LogicCellVector[0].size()); ++j)
+        for (int j = 0; j < static_cast<int>(LogicCellVector[0].size()); j++)
         {
             delete LogicCellVector[i][j];
         }

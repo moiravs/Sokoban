@@ -17,8 +17,8 @@ class Cell
     Point center;
     int type;
     int w, h;
-    Fl_PNG_Image *personnage;
-    Fl_PNG_Image *wall;
+    Fl_Image *personnage;
+    Fl_Image *wall;
     Fl_Color fillColor, frameColor;
     int color;
 

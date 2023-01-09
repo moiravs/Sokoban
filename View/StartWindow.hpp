@@ -15,6 +15,7 @@ private:
 
 public:
     StartWindow();
+    ~StartWindow(){delete button;};
     /**
      * @brief  Override the drawing function from Fl_Window, draw the names of the authors of the game
      * @retval None
