@@ -72,6 +72,7 @@ void BoardModel::createBoard(std::string fileContent)
 
 void BoardModel::createLogicCell(int index, std::string fileContent)
 {
+    deleteVectors();
     this->LogicCellVector.clear();
     this->teleportation.clear();
     std::vector<LogicCell *> line;
@@ -309,8 +310,7 @@ void BoardModel::checkBoard(bool teleportationEnd)
     }
 }
 
-BoardModel::~BoardModel()
-{
+void BoardModel::deleteVectors(){
     for (int i = 0; i < static_cast<int>(LogicCellVector.size()); i++)
     {
         for (int j = 0; j < static_cast<int>(LogicCellVector[0].size()); j++)
@@ -319,8 +319,14 @@ BoardModel::~BoardModel()
         }
     }
 
-    for (int i = 0; i < static_cast<int>(teleportation.size()); ++i){
+    for (int i = 0; i < static_cast<int>(teleportation.size()); ++i)
+    {
         delete teleportation[i];
     }
+}
+
+BoardModel::~BoardModel()
+{
+    deleteVectors();
     delete player;
 }
