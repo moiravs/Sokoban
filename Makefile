@@ -1,5 +1,5 @@
 
-FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE  -lfltk -lfltk_images -Wold-style-cast -fsanitize=leak -Wall 
+FLAGS=-std=c++17 -Wall -Wpedantic -D_GNU_SOURCE  -lfltk -lfltk_images -Wold-style-cast -Werror
 
 COMPILER=g++
 
