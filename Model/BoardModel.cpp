@@ -43,9 +43,7 @@ bool BoardModel::isFailure()
             }
         }
     }
-    if (allBoxes == false)
-        return false;
-    return true;
+    return allBoxes;
 }
 
 void BoardModel::createBoard(std::string fileContent)
