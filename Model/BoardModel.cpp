@@ -132,7 +132,6 @@ void BoardModel::createLogicCell(int index, std::string fileContent)
         {
             std::cout << "Number not recognized by the program" << static_cast<int>(fileContent[ind]) << std::endl;
             exit(1);
-            break;
         }
         }
         if (fileContent[ind] == '\n' || fileContent[ind] == '\0')

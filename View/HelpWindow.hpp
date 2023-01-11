@@ -14,12 +14,20 @@ private:
     Fl_Button *level2 = new Fl_Button(LEVEL2_X, LEVEL2_Y, LEVEL_W, LEVEL_H, "Level2");
     Fl_Button *level3 = new Fl_Button(LEVEL3_X, LEVEL3_Y, LEVEL_W, LEVEL_H, "Level3");
     Fl_Button *level4 = new Fl_Button(LEVEL4_X, LEVEL4_Y, LEVEL_W, LEVEL_H, "Level4");
+    int levelsValue;
+    bool help = true;
 
 public:
-    bool help = true;
-    int levelsValue;
+
+    // Constructors and Destructors
     HelpWindow();
-    ~HelpWindow(){delete level1;}
+    ~HelpWindow(){delete level1; delete level2; delete level3; delete level4;}
+
+    // Getters and setters
+    int getLevelsValue(){return levelsValue;}
+    void setHelp(bool newHelp){help = newHelp;}
+
+    // Methods
     /**
      * @brief  Override the drawing function from Fl_Window, writes text
      * @retval None

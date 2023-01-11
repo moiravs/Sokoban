@@ -114,12 +114,12 @@ void MainWindow::resetLevelCallback(Fl_Widget *w, void *f)
 void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *mainWindow = static_cast<MainWindow *>(f);
-    mainWindow->helpWindow->help = false;
+    mainWindow->helpWindow->setHelp(false);
     mainWindow->helpWindow->set_modal();
     mainWindow->helpWindow->show();
     while (mainWindow->helpWindow->shown())
         Fl::wait();
-    int choice = mainWindow->helpWindow->levelsValue;
+    int choice = mainWindow->helpWindow->getLevelsValue();
     mainWindow->boardModel->saveBestScore();
     switch (choice)
     {
@@ -145,7 +145,7 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
 void MainWindow::helpCallback(Fl_Widget *widget, void *f)
 {
     MainWindow *mainWindow = static_cast<MainWindow *>(f);
-    mainWindow->helpWindow->help = true;
+    mainWindow->helpWindow->setHelp(true);
     mainWindow->helpWindow->show();
 }
 
