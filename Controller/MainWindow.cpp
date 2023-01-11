@@ -119,8 +119,7 @@ void MainWindow::changeLevelCallback(Fl_Widget *widget, void *f)
     mainWindow->helpWindow->show();
     while (mainWindow->helpWindow->shown())
         Fl::wait();
-    Fl_Choice *levels = static_cast<Fl_Choice *>(mainWindow->helpWindow->levels);
-    int choice = levels->value();
+    int choice = mainWindow->helpWindow->levelsValue;
     mainWindow->boardModel->saveBestScore();
     switch (choice)
     {

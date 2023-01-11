@@ -10,11 +10,16 @@
 class HelpWindow : public Fl_Window
 {
 private:
+    Fl_Button *level1 = new Fl_Button(100, 100, 100, 100, "Level1");
+    Fl_Button *level2 = new Fl_Button(250, 100, 100, 100, "Level2");
+    Fl_Button *level3 = new Fl_Button(100, 250, 100, 100, "Level3");
+    Fl_Button *level4 = new Fl_Button(250, 250, 100, 100, "Level4");
+
 public:
-    Fl_Choice *levels = new Fl_Choice(100, 150, 200, 50);
     bool help = true;
+    int levelsValue;
     HelpWindow();
-    ~HelpWindow(){delete levels;}
+    ~HelpWindow(){delete level1;}
     /**
      * @brief  Override the drawing function from Fl_Window, writes text
      * @retval None

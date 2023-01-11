@@ -12,19 +12,24 @@ HelpWindow::HelpWindow() : Fl_Window(400, 400, 400, 400, "Help") // Source : Pro
     resizable(this);
     this->show();
     this->callback(windowCallback, this);
-    levels->add("Level 1");
-    levels->add("Level 2");
-    levels->add("Level 3");
-    levels->add("Level 4");
-    levels->hide();
-    levels->callback(windowCallback, this);
+    level1->hide();
+    level2->hide();
+    level3->hide();
+    level4->hide();
+    level1->callback(windowCallback, this);
+    level2->callback(windowCallback, this);
+    level3->callback(windowCallback, this);
+    level4->callback(windowCallback, this);
 }
 void HelpWindow::draw()
 {
     Fl_Window::draw();
     if (help == true)
     {
-        levels->hide();
+        level1->hide();
+        level2->hide();
+        level3->hide();
+        level4->hide();
         fl_color(FL_BLACK);
         fl_draw("To Teleport Yourself, press A ", 100, 100);
         fl_draw("To go on the left, press Left Arrow", 100, 130);
@@ -32,8 +37,12 @@ void HelpWindow::draw()
         fl_draw("To go up, press Up Arrow ", 100, 190);
         fl_draw("To go down, press Down Arrow", 100, 220);
     }
-    else {
-        levels->show();
+    else
+    {
+        level1->show();
+        level2->show();
+        level3->show();
+        level4->show();
     }
 }
 void HelpWindow::Time_CB(void *userdata) // Source : Programmation Language Course
@@ -44,5 +53,14 @@ void HelpWindow::Time_CB(void *userdata) // Source : Programmation Language Cour
 void HelpWindow::windowCallback(Fl_Widget *widget, void *f)
 {
     HelpWindow *a = static_cast<HelpWindow *>(f);
+    std::cout << widget->label();
+    if (strcmp(widget->label(),"Level1")==0)
+        a->levelsValue = 0;
+    if (strcmp(widget->label(), "Level2") == 0)
+        a->levelsValue = 1;
+    if (strcmp(widget->label(), "Level3") == 0)
+        a->levelsValue = 2;
+    if (strcmp(widget->label(), "Level4") == 0)
+        a->levelsValue = 3;
     a->hide();
 }
