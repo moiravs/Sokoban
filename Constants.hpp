@@ -53,8 +53,8 @@ const int BOARD_W = 600;
 const int BOARD_H = 600;
 
 // Button reset display
-const int RESET_X = 200;
-const int RESET_Y = 620;
+const int RESET_X = 600;
+const int RESET_Y = 200;
 const int RESET_W = 100;
 const int RESET_H = 25;
 
@@ -67,20 +67,20 @@ const int PARTY_WON_X = 200;
 const int PARTY_WON_Y = 100;
 
 // Level button display
-const int CHOICE_X = 350;
-const int CHOICE_Y = 620;
-const int CHOICE_W = 100;
-const int CHOICE_H = 25;
-
-// Level button display
-const int HELP_X = 350;
-const int HELP_Y = 700;
+const int HELP_X = 600;
+const int HELP_Y = 300;
 const int HELP_W = 100;
 const int HELP_H = 25;
 
 // Level button display
-const int RESET_BEST_SCORE_X = 500;
-const int RESET_BEST_SCORE_Y = 620;
+const int CHOICE_X = 600;
+const int CHOICE_Y = 500;
+const int CHOICE_W = 100;
+const int CHOICE_H = 25;
+
+// Level button display
+const int RESET_BEST_SCORE_X = 600;
+const int RESET_BEST_SCORE_Y = 400;
 const int RESET_BEST_SCORE_W = 100;
 const int RESET_BEST_SCORE_H = 25;
 

@@ -53,7 +53,6 @@ void HelpWindow::Time_CB(void *userdata) // Source : Programmation Language Cour
 void HelpWindow::windowCallback(Fl_Widget *widget, void *f)
 {
     HelpWindow *a = static_cast<HelpWindow *>(f);
-    std::cout << widget->label();
     if (strcmp(widget->label(),"Level1")==0)
         a->levelsValue = 0;
     if (strcmp(widget->label(), "Level2") == 0)
