@@ -100,4 +100,21 @@ const std::string LEVEL4 = "Niveaux/niveau4.txt";
 const std::string PLAYER_IMAGE = "Textures/Mario.png";
 const std::string WALL_IMAGE = "Textures/Stone_Wall.png";
 
+const int LEVEL_W = 100;
+const int LEVEL_H = 100;
+
+const int LEVEL1_X = 100;
+const int LEVEL1_Y = 100;
+const int LEVEL2_X = 100;
+const int LEVEL2_Y = 250;
+const int LEVEL3_X = 250;
+const int LEVEL3_Y = 100;
+const int LEVEL4_X = 250;
+const int LEVEL4_Y = 250;
+
+const int HELP_W_X = 400;
+const int HELP_W_Y = 400;
+const int HELP_W_W = 400;
+const int HELP_W_H = 400;
+
 #endif

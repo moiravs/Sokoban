@@ -6,7 +6,7 @@
  * */
 #include "HelpWindow.hpp"
 
-HelpWindow::HelpWindow() : Fl_Window(400, 400, 400, 400, "Help") // Source : Programmation Language Course
+HelpWindow::HelpWindow() : Fl_Window(HELP_W_X, HELP_W_Y, HELP_W_W, HELP_W_H, "Help") // Source : Programmation Language Course
 {
     Fl::add_timeout(1.0 / REFRESH_PER_SECOND, Time_CB, this);
     resizable(this);

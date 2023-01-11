@@ -10,10 +10,10 @@
 class HelpWindow : public Fl_Window
 {
 private:
-    Fl_Button *level1 = new Fl_Button(100, 100, 100, 100, "Level1");
-    Fl_Button *level2 = new Fl_Button(250, 100, 100, 100, "Level2");
-    Fl_Button *level3 = new Fl_Button(100, 250, 100, 100, "Level3");
-    Fl_Button *level4 = new Fl_Button(250, 250, 100, 100, "Level4");
+    Fl_Button *level1 = new Fl_Button(LEVEL1_X, LEVEL1_Y, LEVEL_W, LEVEL_H, "Level1");
+    Fl_Button *level2 = new Fl_Button(LEVEL2_X, LEVEL2_Y, LEVEL_W, LEVEL_H, "Level2");
+    Fl_Button *level3 = new Fl_Button(LEVEL3_X, LEVEL3_Y, LEVEL_W, LEVEL_H, "Level3");
+    Fl_Button *level4 = new Fl_Button(LEVEL4_X, LEVEL4_Y, LEVEL_W, LEVEL_H, "Level4");
 
 public:
     bool help = true;
