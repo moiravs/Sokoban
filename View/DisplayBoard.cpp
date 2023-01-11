@@ -27,9 +27,8 @@ std::tuple<int, int> DisplayBoard::mouseClick(Point mouseLoc) // Source : Progra
 
 void DisplayBoard::update()
 {
-    for (auto i : cells){
+    for (auto i : cells)
         delete i;
-    }
     cells.clear();
     for (size_t y = 0; y < boardModel->getLogicCellVector().size(); y++)
     {
@@ -59,11 +58,10 @@ void DisplayBoard::update()
     }
 }
 
-DisplayBoard::~DisplayBoard(){
+DisplayBoard::~DisplayBoard()
+{
     for (auto i : cells)
-    {
         delete i;
-    }
 }
 
 #endif

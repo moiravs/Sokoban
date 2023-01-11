@@ -16,7 +16,8 @@ Cell::Cell(Point center, int type, int w, int h, int color) : center{center}, ty
         this->wall = new Fl_PNG_Image(WALL_IMAGE.c_str());
 }
 
-Cell::~Cell(){
+Cell::~Cell()
+{
     if (type == PLAYER)
         delete this->personnage;
     else if (type == WALL)

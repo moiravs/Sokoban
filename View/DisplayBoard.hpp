@@ -17,14 +17,14 @@ private:
     std::vector<Cell *> cells;
 
 public:
-    //Constructors
+    // Constructors and Destructors
     DisplayBoard() : Fl_Box(BOARD_X, BOARD_Y, BOARD_W, BOARD_H){};
     DisplayBoard(std::shared_ptr<BoardModel> boardModel) : Fl_Box(BOARD_X, BOARD_Y, BOARD_W, BOARD_H), boardModel{boardModel} { this->update(); }
     ~DisplayBoard();
 
-    //Methods
+    // Methods
     /**
-     * @brief  Iterates over a vector of cell, and if the mouse location is in the cell, 
+     * @brief  Iterates over a vector of cell, and if the mouse location is in the cell,
      * returns a tuple with the position of the cell
      * @param  mouseLoc: the Location of the mouse
      * @retval The position of the cell where the mouse location is
