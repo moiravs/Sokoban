@@ -27,7 +27,8 @@ MainWindow::MainWindow(std::shared_ptr<BoardModel> boardModel, HelpWindow *helpW
     this->resizable(help);
 }
 
-MainWindow::~MainWindow(){
+MainWindow::~MainWindow()
+{
     delete reset;
     delete levels;
     delete help;

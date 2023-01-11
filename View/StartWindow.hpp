@@ -10,12 +10,13 @@
 class StartWindow : public Fl_Window
 {
 private:
-    Fl_Button *button = new Fl_Button(300, 300, 400, 50, "Andrius Ezerskis & Moïra Vanderslagmolen");
     int wait = 0;
 
 public:
+    // Constructors and destructors
     StartWindow();
-    ~StartWindow(){delete button;};
+    
+    // Methods
     /**
      * @brief  Override the drawing function from Fl_Window, draw the names of the authors of the game
      * @retval None

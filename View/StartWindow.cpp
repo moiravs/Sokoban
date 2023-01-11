@@ -15,7 +15,11 @@ StartWindow::StartWindow() : Fl_Window(500, 500, WINDOW_WIDTH, WINDOW_HEIGHT, "S
 void StartWindow::draw()
 {
     Fl_Window::draw();
-    fl_draw("SOKOBAN", 300, 300);
+    fl_color(FL_BLACK);
+    fl_font(Fl_Font(1),20);
+    fl_draw("Andrius Ezerskis & Moïra Vanderslagmolen", 200, 400);
+    fl_font(Fl_Font(1), 24);
+    fl_draw("Projet de Language de Programmation - Sokoban", 200, 300);
 }
 void StartWindow::Time_CB(void *userdata) // Source : Programmation Language Course
 {

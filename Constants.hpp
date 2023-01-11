@@ -47,15 +47,15 @@ const int WINDOW_HEIGHT = 900;
 const double REFRESH_PER_SECOND = 60;
 
 // Board display
-const int BOARD_X = 200;
+const int BOARD_X = 220;
 const int BOARD_Y = 200;
 const int BOARD_W = 600;
 const int BOARD_H = 600;
 
 // Button reset display
-const int RESET_X = 600;
+const int RESET_X = 40;
 const int RESET_Y = 200;
-const int RESET_W = 100;
+const int RESET_W = 125;
 const int RESET_H = 25;
 
 // PAS
@@ -67,21 +67,21 @@ const int PARTY_WON_X = 200;
 const int PARTY_WON_Y = 100;
 
 // Level button display
-const int HELP_X = 600;
+const int HELP_X = 40;
 const int HELP_Y = 300;
-const int HELP_W = 100;
+const int HELP_W = 125;
 const int HELP_H = 25;
 
 // Level button display
-const int CHOICE_X = 600;
+const int CHOICE_X = 40;
 const int CHOICE_Y = 500;
-const int CHOICE_W = 100;
+const int CHOICE_W = 125;
 const int CHOICE_H = 25;
 
 // Level button display
-const int RESET_BEST_SCORE_X = 600;
+const int RESET_BEST_SCORE_X = 40;
 const int RESET_BEST_SCORE_Y = 400;
-const int RESET_BEST_SCORE_W = 100;
+const int RESET_BEST_SCORE_W = 125;
 const int RESET_BEST_SCORE_H = 25;
 
 const int STEPS_LIMIT_X = 200;
