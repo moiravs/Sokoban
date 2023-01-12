@@ -27,7 +27,11 @@
 
 \maketitle
 \end{titlepage}
+\tableofcontents
+\newpage
 \begin{large}
+
+
 
 \section{Introduction}
 \indent
@@ -278,10 +282,12 @@ Nous avons aussi décidé par souci de performance d'implémenter la vue dans le
 contrôleur. En effet, nous avions implémenté une fonction qui rafraîchit le
 board 60 fois par seconde, et il n'était donc pas nécessaire d'avoir cette
 classe dans le contrôleur. Seulement, cela ralentissait beaucoup notre programme
-et le jeu clignotait. Nous avons donc mis DisplayBoard dans MainWindow. Lorsque
-nous avons une commande entrée par l'utilisateur, nous mettons à jour le plateau
-de jeu (le modèle) et nous appelons la fonction update de display pour
-lui dire de se mettre à jour. 
+et le jeu clignotait. Nous avons donc mis DisplayBoard dans MainWindow. Comme
+nous n'avions qu'un sujet et un observateur, nous n'avons pas utilisé le patron
+de conception Subject-Observer pour ne pas alourdir le code. Lorsque nous avons
+une commande entrée par l'utilisateur, nous mettons à jour le plateau de jeu (le
+modèle) et nous appelons la fonction update de display pour lui dire de se
+mettre à jour. 
 \par
 \section{Conclusion}
 \indent
