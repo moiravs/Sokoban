@@ -36,7 +36,8 @@ public:
      */
     void update();
     /**
-     * @brief  Draws the board
+     * @brief  Draws the cells, draw the number of steps, the steps limit, the
+     * minimum steps for this level and draw a text if the player win or lose.
      * @retval None
      */
     void draw();

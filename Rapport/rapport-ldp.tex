@@ -68,7 +68,7 @@ Nous avons implémenté :
 \section{Classes}
 \indent
 \par
-Nous avons séparé nos classes en trois fichiers distincts : Model, Controller et Vue.
+Nous avons séparé nos classes en trois fichiers distincts : Model, Controller et View.
 \par
 \subsection{Classes du Modèle}
 
@@ -79,7 +79,7 @@ BoardModel est la classe qui s'occupe de gérer la logique du plateau. Elle fait
 bouger le personnage, compte le nombre de pas, détermine si la partie est
 terminée ou si elle ne peut plus être résolue. Elle peut aussi téléporter le
 personnage d'une case de téléportation à une autre et charger les niveaux en
-mémoire et s'occupe de sauvegarder le meilleur score en mémoire.
+mémoire et s'occupe de sauvegarder le meilleur score dans un fichier.
 \par
 \indent
 \par
@@ -98,24 +98,29 @@ meilleur score, le fichier affiche un m suivi du meilleur score.
 \par
 Nous avons implémenté deux structures : Player et Box, que nous avons placé dans
 le fichier de LogicCell. Player contient seulement deux attributs, x et y, qui
-représentent la ligne et la colonne dans laquelle est placé le player. Box
+représentent l'emplacement du player (ligne et colonne). Box
 contient trois attributs, la couleur de la boîte, un booléen indiquant si elle
-est légère et un autre booléen indiquant si la boîte est bloquée.
+est légère ou lourde et un autre booléen indiquant si la boîte est bloquée ou pas.
 \par
-Cette classe représente une cellule ou une case. Elle a une position, et
-contient un joueur ou une boîte. La case a aussi une couleur et un type. Elle
-peut avoir 4 types différents (mur, vide, téléportation, position finale d'une
+La classe LogicCell représente une cellule ou une case. Elle a une position, et peut
+contenir un joueur ou une boîte. La case a aussi une couleur et un type. Elle
+peut avoir 4 types différents (mur, vide, téléportation ou position finale d'une
 boîte). 
 \par
-Nous avons écrit une méthode qui permet de vérifier si la case est
-"complète". En effet, si le type de la case est la position finale d'une boîte,
-alors elle est complète que si elle possède une boîte et si cette boîte a la
-même couleur que la cellule qui la contient. Elle est aussi complète lorsque le
-type n'est pas la position finale d'une boîte. Cette fonction est utile
-lorsque nous voulons vérifier si le joueur a terminé son niveau, nous itérons alors
-dans le vecteur contenant toutes les cases et nous vérifions si chacune des
-cases est complète. La cellule est bloquée si son type est un mur ou si la boîte
-sur la case est bloquée.
+Nous avons écrit une méthode qui permet de vérifier si la case est "complète".
+En effet, si le type de la case est la position finale d'une boîte, alors elle
+est complète que si elle possède une boîte et si cette boîte a la même couleur
+que la cellule qui la contient. Elle est aussi complète lorsque le type n'est
+pas la position finale d'une boîte. Cette fonction est utile lorsque nous
+voulons vérifier si le joueur a terminé son niveau, nous itérons alors dans le
+vecteur contenant toutes les cases et nous vérifions si chacune des cases est
+complète. 
+\par
+Pour savoir si une cellule est bloquée, nous avons procédé de la même manière
+que nous avons écrit la méthode de la case complète. La cellule est bloquée si
+son type est un mur ou si la boîte sur la case est bloquée. Nous
+itérons alors dans le vecteur de toutes les cases, et si la boîte est située dans un
+coin où les deux cellules sont bloquées, alors la boîte est bloquée.
 \par
 \subsubsection{Téléportation}
 \indent
@@ -160,9 +165,7 @@ auteurs. C'est la première fenêtre qui s'affiche et disparaît après 10 secon
 \subsubsection{MainWindow}
 \indent
 \par
-Cette classe sert de contrôleur. En effet, elle s'occupe de faire le lien entre
-le modèle et la vue. Elle va aussi dessiner les limites de pas, le compteur de
-pas et le meilleur score. Cette classe gère aussi les commandes entrées par
+Cette classe sert de contrôleur. Cette classe gère les commandes entrées par
 l'utilisateur et s'occupe aussi des callback de chaque bouton. Chaque callback
 change l'information dans le modèle et met à jour le display en fonction. Il
 affiche aussi la fenêtre principale du jeu.
@@ -179,10 +182,9 @@ enregistrer la limite de pas ainsi que le meilleur score dans une variable.
 Ensuite, nous allons créer une instance de HelpWindow, et nous les passons
 ensuite en paramètre à MainWindow. MainWindow va dessiner tous les widgets du
 jeu(bouton d'aide, changer de niveau, recommencer le niveau et remettre à 0 le
-meilleur score). MainWindow va aussi dessiner le nombre de pas, la limite de pas
-ainsi que le meilleur score. Le DisplayBoard, créé dans mainWindow, va dessiner
-toutes les CellDisplay une par une grâce au vecteur de LogicCell créé dans
-BoardModel. 
+meilleur score). Le DisplayBoard, créé dans mainWindow, va dessiner toutes les
+CellDisplay une par une grâce au vecteur de LogicCell créé dans BoardModel ainsi
+que le nombre de pas, la limite de pas ainsi que le meilleur score.
 
 
 \par
@@ -193,21 +195,20 @@ La classe MainWindow s'occupe de gérer chaque événement. Par exemple, lorsque
 l'utilisateur appuie sur la flèche de droite et que la partie n'est pas
 terminée, la classe MainWindow va tout d'abord appeler la classe BoardModel,
 pour lui indiquer que le joueur veut aller à droite. Le BoardModel va mettre à
-jour son vecteur de LogicCell et le nombre de pas. MainWindow va demander à
-DisplayBoard de se mettre à jour, et va donc recréer un nouveau vecteur de
-CellDisplay grâce au vecteur de LogicCell de BoardModel. MainWindow va aussi
-redessiner les pas. 
+jour son vecteur de LogicCell, le nombre de pas et la position du joueur.
+MainWindow va demander à DisplayBoard de se mettre à jour, et DisplayBoard va
+donc recréer un nouveau vecteur de CellDisplay grâce au vecteur de LogicCell de
+BoardModel.
 \par
 Si l'utilisateur clique sur le plateau de jeu, MainWindow va demander à
 DisplayBoard quelle est la position de la case cliquée. Celui-ci va demander à
 chaque CellDisplay si la position de la souris est dans cette CellDisplay. Si la
 CellDisplay renvoie true, il envoie le tuple de cette Cell à MainWindow, qui
 enverra ce tuple à BoardModel. BoardModel va mettre à jour le vecteur de
-logicCell et la position du joueur. MainWindow vérifie ensuite si la partie est
-terminée ou pas.
+LogicCell et la position du joueur.
 \par
 Si la partie est terminée, les évènements liés au plateau de jeu ne sont plus
-reconnus par MainWindow et celui-ci affichera un message indiquant à
+reconnus par MainWindow et DisplayBoard affichera un message indiquant à
 l'utilisateur s'il a gagné ou perdu.
 \par
 
@@ -223,17 +224,18 @@ HelpWindow.
 \subsubsection{Levels}
 \indent
 \par
-Si l'utilisateur appuie sur le bouton changeLevel, une nouvelle fenêtre va être
-affichée grâce à la fonction show de FLTK. Tant que la fenêtre est affichée (la
-fonction shown de Fl\_Window), nous appelons la fonction Fl::wait. La fenêtre
-est modale, c'est à dire que l'utilisateur ne peut plus faire aucune autre
-action dans une autre fenêtre tant qu'il n'a pas cliqué sur le bouton pour
-choisir le niveau. Lorsque l'utilisateur a cliqué sur un des niveaux, le
-callback de ce bouton va enregistrer dans une variable quelle niveau a été
-cliqué et va fermer la fenêtre. Ensuite, MainWindow va demander à BoardModel
-d'enregistrer le meilleur score va récupérer l'information de HelpWindow et
-enverra l'information à BoardModel, qui va recréer un nouveau board. Enfin,
-MainWindow va demander à DisplayBoard de se mettre à jour.
+Si l'utilisateur appuie sur le bouton changeLevel, nous mettons help à false
+pour indiquer à HelpWindow d'afficher les niveaux. Par après, une nouvelle
+fenêtre va être affichée grâce à la fonction show de FLTK. Tant que la fenêtre
+est affichée (la fonction shown de Fl\_Window), nous appelons la fonction
+Fl::wait. La fenêtre est modale, c'est à dire que l'utilisateur ne peut plus
+faire aucune autre action dans une autre fenêtre tant qu'il n'a pas cliqué sur
+le bouton pour choisir le niveau. Lorsque l'utilisateur a cliqué sur un des
+niveaux, le callback de ce bouton va enregistrer dans une variable quelle niveau
+a été cliqué et va fermer la fenêtre. Ensuite, MainWindow va demander à
+BoardModel d'enregistrer le meilleur score va récupérer l'information de
+HelpWindow et enverra l'information à BoardModel, qui va recréer un nouveau
+board. Enfin, MainWindow va demander à DisplayBoard de se mettre à jour.
 
 \par
 
@@ -249,6 +251,8 @@ draw pour redessiner le meilleur score.
 \par
 
 \subsubsection{ResetLevel}
+\indent
+\par
 Pour recommencer un niveau, nous avons décidé de recharger le niveau à partir du
 fichier. Il agit donc comme un changement de niveau.
 \subsection{Quitter le jeu}
@@ -264,11 +268,11 @@ enregistrer le meilleur score de l'utilisateur.
 Nous avons implémenté le modèle MVC uniquement pour le board. Premièrement, nous
 avons d'abord essayé d'implémenter tout le jeu en modèle MVC, mais FLTK n'est
 pas adapté au modèle MVC. En effet, les callback des widgets sont statiques et
-nous étions donc obligés d'appeler notre contrôleur dans le MainWindow. Nous
-avons donc décidé que la fenêtre principale serait le contrôleur du board vu
-qu'il gère les commandes entrées par l'utilisateur et met à jour le boardModel
-et le display en fonction et il s'occupe aussi de l'affichage des boutons et de
-leur callback.
+nous étions donc obligés d'appeler notre contrôleur dans le MainWindow, qui
+normalement dessine uniquement les boutons. Nous avons donc décidé que la
+fenêtre principale serait le contrôleur du board vu qu'il gère les commandes
+entrées par l'utilisateur et met à jour le boardModel et le display en fonction.
+Il s'occupe donc aussi de l'affichage des boutons et de leur callback.
 \par
 Nous avons aussi décidé par souci de performance d'implémenter la vue dans le
 contrôleur. En effet, nous avions implémenté une fonction qui rafraîchit le

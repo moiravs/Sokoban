@@ -27,8 +27,7 @@ public:
     ~MainWindow();
     // Methods
     /**
-     * @brief  Override the drawing function from Fl_Window, draw the number of steps, the steps limit, the
-     * minimum steps for this level and draw a text if the player win or lose.
+     * @brief  Overrides the drawing function from Fl_Window
      * @retval None
      */
     void draw() override;
