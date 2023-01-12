@@ -14,7 +14,7 @@ class DisplayBoard : public Fl_Box
 {
 private:
     std::shared_ptr<BoardModel> boardModel;
-    std::vector<Cell *> cells;
+    std::vector<std::vector<Cell *>> cells;
 
 public:
     // Constructors and Destructors
