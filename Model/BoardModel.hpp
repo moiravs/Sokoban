@@ -107,6 +107,10 @@ public:
      * @retval None
      */
     void checkBoard(bool teleportationEnd);
+    /**
+     * @brief  Delete all the vectors
+     * @retval None
+     */
     void deleteVectors();
 };
 

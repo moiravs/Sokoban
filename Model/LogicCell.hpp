@@ -44,7 +44,7 @@ private:
     Player *player = nullptr;
 
 public:
-    // Constructors
+    // Constructors and Destructors
     LogicCell(size_t line, size_t column, int type, int color = FL_WHITE) : line{line}, column{column}, type{type}
     {
         if (color == BLUE_BOX_FINAL_POS)
@@ -54,7 +54,6 @@ public:
         else if (color == BOX_FINAL_POS + '0')
             this->color = FL_WHITE;
     };
-
     ~LogicCell(){if (this->hasBox()) {delete box;}}
 
     // Setters and Getters
