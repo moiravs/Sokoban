@@ -1,2 +1,2 @@
 # Sokoban
-Projet de Langage de programmation 2.
+Implementation of the Sokoban game in C++, for the course Programming Languages 2 at ULB (Université Libre de Bruxelles) 
